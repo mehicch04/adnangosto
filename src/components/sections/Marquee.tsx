@@ -24,7 +24,7 @@ export function Marquee() {
       aria-label="Takmičenja"
       className="-rotate-1 overflow-hidden border-y-4 border-brand-black bg-brand-yellow py-4 text-brand-black lg:py-6"
     >
-      <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-marquee will-change-transform [backface-visibility:hidden] hover:[animation-play-state:paused]">
         <Row />
         <Row hidden />
       </div>

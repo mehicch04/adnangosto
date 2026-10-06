@@ -81,4 +81,5 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
 - Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
 - Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
+- Instagram feed: za prave objave treba `INSTAGRAM_ACCESS_TOKEN` (Meta app, Instagram API with Instagram Login, Adnanov profesionalni nalog); bez njega se prikazuju lokalne fotografije
 - Fotografije takmičara (`public/images/takmicari`) su sa starog sajta bez imena: Adnan mora potvrditi ko je ko i poslati sliku za Jasmina Hodžića

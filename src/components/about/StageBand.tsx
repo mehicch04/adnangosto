@@ -17,9 +17,9 @@ export function StageBand() {
           Najuspješniji takmičar BiH četiri godine zaredom,{" "}
           <span className="text-brand-yellow">od 2012. do 2015.</span>
         </p>
-        <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/10 backdrop-blur-sm lg:grid-cols-4">
+        <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/10 lg:grid-cols-4">
           {careerStats.map((s) => (
-            <div key={s.label} className="bg-brand-black/60 p-6 lg:p-8">
+            <div key={s.label} className="bg-brand-black/75 p-6 lg:p-8">
               <dt className="font-display text-6xl leading-none text-brand-yellow lg:text-8xl">
                 {s.value}
               </dt>

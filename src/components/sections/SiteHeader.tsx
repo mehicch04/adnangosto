@@ -22,10 +22,21 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const next = window.scrollY > 24;
+        setScrolled((prev) => (prev === next ? prev : next));
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -40,17 +51,13 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-shadow duration-300 ${
           solid
             ? "border-b border-white/10 bg-brand-black shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
             : "border-b border-white/5 bg-brand-black"
         }`}
       >
-        <div
-          className={`mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 transition-[height] duration-300 ${
-            scrolled ? "h-[72px]" : "h-20 lg:h-[88px]"
-          }`}
-        >
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-6 px-5 lg:h-20">
           <Link
             href="/"
             aria-label="Adnan Gosto, početna"
@@ -63,7 +70,7 @@ export function SiteHeader() {
               width={560}
               height={304}
               priority
-              className={`w-auto transition-[height] duration-300 ${scrolled ? "h-10 lg:h-11" : "h-11 lg:h-12"}`}
+              className="h-10 w-auto lg:h-12"
             />
           </Link>
 

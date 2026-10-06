@@ -9,6 +9,7 @@ import { StageBand } from "@/components/about/StageBand";
 import { CareerResults } from "@/components/about/CareerResults";
 import { CoachLegacy } from "@/components/about/CoachLegacy";
 import { Gallery } from "@/components/about/Gallery";
+import { InstagramFeed } from "@/components/sections/InstagramFeed";
 
 export const metadata: Metadata = {
   title: "O meni",
@@ -29,6 +30,7 @@ export default function AboutPage() {
         <CoachLegacy />
         <Gallery />
         <FinalCta />
+        <InstagramFeed />
       </main>
       <SiteFooter />
     </>

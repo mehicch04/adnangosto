@@ -56,7 +56,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="border-t border-white/15 bg-brand-black/70 backdrop-blur-md">
+      <div className="border-t border-white/15 bg-brand-black/85">
         <dl className="mx-auto grid w-full max-w-7xl grid-cols-2 px-5 lg:grid-cols-4">
           {stats.map((s, i) => (
             <div

@@ -202,3 +202,12 @@ export const faq = [
     a: "Pročitam tvoje odgovore i javim ti se s prijedlogom kako da krenemo. Ne moraš ništa objašnjavati ispočetka.",
   },
 ];
+
+export const instagramFallback = [
+  { src: "/images/om-konstrukcija.jpg", alt: "Poza na čeličnoj konstrukciji" },
+  { src: "/images/om-ledja.jpg", alt: "Trening u teretani" },
+  { src: "/images/om-narandzasta.jpg", alt: "Fotografija ispred narandžastog zida" },
+  { src: "/images/om-portret.jpg", alt: "Prednja poza" },
+  { src: "/images/om-ledja-krov.jpg", alt: "Poza leđa na krovu" },
+  { src: "/images/om-majica.jpg", alt: "U teretani" },
+];

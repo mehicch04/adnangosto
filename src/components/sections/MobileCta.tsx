@@ -1,41 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-function inView(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return false;
-  const r = el.getBoundingClientRect();
-  return r.top < window.innerHeight && r.bottom > 0;
-}
-
-function reached(id: string) {
-  const el = document.getElementById(id);
-  return el ? el.getBoundingClientRect().top < window.innerHeight : false;
-}
+import { useEffect, useRef, useState } from "react";
 
 export function MobileCta() {
   const [show, setShow] = useState(false);
+  const state = useRef({ pastHero: false, inPackages: false, atEnd: false });
 
   useEffect(() => {
-    const onScroll = () =>
-      setShow(
-        window.scrollY > window.innerHeight * 0.7 && !inView("saradnja") && !reached("kontakt"),
-      );
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const update = () => {
+      const s = state.current;
+      const next = s.pastHero && !s.inPackages && !s.atEnd;
+      setShow((prev) => (prev === next ? prev : next));
+    };
+    const observe = (id: string, key: "inPackages" | "atEnd") => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const io = new IntersectionObserver(([e]) => {
+        state.current[key] =
+          key === "atEnd" ? e.isIntersecting || e.boundingClientRect.top < 0 : e.isIntersecting;
+        update();
+      });
+      io.observe(el);
+      return io;
+    };
+    const hero = document.querySelector("main > section");
+    const heroIo = hero
+      ? new IntersectionObserver(
+          ([e]) => {
+            state.current.pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+            update();
+          },
+          { rootMargin: "0px 0px -30% 0px" },
+        )
+      : null;
+    if (hero && heroIo) heroIo.observe(hero);
+    const a = observe("saradnja", "inPackages");
+    const b = observe("kontakt", "atEnd");
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      heroIo?.disconnect();
+      a?.disconnect();
+      b?.disconnect();
     };
   }, []);
 
   return (
     <div
       aria-hidden={!show}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-brand-black/95 p-3 backdrop-blur transition-transform duration-300 lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-brand-black p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-transform duration-300 will-change-transform lg:hidden ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
     >
