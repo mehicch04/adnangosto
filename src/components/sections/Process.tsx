@@ -2,7 +2,7 @@ import { process } from "@/content/site";
 
 export function Process() {
   return (
-    <section id="kako-radimo" className="scroll-mt-16 px-5 py-24 lg:py-32">
+    <section id="kako-radimo" className="scroll-mt-24 px-5 py-24 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]">
@@ -22,7 +22,7 @@ export function Process() {
             >
               <span
                 aria-hidden="true"
-                className="font-display text-5xl leading-none text-brand-yellow/40 transition-colors group-hover:text-brand-yellow lg:text-7xl"
+                className="font-display text-5xl leading-none text-brand-yellow lg:text-7xl"
               >
                 0{i + 1}
               </span>

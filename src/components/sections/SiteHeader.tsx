@@ -13,7 +13,7 @@ const nav = [
   { label: "Rezultati", href: "/#rezultati" },
   { label: "Kako radimo", href: "/#kako-radimo" },
   { label: "O meni", href: "/o-meni" },
-  { label: "Kontakt", href: "/#kontakt" },
+  { label: "Pitanja", href: "/#pitanja" },
 ];
 
 export function SiteHeader() {
@@ -42,8 +42,8 @@ export function SiteHeader() {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
           solid
-            ? "border-b border-white/10 bg-brand-black/85 backdrop-blur-xl"
-            : "border-b border-white/5 bg-brand-black/90 backdrop-blur-xl"
+            ? "border-b border-white/10 bg-brand-black shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]"
+            : "border-b border-white/5 bg-brand-black"
         }`}
       >
         <div

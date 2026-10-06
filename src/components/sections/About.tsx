@@ -12,7 +12,7 @@ export function About() {
   } = getImageProps({ ...common, src: "/images/stage-pose-mobile.jpg", width: 595, height: 725 });
 
   return (
-    <section id="o-meni" className="scroll-mt-16">
+    <section id="o-meni" className="scroll-mt-24">
       <div className="relative isolate overflow-hidden">
         <picture className="absolute inset-0 -z-20">
           <source media="(min-width: 768px)" srcSet={desktop} />

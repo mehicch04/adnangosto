@@ -16,12 +16,22 @@ export async function SiteFooter() {
 
   return (
     <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
-      <p
+      <svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-[-2vw] -z-10 text-center font-display text-[22vw] leading-[0.8] whitespace-nowrap text-[#161616] select-none"
+        viewBox="0 0 1000 170"
+        preserveAspectRatio="xMidYMax meet"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 w-full select-none"
       >
-        Gosto Adnan
-      </p>
+        <text
+          x="500"
+          y="188"
+          textAnchor="middle"
+          fill="#161616"
+          style={{ fontFamily: "var(--font-display)", fontSize: 232 }}
+        >
+          GOSTO ADNAN
+        </text>
+      </svg>
       <div className="mx-auto max-w-7xl px-5 pt-20 pb-[14vw] lg:pt-28 lg:pb-[12vw]">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
           <div>
@@ -40,7 +50,7 @@ export async function SiteFooter() {
               href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-full border border-white/15 px-5 font-semibold transition-colors hover:border-brand-yellow hover:text-brand-yellow"
+              className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-sm border border-white/15 px-5 font-semibold transition-colors hover:border-brand-yellow hover:text-brand-yellow"
             >
               <InstagramIcon />
               {site.instagramHandle}
@@ -91,7 +101,7 @@ export async function SiteFooter() {
             </ul>
             <Link
               href="/#saradnja"
-              className="mt-8 inline-flex min-h-12 items-center rounded-full bg-brand-yellow px-7 pt-0.5 font-display text-2xl leading-none tracking-wide text-brand-black transition-colors hover:bg-white"
+              className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white"
             >
               Prijavi se
             </Link>

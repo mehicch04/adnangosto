@@ -169,3 +169,26 @@ export const about = {
     { year: "2022", text: "IFBB Pro nastup na Yamamoto Cup Pro" },
   ],
 };
+
+export const faq = [
+  {
+    q: "Moram li biti takmičar da bih radio s tobom?",
+    a: "Ne. Radim i s rekreativcima koji žele formu koja se zadrži, i s takmičarima koji se spremaju za binu. Plan se pravi prema tvom cilju, ne prema tuđem.",
+  },
+  {
+    q: "Radiš li online ili samo uživo?",
+    a: "Oboje. Online coaching radi bez obzira gdje živiš. Trening, ishrana i provjere idu na daljinu, a ti dobiješ isto vodstvo kao i uživo.",
+  },
+  {
+    q: "Koliko košta saradnja?",
+    a: "Cijena zavisi od paketa i od toga šta ti treba. Konkretnu ponudu dobiješ nakon što popuniš prijavu, bez ikakve obaveze.",
+  },
+  {
+    q: "Nikad nisam nastupao. Mogu li se spremiti za prvo takmičenje?",
+    a: "Možeš. Pripremao sam takmičare od prvog državnog prvenstva do Arnold Classica. Na početku procijenimo gdje si i koliko vremena realno treba.",
+  },
+  {
+    q: "Šta se desi kad pošaljem prijavu?",
+    a: "Pročitam tvoje odgovore i javim ti se s prijedlogom kako da krenemo. Ne moraš ništa objašnjavati ispočetka.",
+  },
+];

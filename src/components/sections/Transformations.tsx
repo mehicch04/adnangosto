@@ -8,7 +8,7 @@ export async function Transformations() {
   return (
     <section
       id="transformacije"
-      className="scroll-mt-16 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
+      className="scroll-mt-24 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
         <h2 className="font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">

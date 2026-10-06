@@ -22,7 +22,7 @@ export function CareerResults() {
   return (
     <section
       id="titule"
-      className="scroll-mt-16 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
+      className="scroll-mt-24 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">

@@ -33,19 +33,15 @@ export function Hero() {
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 items-end px-5 pt-28 pb-10 lg:items-center lg:pt-36 lg:pb-12">
         <div className="max-w-2xl">
-          <p className="animate-rise text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
+          <p className="text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
             {hero.kicker}
           </p>
           <h1 className="mt-5 font-display text-[clamp(4rem,15vw,10rem)] leading-[0.82]">
-            <span className="block animate-rise [animation-delay:120ms]">{hero.title}</span>
-            <span className="block animate-rise text-brand-yellow [animation-delay:240ms]">
-              {hero.titleAccent}
-            </span>
+            <span className="block">{hero.title}</span>
+            <span className="block text-brand-yellow">{hero.titleAccent}</span>
           </h1>
-          <p className="mt-7 max-w-lg animate-rise text-lg text-white/75 [animation-delay:380ms]">
-            {hero.subtitle}
-          </p>
-          <div className="mt-9 flex animate-rise flex-wrap items-center gap-x-8 gap-y-4 [animation-delay:500ms]">
+          <p className="mt-7 max-w-lg text-lg text-white/75">{hero.subtitle}</p>
+          <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
             <Button href={hero.primaryCta.href} className="min-h-14 px-8 text-lg">
               {hero.primaryCta.label}
             </Button>

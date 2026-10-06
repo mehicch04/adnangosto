@@ -7,7 +7,7 @@ export function FinalCta() {
   return (
     <section
       id="kontakt"
-      className="relative isolate scroll-mt-16 overflow-hidden px-5 py-28 lg:py-44"
+      className="relative isolate scroll-mt-24 overflow-hidden px-5 py-28 lg:py-44"
     >
       <Image
         src="/images/om-ledja-krov.jpg"

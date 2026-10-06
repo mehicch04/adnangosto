@@ -7,6 +7,8 @@ import { Transformations } from "@/components/sections/Transformations";
 import { About } from "@/components/sections/About";
 import { Process } from "@/components/sections/Process";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { Faq } from "@/components/sections/Faq";
+import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 
 export const revalidate = 60;
@@ -29,9 +31,11 @@ export default function HomePage() {
         <Transformations />
         <Process />
         <About />
+        <Faq />
         <FinalCta />
       </main>
       <SiteFooter />
+      <MobileCta />
     </>
   );
 }

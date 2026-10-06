@@ -80,3 +80,4 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Pristup domeni adnangosto.com (za Resend DNS i prebacivanje)
 - Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
 - Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
+- Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
