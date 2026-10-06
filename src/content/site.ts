@@ -160,6 +160,11 @@ export const clientResults: {
 
 export const fallbackTransformations: Transformation[] = [];
 
+export const transformationPhotos = Array.from({ length: 11 }, (_, i) => ({
+  src: `/images/transformacije/tr-${String(i + 1).padStart(2, "0")}.jpg`,
+  alt: `Transformacija klijenta ${i + 1}: fotografija prije i poslije saradnje`,
+}));
+
 export const about = {
   title: "Iskustvo s bine, ne iz knjige",
   paragraphs: [

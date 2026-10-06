@@ -12,6 +12,7 @@ const nav = [
   { label: "Početna", href: "/" },
   { label: "Saradnja", href: "/#saradnja" },
   { label: "Rezultati", href: "/#rezultati" },
+  { label: "Transformacije", href: "/#transformacije" },
   { label: "Kako radimo", href: "/#kako-radimo" },
   { label: "O meni", href: "/o-meni" },
   { label: "Pitanja", href: "/#pitanja" },
@@ -84,15 +85,15 @@ export function SiteHeader() {
           </Link>
 
           <nav aria-label="Glavni meni" className="hidden lg:block">
-            <ul className="flex items-center gap-8 xl:gap-10">
+            <ul className="flex items-center gap-6 xl:gap-8">
               {nav.map((item) => {
                 const active = item.href === pathname;
                 return (
-                  <li key={item.href}>
+                  <li key={item.href} className={item.href === "/" ? "hidden xl:block" : undefined}>
                     <Link
                       href={item.href}
                       onClick={item.href === "/" ? goHome : undefined}
-                      className={`group relative block py-2 text-[13px] font-semibold tracking-[0.14em] uppercase transition-colors ${
+                      className={`group relative block py-2 text-[13px] font-semibold tracking-[0.14em] whitespace-nowrap uppercase transition-colors ${
                         active ? "text-brand-yellow" : "text-white hover:text-brand-yellow"
                       }`}
                     >
@@ -122,7 +123,7 @@ export function SiteHeader() {
             <Link
               href="/#saradnja"
               onClick={() => setOpen(false)}
-              className="hidden min-h-11 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white sm:inline-flex"
+              className="hidden min-h-11 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] whitespace-nowrap text-brand-black uppercase transition-colors hover:bg-white sm:inline-flex"
             >
               Prijavi se
             </Link>
