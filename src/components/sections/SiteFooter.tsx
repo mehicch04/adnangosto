@@ -113,19 +113,16 @@ export async function SiteFooter() {
             © {new Date().getFullYear()} {site.name}. Sva prava zadržana.
           </p>
           <a
-            href="#"
-            className="inline-flex items-center gap-2 transition-colors hover:text-brand-yellow"
+            href="https://mehiccdev.com"
+            target="_blank"
+            rel="noopener"
+            className="group inline-flex items-center gap-2 text-xs tracking-[0.14em] uppercase transition-colors hover:text-white"
           >
-            Nazad na vrh
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4" fill="none">
-              <path
-                d="M12 19V5m0 0-6 6m6-6 6 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            Designed &amp; powered by
+            <span className="inline-flex items-center gap-1.5 font-bold text-white">
+              <span className="size-1.5 rounded-full bg-brand-yellow transition-transform duration-300 group-hover:scale-150" />
+              mehiccdev
+            </span>
           </a>
         </div>
       </div>
