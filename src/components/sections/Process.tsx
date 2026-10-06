@@ -2,28 +2,34 @@ import { process } from "@/content/site";
 
 export function Process() {
   return (
-    <section
-      id="kako-radimo"
-      className="scroll-mt-16 border-t border-brand-line bg-brand-surface px-5 py-24 lg:py-32"
-    >
-      <div className="mx-auto max-w-7xl">
-        <h2 className="max-w-3xl font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">
-          Od prijave do <span className="text-brand-yellow">prvog plana</span>
-        </h2>
-        <ol className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+    <section id="kako-radimo" className="scroll-mt-16 px-5 py-24 lg:py-32">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]">
+            Od prijave
+            <br />
+            do <span className="text-brand-yellow">plana</span>
+          </h2>
+          <p className="mt-6 max-w-sm text-lg text-brand-muted">
+            Bez dopisivanja i objašnjavanja ispočetka. Četiri koraka i znaš tačno gdje si.
+          </p>
+        </div>
+        <ol className="border-t border-brand-line">
           {process.map((step, i) => (
             <li
               key={step.title}
-              className="relative lg:border-l lg:border-brand-line lg:px-8 lg:first:border-l-0 lg:first:pl-0"
+              className="group grid grid-cols-[4rem_1fr] gap-4 border-b border-brand-line py-8 lg:grid-cols-[6rem_1fr] lg:py-10"
             >
               <span
                 aria-hidden="true"
-                className="text-outline block font-display text-8xl leading-none lg:text-9xl"
+                className="font-display text-5xl leading-none text-brand-yellow/40 transition-colors group-hover:text-brand-yellow lg:text-7xl"
               >
-                {i + 1}
+                0{i + 1}
               </span>
-              <h3 className="mt-4 font-display text-3xl lg:text-4xl">{step.title}</h3>
-              <p className="mt-2 text-brand-muted">{step.text}</p>
+              <div>
+                <h3 className="font-display text-4xl leading-none lg:text-5xl">{step.title}</h3>
+                <p className="mt-3 max-w-md text-brand-muted">{step.text}</p>
+              </div>
             </li>
           ))}
         </ol>

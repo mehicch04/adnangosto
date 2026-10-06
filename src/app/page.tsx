@@ -1,6 +1,5 @@
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
-import { Stats } from "@/components/sections/Stats";
 import { Marquee } from "@/components/sections/Marquee";
 import { Packages } from "@/components/sections/Packages";
 import { ClientResults } from "@/components/sections/ClientResults";
@@ -24,13 +23,12 @@ export default function HomePage() {
       <SiteHeader />
       <main id="sadrzaj">
         <Hero />
-        <Stats />
         <Marquee />
         <Packages />
         <ClientResults />
         <Transformations />
-        <About />
         <Process />
+        <About />
         <FinalCta />
       </main>
       <SiteFooter />

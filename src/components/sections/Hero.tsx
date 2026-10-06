@@ -1,6 +1,7 @@
 import { getImageProps } from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { hero } from "@/content/site";
+import { hero, stats } from "@/content/site";
 
 export function Hero() {
   const common = { alt: "Adnan Gosto u teretani", sizes: "100vw", priority: true };
@@ -12,58 +13,66 @@ export function Hero() {
   } = getImageProps({ ...common, src: "/images/hero-gym-mobile.jpg", width: 800, height: 725 });
 
   return (
-    <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden lg:items-center">
+    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
       <picture className="absolute inset-0 -z-20">
         <source media="(min-width: 1024px)" srcSet={desktop} />
         <source srcSet={mobile} />
         <img
           {...rest}
-          className="h-full w-full object-cover object-[60%_20%] lg:object-[22%_center]"
           alt={common.alt}
+          className="h-full w-full object-cover object-[60%_20%] lg:object-[22%_center]"
         />
       </picture>
-
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-black via-brand-black/70 to-brand-black/10 lg:bg-gradient-to-r lg:from-brand-black lg:via-brand-black/80 lg:to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-brand-black to-transparent" />
-
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-black via-brand-black/60 to-brand-black/20 lg:bg-gradient-to-r lg:from-brand-black lg:via-brand-black/75 lg:to-brand-black/10" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-brand-black to-transparent" />
       <div
         aria-hidden="true"
-        className="absolute top-0 bottom-0 left-[50%] -z-10 hidden w-24 bg-brand-yellow lg:block"
+        className="absolute inset-y-0 left-[47%] -z-10 hidden w-24 bg-brand-yellow lg:block"
         style={{ clipPath: "polygon(70% 0, 100% 0, 30% 100%, 0 100%)" }}
       />
 
-      <span
-        aria-hidden="true"
-        className="text-outline pointer-events-none absolute right-[-2vw] bottom-[-4vw] -z-10 hidden font-display text-[18vw] leading-none whitespace-nowrap opacity-20 [--outline:#ffffff] lg:block"
-      >
-        Gosto
-      </span>
-
-      <div className="mx-auto w-full max-w-7xl px-5 pt-28 pb-14 lg:pt-32 lg:pb-24">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 items-end px-5 pt-28 pb-10 lg:items-center lg:pt-24 lg:pb-0">
         <div className="max-w-2xl">
-          <p className="flex animate-rise items-center gap-3 font-semibold text-brand-yellow">
-            <span className="h-0.5 w-10 bg-brand-yellow" />
+          <p className="animate-rise text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
             {hero.kicker}
           </p>
-          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,9.5rem)] leading-[0.84]">
+          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,10rem)] leading-[0.82]">
             <span className="block animate-rise [animation-delay:120ms]">{hero.title}</span>
             <span className="block animate-rise text-brand-yellow [animation-delay:240ms]">
               {hero.titleAccent}
             </span>
           </h1>
-          <p className="mt-7 max-w-xl animate-rise text-lg text-white/80 [animation-delay:380ms] lg:text-xl">
+          <p className="mt-7 max-w-lg animate-rise text-lg text-white/75 [animation-delay:380ms]">
             {hero.subtitle}
           </p>
-          <div className="mt-9 flex animate-rise flex-col gap-3 [animation-delay:500ms] sm:flex-row">
+          <div className="mt-9 flex animate-rise flex-wrap items-center gap-x-8 gap-y-4 [animation-delay:500ms]">
             <Button href={hero.primaryCta.href} className="min-h-14 px-8 text-lg">
               {hero.primaryCta.label}
             </Button>
-            <Button href={hero.secondaryCta.href} variant="ghost" className="min-h-14 px-8 text-lg">
+            <Link
+              href={hero.secondaryCta.href}
+              className="group inline-flex items-center gap-3 font-semibold text-white"
+            >
+              <span className="h-px w-8 bg-white transition-all group-hover:w-12 group-hover:bg-brand-yellow" />
               {hero.secondaryCta.label}
-            </Button>
+            </Link>
           </div>
         </div>
       </div>
+
+      <dl className="mx-auto grid w-full max-w-7xl grid-cols-2 border-t border-white/15 px-5 lg:grid-cols-4">
+        {stats.map((s, i) => (
+          <div
+            key={s.label}
+            className={`py-6 lg:py-8 ${i % 2 === 1 ? "pl-5 lg:pl-8" : "pr-5 lg:pr-8"} ${
+              i > 0 ? "lg:border-l lg:border-white/15 lg:pl-8" : ""
+            } ${i < 2 ? "border-b border-white/15 lg:border-b-0" : ""}`}
+          >
+            <dt className="font-display text-5xl leading-none text-white lg:text-6xl">{s.value}</dt>
+            <dd className="mt-2 max-w-[14rem] text-sm text-white/60">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

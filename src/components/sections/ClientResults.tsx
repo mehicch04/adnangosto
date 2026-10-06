@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { clientResults, coachingTotals } from "@/content/site";
 
 export function ClientResults() {
@@ -6,7 +5,7 @@ export function ClientResults() {
     <section id="rezultati" className="scroll-mt-16 px-5 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <div>
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <h2 className="font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">
               Moji takmičari
               <br />
@@ -26,15 +25,6 @@ export function ClientResults() {
                 </div>
               ))}
             </dl>
-            <div className="relative mt-10 hidden aspect-[2/3] w-56 overflow-hidden rounded-xl lg:block">
-              <Image
-                src="/images/podij.jpg"
-                alt="Proglašenje pobjednika na takmičenju"
-                fill
-                sizes="224px"
-                className="object-cover"
-              />
-            </div>
           </div>
 
           <ol className="divide-y divide-brand-line border-y border-brand-line">

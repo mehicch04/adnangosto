@@ -1,22 +1,6 @@
 import Link from "next/link";
 import { getPackages } from "@/lib/content";
 
-function Check() {
-  return (
-    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-yellow">
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3.5" fill="none">
-        <path
-          d="m6 12.5 4 4 8-9"
-          stroke="#0a0a0a"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  );
-}
-
 export async function Packages() {
   const packages = await getPackages();
 
@@ -27,83 +11,64 @@ export async function Packages() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <h2 className="font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">
+          <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]">
             Izaberi kako
             <br />
             radimo
           </h2>
-          <p className="max-w-lg text-lg text-brand-ink-muted lg:justify-self-end">
+          <p className="max-w-md text-lg text-brand-ink-muted lg:justify-self-end">
             Svaki paket ima svoju prijavu. Odgovoriš na pitanja bitna baš za tvoj cilj, a ja dobijem
             sve što trebam da ti se javim s konkretnim prijedlogom.
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-5 lg:grid-cols-3">
-          {packages.map((pkg, i) => {
-            const dark = i === 1;
-            return (
-              <li
-                key={pkg.slug}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl p-7 transition-transform duration-300 hover:-translate-y-1 lg:p-9 ${
-                  dark
-                    ? "bg-brand-black text-white"
-                    : "border border-brand-paper-line bg-white text-brand-black"
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute top-0 right-0 h-full w-14 bg-brand-yellow opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ clipPath: "polygon(70% 0, 100% 0, 100% 100%, 0 100%)" }}
-                />
-                {pkg.duration && (
-                  <p
-                    className={`font-display text-2xl ${dark ? "text-brand-yellow" : "text-brand-ink-muted"}`}
-                  >
-                    {pkg.duration}
-                  </p>
-                )}
-                <h3 className="mt-1 font-display text-5xl leading-none">{pkg.name}</h3>
-                {pkg.audience && (
-                  <p className={`mt-5 font-semibold ${dark ? "text-white" : "text-brand-black"}`}>
-                    {pkg.audience}
-                  </p>
-                )}
-                {pkg.tagline && (
-                  <p className={`mt-2 ${dark ? "text-brand-muted" : "text-brand-ink-muted"}`}>
-                    {pkg.tagline}
-                  </p>
-                )}
-                <ul className="mt-7 space-y-3">
-                  {pkg.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3">
-                      <Check />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-10">
+        <ul className="mt-16 border-t-2 border-brand-black">
+          {packages.map((pkg) => (
+            <li key={pkg.slug} className="group relative border-b border-brand-paper-line">
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 w-0 bg-brand-yellow transition-all duration-500 group-hover:w-1.5"
+              />
+              <div className="grid gap-6 py-10 transition-[padding] duration-500 lg:grid-cols-[1.1fr_1.2fr_auto] lg:items-center lg:gap-12 lg:py-12 group-hover:lg:pl-8">
+                <div>
+                  {pkg.duration && (
+                    <p className="text-sm font-semibold tracking-[0.15em] text-brand-ink-muted uppercase">
+                      {pkg.duration}
+                    </p>
+                  )}
+                  <h3 className="mt-2 font-display text-5xl leading-none lg:text-6xl">
+                    {pkg.name}
+                  </h3>
+                  {pkg.audience && <p className="mt-3 font-semibold">{pkg.audience}</p>}
+                </div>
+                <div>
+                  {pkg.tagline && <p className="text-brand-ink-muted">{pkg.tagline}</p>}
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {pkg.features.map((f) => (
+                      <li
+                        key={f}
+                        className="rounded-full border border-brand-black/15 bg-white px-3.5 py-1.5 text-sm font-semibold"
+                      >
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex items-center gap-6 lg:flex-col lg:items-end lg:gap-2">
                   <Link
                     href={`/prijava/${pkg.slug}`}
-                    className={`flex min-h-14 items-center justify-center rounded-md text-lg font-semibold transition-colors ${
-                      dark
-                        ? "bg-brand-yellow text-brand-black hover:bg-white"
-                        : "bg-brand-black text-white hover:bg-brand-yellow hover:text-brand-black"
-                    }`}
+                    className="inline-flex min-h-14 items-center rounded-md bg-brand-black px-8 text-lg font-semibold text-white transition-colors group-hover:bg-brand-yellow group-hover:text-brand-black"
                   >
                     Prijavi se
                     <span className="sr-only"> za {pkg.name}</span>
                   </Link>
                   {pkg.price_label && (
-                    <p
-                      className={`mt-3 text-center text-sm ${dark ? "text-brand-muted" : "text-brand-ink-muted"}`}
-                    >
-                      Cijena {pkg.price_label}
-                    </p>
+                    <p className="text-sm text-brand-ink-muted">Cijena {pkg.price_label}</p>
                   )}
                 </div>
-              </li>
-            );
-          })}
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>
