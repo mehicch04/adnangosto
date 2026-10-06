@@ -83,4 +83,5 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
 - Instagram feed: zadnje objave dolaze preko Behold.so (JSON feed), URL ide u `BEHOLD_FEED_URL`. Adnan jednom povezuje svoj profesionalni Instagram nalog u Beholdu; bez URL-a se prikazuju lokalne fotografije
 - Sponzori na početnoj su šablon (`fallbackSponsors` u `src/content/site.ts`): Adnan šalje prave logotipe i linkove, unose se kroz tabelu `sponsors`
+- Iskustva klijenata (`fallbackTestimonials` u `src/content/site.ts`) su šablon: prije objave zamijeniti pravim izjavama, imenima, ulogama i fotografijama uz dozvolu klijenata
 - Fotografije takmičara (`public/images/takmicari`) su sa starog sajta bez imena: Adnan mora potvrditi ko je ko i poslati sliku za Jasmina Hodžića

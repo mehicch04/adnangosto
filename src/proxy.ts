@@ -1,14 +1,3 @@
-/*
-  proxy.ts se izvrsava PRIJE svake stranice koju matcher uhvati.
-  U Next 16 ovo je novo ime za middleware.ts.
-
-  Dva posla:
-    1. osvjezi Supabase sesiju (da admin ne bude izbacen usred rada)
-    2. cuva /admin: ko nije prijavljen, ide na /admin/login
-
-  Analogija: portir na ulazu u kancelariju. Izlog (javni sajt) ga ne zanima,
-  matcher ispod ga salje samo na vrata /admin.
-*/
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 

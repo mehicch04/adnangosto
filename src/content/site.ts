@@ -230,3 +230,69 @@ export const fallbackSponsors: Sponsor[] = [
   { name: "Dymatize", logo: null, url: null, style: "italic" },
   { name: "Gymshark", logo: null, url: null, style: "wide" },
 ];
+
+export type Testimonial = {
+  name: string;
+  role: string;
+  quote: string;
+  image: string | null;
+};
+
+export const fallbackTestimonials: Testimonial[] = [
+  {
+    name: "Amar K.",
+    role: "Takmičar, Men's Physique",
+    quote:
+      "Prvi put sam na binu izašao spreman do detalja. Svaka sedmica je imala jasan plan, a zadnje dvije sedmice su bile odrađene bez ikakvog nagađanja.",
+    image: null,
+  },
+  {
+    name: "Lejla H.",
+    role: "Rekreativka",
+    quote:
+      "Nakon godina krugova s dijetama prvi put imam ishranu koju mogu držati. Forma je ostala i kad je program završio.",
+    image: null,
+  },
+  {
+    name: "Haris M.",
+    role: "Trener",
+    quote:
+      "Edukacija mi je promijenila način na koji radim s klijentima. Konkretno, praktično i bez teorije koja ne služi ničemu.",
+    image: null,
+  },
+  {
+    name: "Edin S.",
+    role: "Takmičar, Classic Physique",
+    quote:
+      "Adnan zna kad treba stisnuti, a kad pustiti. Takav osjećaj za pripremu dolazi samo od nekoga ko je sve to prošao sam.",
+    image: null,
+  },
+  {
+    name: "Selma B.",
+    role: "Takmičarka, Bikini",
+    quote:
+      "Uz poziranje i pripremu dobila sam i mir u glavi. Uvijek je bio tu za pitanje, i u šest ujutro i u ponoć.",
+    image: null,
+  },
+  {
+    name: "Tarik D.",
+    role: "Rekreativac",
+    quote:
+      "Minus 14 kilograma za šest mjeseci, a trening nikad nije bio dosadan. Najbolja investicija koju sam napravio u sebe.",
+    image: null,
+  },
+  {
+    name: "Nermin A.",
+    role: "Takmičar, Bodybuilding",
+    quote:
+      "Godinama sam trenirao sam i stajao u mjestu. Prvi off season s Adnanom donio je više mase nego prethodne tri godine.",
+    image: null,
+  },
+  {
+    name: "Ajla P.",
+    role: "Rekreativka",
+    quote:
+      "Plan prilagođen mom poslu i porodici, bez stresa i bez izgovora. Konačno se osjećam jako i sigurno u sebe.",
+    image: null,
+  },
+];

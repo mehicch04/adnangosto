@@ -10,6 +10,7 @@ import { CareerResults } from "@/components/about/CareerResults";
 import { CoachLegacy } from "@/components/about/CoachLegacy";
 import { Gallery } from "@/components/about/Gallery";
 import { BackToTop } from "@/components/sections/BackToTop";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function AboutPage() {
         <CareerResults />
         <CoachLegacy />
         <Gallery />
+        <Testimonials />
         <FinalCta />
         <InstagramFeed />
       </main>

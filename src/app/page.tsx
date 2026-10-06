@@ -10,6 +10,7 @@ import { Process } from "@/components/sections/Process";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Faq } from "@/components/sections/Faq";
 import { BackToTop } from "@/components/sections/BackToTop";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -33,6 +34,7 @@ export default function HomePage() {
         <Packages />
         <ClientResults />
         <Transformations />
+        <Testimonials />
         <Process />
         <About />
         <Faq />

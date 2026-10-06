@@ -107,3 +107,16 @@ body {
     transition: none;
   }
 }
+
+.testimonial-mask {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-row {
+    overflow-x: auto;
+  }
+}
+
+body {
+  overflow-x: clip;
+}
