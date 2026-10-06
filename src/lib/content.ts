@@ -12,8 +12,10 @@ import "server-only";
 import { createPublicClient } from "@/lib/supabase/public";
 import {
   fallbackPackages,
+  fallbackSponsors,
   fallbackTransformations,
   type Package,
+  type Sponsor,
   type Transformation,
 } from "@/content/site";
 
@@ -43,6 +45,19 @@ export async function getTransformations(): Promise<Transformation[]> {
 
   if (error || !data) return fallbackTransformations;
   return data;
+}
+
+export async function getSponsors(): Promise<Sponsor[]> {
+  const supabase = createPublicClient();
+  if (!supabase) return fallbackSponsors;
+
+  const { data, error } = await supabase
+    .from("sponsors")
+    .select("name, logo_path, url")
+    .order("position", { ascending: true });
+
+  if (error || !data || data.length === 0) return fallbackSponsors;
+  return data.map((s) => ({ name: s.name, logo: mediaUrl(s.logo_path), url: s.url }));
 }
 
 /*

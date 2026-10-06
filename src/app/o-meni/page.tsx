@@ -9,6 +9,7 @@ import { StageBand } from "@/components/about/StageBand";
 import { CareerResults } from "@/components/about/CareerResults";
 import { CoachLegacy } from "@/components/about/CoachLegacy";
 import { Gallery } from "@/components/about/Gallery";
+import { BackToTop } from "@/components/sections/BackToTop";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function AboutPage() {
         <InstagramFeed />
       </main>
       <SiteFooter />
+      <BackToTop />
     </>
   );
 }

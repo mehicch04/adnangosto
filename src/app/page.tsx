@@ -1,6 +1,7 @@
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
 import { Marquee } from "@/components/sections/Marquee";
+import { Sponsors } from "@/components/sections/Sponsors";
 import { Packages } from "@/components/sections/Packages";
 import { ClientResults } from "@/components/sections/ClientResults";
 import { Transformations } from "@/components/sections/Transformations";
@@ -8,6 +9,7 @@ import { About } from "@/components/sections/About";
 import { Process } from "@/components/sections/Process";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Faq } from "@/components/sections/Faq";
+import { BackToTop } from "@/components/sections/BackToTop";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
@@ -27,6 +29,7 @@ export default function HomePage() {
       <main id="sadrzaj">
         <Hero />
         <Marquee />
+        <Sponsors />
         <Packages />
         <ClientResults />
         <Transformations />
@@ -37,6 +40,7 @@ export default function HomePage() {
         <InstagramFeed />
       </main>
       <SiteFooter />
+      <BackToTop />
       <MobileCta />
     </>
   );

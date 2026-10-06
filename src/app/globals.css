@@ -71,3 +71,39 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+.faq-item {
+  interpolate-size: allow-keywords;
+}
+.faq-item::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    content-visibility 0.5s allow-discrete;
+}
+.faq-item[open]::details-content {
+  block-size: auto;
+}
+.faq-body {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.faq-item[open] .faq-body {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.08s;
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item::details-content,
+  .faq-body {
+    transition: none;
+  }
+}

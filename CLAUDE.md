@@ -81,5 +81,6 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
 - Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
 - Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
-- Instagram feed: za prave objave treba `INSTAGRAM_ACCESS_TOKEN` (Meta app, Instagram API with Instagram Login, Adnanov profesionalni nalog); bez njega se prikazuju lokalne fotografije
+- Instagram feed: zadnje objave dolaze preko Behold.so (JSON feed), URL ide u `BEHOLD_FEED_URL`. Adnan jednom povezuje svoj profesionalni Instagram nalog u Beholdu; bez URL-a se prikazuju lokalne fotografije
+- Sponzori na početnoj su šablon (`fallbackSponsors` u `src/content/site.ts`): Adnan šalje prave logotipe i linkove, unose se kroz tabelu `sponsors`
 - Fotografije takmičara (`public/images/takmicari`) su sa starog sajta bez imena: Adnan mora potvrditi ko je ko i poslati sliku za Jasmina Hodžića

@@ -211,3 +211,22 @@ export const instagramFallback = [
   { src: "/images/om-ledja-krov.jpg", alt: "Poza leđa na krovu" },
   { src: "/images/om-majica.jpg", alt: "U teretani" },
 ];
+
+export type SponsorStyle = "display" | "heavy" | "italic" | "wide";
+
+export type Sponsor = {
+  name: string;
+  logo: string | null;
+  url: string | null;
+  style?: SponsorStyle;
+};
+
+export const fallbackSponsors: Sponsor[] = [
+  { name: "Olimp Sport Nutrition", logo: null, url: null, style: "heavy" },
+  { name: "BioTechUSA", logo: null, url: null, style: "heavy" },
+  { name: "Scitec", logo: null, url: null, style: "italic" },
+  { name: "Applied Nutrition", logo: null, url: null, style: "wide" },
+  { name: "MuscleTech", logo: null, url: null, style: "display" },
+  { name: "Dymatize", logo: null, url: null, style: "italic" },
+  { name: "Gymshark", logo: null, url: null, style: "wide" },
+];

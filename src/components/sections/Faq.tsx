@@ -19,15 +19,17 @@ export function Faq() {
         </div>
         <div className="border-t-2 border-brand-black">
           {faq.map((item) => (
-            <details key={item.q} className="group border-b border-brand-paper-line">
+            <details key={item.q} className="faq-item group border-b border-brand-paper-line">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-7 [&::-webkit-details-marker]:hidden">
-                <span className="text-lg font-semibold lg:text-xl">{item.q}</span>
-                <span className="relative grid size-10 shrink-0 place-items-center rounded-full border border-brand-black/15 transition-colors group-open:border-brand-yellow group-open:bg-brand-yellow">
+                <span className="text-lg font-semibold transition-transform duration-300 group-open:translate-x-1 lg:text-xl">
+                  {item.q}
+                </span>
+                <span className="relative grid size-10 shrink-0 place-items-center rounded-full border border-brand-black/15 transition-[background-color,border-color,transform] duration-300 group-open:rotate-180 group-open:border-brand-yellow group-open:bg-brand-yellow">
                   <span className="absolute h-0.5 w-4 bg-brand-black" />
                   <span className="absolute h-4 w-0.5 bg-brand-black transition-transform duration-300 group-open:rotate-90 group-open:opacity-0" />
                 </span>
               </summary>
-              <p className="max-w-2xl pb-8 text-brand-ink-muted">{item.a}</p>
+              <p className="faq-body max-w-2xl pb-8 text-brand-ink-muted">{item.a}</p>
             </details>
           ))}
         </div>
