@@ -117,9 +117,15 @@ export const coachingTotals = [
   { value: "4", label: "Elite Pro karte" },
 ];
 
-export const clientResults = [
+export const clientResults: {
+  name: string;
+  image: string | null;
+  title: string;
+  results: string[];
+}[] = [
   {
     name: "Andrej Mandić",
+    image: "/images/takmicari/t1.jpg",
     title: "IFBB Elite Pro",
     results: [
       "Arnold Classic Barcelona 2019, 1. mjesto i apsolutni pobjednik",
@@ -128,21 +134,25 @@ export const clientResults = [
   },
   {
     name: "Vladica Jovanović",
+    image: "/images/takmicari/t2.jpg",
     title: "IFBB Elite Pro",
     results: ["Diamond Cup Malta 2017, 1. mjesto", "Amateur Olympia Spain 2017, 3. mjesto"],
   },
   {
     name: "Mirnes Husanović",
+    image: "/images/takmicari/t4.jpg",
     title: "IFBB Pro",
     results: ["Juniorski apsolutni prvak BiH 2013", "Višestruki državni prvak do 80 kg"],
   },
   {
     name: "Meldin Zimić",
+    image: "/images/takmicari/t5.jpg",
     title: "Classic bodybuilding",
     results: ["Sarajevo Open 2017, apsolutni pobjednik", "Državni prvak BiH 2017"],
   },
   {
     name: "Jasmin Hodžić",
+    image: null,
     title: "Bodybuilding do 100 kg",
     results: ["Balkansko prvenstvo 2017, 1. mjesto"],
   },
