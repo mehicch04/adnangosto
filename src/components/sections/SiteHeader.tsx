@@ -8,10 +8,12 @@ import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 
 const nav = [
+  { label: "Početna", href: "/" },
   { label: "Saradnja", href: "/#saradnja" },
   { label: "Rezultati", href: "/#rezultati" },
   { label: "Kako radimo", href: "/#kako-radimo" },
   { label: "O meni", href: "/o-meni" },
+  { label: "Kontakt", href: "/#kontakt" },
 ];
 
 export function SiteHeader() {
@@ -41,12 +43,12 @@ export function SiteHeader() {
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${
           solid
             ? "border-b border-white/10 bg-brand-black/85 backdrop-blur-xl"
-            : "border-b border-transparent bg-gradient-to-b from-brand-black/80 to-transparent"
+            : "border-b border-white/5 bg-brand-black/90 backdrop-blur-xl"
         }`}
       >
         <div
           className={`mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 transition-[height] duration-300 ${
-            scrolled ? "h-[72px] lg:h-20" : "h-20 lg:h-28"
+            scrolled ? "h-[72px]" : "h-20 lg:h-[88px]"
           }`}
         >
           <Link
@@ -61,25 +63,25 @@ export function SiteHeader() {
               width={560}
               height={304}
               priority
-              className={`w-auto transition-[height] duration-300 ${scrolled ? "h-10 lg:h-12" : "h-11 lg:h-16"}`}
+              className={`w-auto transition-[height] duration-300 ${scrolled ? "h-10 lg:h-11" : "h-11 lg:h-12"}`}
             />
           </Link>
 
           <nav aria-label="Glavni meni" className="hidden lg:block">
-            <ul className="flex items-center gap-10">
+            <ul className="flex items-center gap-8 xl:gap-10">
               {nav.map((item) => {
                 const active = item.href === pathname;
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`group relative block py-2 font-display text-[1.65rem] leading-none tracking-wide transition-colors ${
+                      className={`group relative block py-2 text-[13px] font-semibold tracking-[0.14em] uppercase transition-colors ${
                         active ? "text-brand-yellow" : "text-white hover:text-brand-yellow"
                       }`}
                     >
                       {item.label}
                       <span
-                        className={`absolute -bottom-0.5 left-0 h-[3px] -skew-x-[30deg] bg-brand-yellow transition-all duration-300 ${
+                        className={`absolute -bottom-1 left-0 h-0.5 bg-brand-yellow transition-all duration-300 ${
                           active ? "w-full" : "w-0 group-hover:w-full"
                         }`}
                       />
@@ -96,14 +98,14 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="hidden size-12 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow sm:grid"
+              className="hidden size-11 place-items-center rounded-sm border border-white/15 text-white/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow sm:grid"
             >
               <InstagramIcon />
             </a>
             <Link
               href="/#saradnja"
               onClick={() => setOpen(false)}
-              className="hidden min-h-12 items-center rounded-full bg-brand-yellow px-7 pt-0.5 font-display text-2xl leading-none tracking-wide text-brand-black transition-colors hover:bg-white sm:inline-flex"
+              className="hidden min-h-11 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white sm:inline-flex"
             >
               Prijavi se
             </Link>
@@ -113,7 +115,7 @@ export function SiteHeader() {
               aria-expanded={open}
               aria-controls="mobilni-meni"
               onClick={() => setOpen((v) => !v)}
-              className="grid size-12 place-items-center rounded-full border border-white/15 lg:hidden"
+              className="grid size-11 place-items-center rounded-sm border border-white/15 lg:hidden"
             >
               <span className="relative block h-3.5 w-5">
                 <span
