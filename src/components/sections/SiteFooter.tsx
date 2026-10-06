@@ -15,8 +15,14 @@ export async function SiteFooter() {
   const packages = await getPackages();
 
   return (
-    <footer className="relative overflow-hidden border-t border-brand-line bg-brand-black">
-      <div className="mx-auto max-w-7xl px-5 pt-20 lg:pt-28">
+    <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
+      <p
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-[-2vw] -z-10 text-center font-display text-[22vw] leading-[0.8] whitespace-nowrap text-[#161616] select-none"
+      >
+        Gosto Adnan
+      </p>
+      <div className="mx-auto max-w-7xl px-5 pt-20 pb-[14vw] lg:pt-28 lg:pb-[12vw]">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
           <div>
             <Image
@@ -42,7 +48,7 @@ export async function SiteFooter() {
           </div>
 
           <nav aria-label="Stranice">
-            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+            <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
               Stranice
             </h2>
             <ul className="mt-5 space-y-3">
@@ -57,7 +63,7 @@ export async function SiteFooter() {
           </nav>
 
           <nav aria-label="Saradnja">
-            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+            <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
               Saradnja
             </h2>
             <ul className="mt-5 space-y-3">
@@ -75,7 +81,7 @@ export async function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+            <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
               Rad
             </h2>
             <ul className="mt-5 space-y-3 text-white/75">
@@ -85,7 +91,7 @@ export async function SiteFooter() {
             </ul>
             <Link
               href="/#saradnja"
-              className="mt-8 inline-flex min-h-12 items-center rounded-full bg-brand-yellow px-6 font-semibold text-brand-black transition-colors hover:bg-white"
+              className="mt-8 inline-flex min-h-12 items-center rounded-full bg-brand-yellow px-7 pt-0.5 font-display text-2xl leading-none tracking-wide text-brand-black transition-colors hover:bg-white"
             >
               Prijavi se
             </Link>
@@ -113,13 +119,6 @@ export async function SiteFooter() {
           </a>
         </div>
       </div>
-
-      <p
-        aria-hidden="true"
-        className="text-outline pointer-events-none -mb-[3vw] text-center font-display text-[19vw] leading-[0.8] whitespace-nowrap opacity-30 select-none [--outline:#2a2a2a]"
-      >
-        Gosto Adnan
-      </p>
     </footer>
   );
 }

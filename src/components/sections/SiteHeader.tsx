@@ -46,7 +46,7 @@ export function SiteHeader() {
       >
         <div
           className={`mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 transition-[height] duration-300 ${
-            scrolled ? "h-16" : "h-20 lg:h-24"
+            scrolled ? "h-[72px] lg:h-20" : "h-20 lg:h-28"
           }`}
         >
           <Link
@@ -61,25 +61,28 @@ export function SiteHeader() {
               width={560}
               height={304}
               priority
-              className={`w-auto transition-[height] duration-300 ${scrolled ? "h-9" : "h-10 lg:h-12"}`}
+              className={`w-auto transition-[height] duration-300 ${scrolled ? "h-10 lg:h-12" : "h-11 lg:h-16"}`}
             />
           </Link>
 
           <nav aria-label="Glavni meni" className="hidden lg:block">
-            <ul className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 backdrop-blur">
+            <ul className="flex items-center gap-10">
               {nav.map((item) => {
                 const active = item.href === pathname;
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={`block rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
-                        active
-                          ? "bg-white text-brand-black"
-                          : "text-white/75 hover:bg-white/10 hover:text-white"
+                      className={`group relative block py-2 font-display text-[1.65rem] leading-none tracking-wide transition-colors ${
+                        active ? "text-brand-yellow" : "text-white hover:text-brand-yellow"
                       }`}
                     >
                       {item.label}
+                      <span
+                        className={`absolute -bottom-0.5 left-0 h-[3px] -skew-x-[30deg] bg-brand-yellow transition-all duration-300 ${
+                          active ? "w-full" : "w-0 group-hover:w-full"
+                        }`}
+                      />
                     </Link>
                   </li>
                 );
@@ -93,14 +96,14 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="hidden size-11 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow sm:grid"
+              className="hidden size-12 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow sm:grid"
             >
               <InstagramIcon />
             </a>
             <Link
               href="/#saradnja"
               onClick={() => setOpen(false)}
-              className="hidden min-h-11 items-center rounded-full bg-brand-yellow px-6 text-sm font-semibold text-brand-black transition-colors hover:bg-white sm:inline-flex"
+              className="hidden min-h-12 items-center rounded-full bg-brand-yellow px-7 pt-0.5 font-display text-2xl leading-none tracking-wide text-brand-black transition-colors hover:bg-white sm:inline-flex"
             >
               Prijavi se
             </Link>
@@ -110,7 +113,7 @@ export function SiteHeader() {
               aria-expanded={open}
               aria-controls="mobilni-meni"
               onClick={() => setOpen((v) => !v)}
-              className="grid size-11 place-items-center rounded-full border border-white/15 lg:hidden"
+              className="grid size-12 place-items-center rounded-full border border-white/15 lg:hidden"
             >
               <span className="relative block h-3.5 w-5">
                 <span
