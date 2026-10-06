@@ -1,0 +1,12 @@
+{
+  // VS Code ce ti pri otvaranju projekta ponuditi da instaliras ove ekstenzije.
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",      // autocomplete za Tailwind klase + prikaz boje uz klasu
+    "esbenp.prettier-vscode",         // automatsko formatiranje pri snimanju
+    "dbaeumer.vscode-eslint",         // greske u kodu podvucene uzivo
+    "usernamehw.errorlens",           // greska se ispise odmah u redu gdje je, ne moras hover
+    "yoavbls.pretty-ts-errors",       // TypeScript greske prevedene na citljiv jezik
+    "supabase.vscode-supabase-extension", // pregled baze i tabela iz VS Code-a
+    "anthropic.claude-code"           // Claude Code direktno u editoru
+  ]
+}

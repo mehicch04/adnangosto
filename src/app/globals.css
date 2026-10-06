@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/*
+  =========================================================
+  BREND TOKENI (Adnan Gosto)
+  =========================================================
+  @theme je centralna paleta. Svaka varijabla ovdje automatski
+  postaje Tailwind klasa:
+    --color-brand-yellow  ->  bg-brand-yellow, text-brand-yellow, border-brand-yellow
+    --font-display        ->  font-display
+
+  Boje su izvucene direktno iz njegovog loga i Instagram objava.
+
+  PRAVILO KONTRASTA (cuva 100/100 na pristupacnosti):
+    zuta na crnoj   = 10.3:1  -> OK
+    zuta na bijeloj =  1.9:1  -> NIKAD
+    Na zutom dugmetu tekst je UVIJEK crn, nikad bijel.
+*/
+@theme {
+  /* --- Boje --- */
+  --color-brand-black: #0a0a0a; /* glavna pozadina sajta */
+  --color-brand-surface: #141414; /* kartice i sekcije, sloj iznad pozadine */
+  --color-brand-raised: #1f1f1f; /* hover stanja, drugi sloj */
+  --color-brand-line: #2a2a2a; /* tanke linije i okviri */
+  --color-brand-yellow: #edb12d; /* SAMO akcenti: dugmad, istaknute rijeci, ikone */
+  --color-brand-white: #ffffff; /* naslovi i glavni tekst */
+  --color-brand-muted: #a3a3a3; /* sporedni tekst, prolazi kontrast na crnoj */
+
+  /* --- Fontovi ---
+     Varijable --font-bebas i --font-barlow puni next/font u layout.tsx.
+     Ovdje ih samo prijavljujemo Tailwindu kao klase font-display i font-body. */
+  --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
+  --font-body: var(--font-barlow), system-ui, sans-serif;
+}
+
+/* Crna pozadina od prvog piksela, da nema bijelog bljeska pri ucitavanju. */
+html {
+  background-color: var(--color-brand-black);
+  color: var(--color-brand-white);
+  /* glatko skrolanje kad se klikne na link sekcije (#usluge, #prijava) */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  /* Barlow je malo uzi, veci razmak redova pomaze citljivosti na mobitelu */
+  line-height: 1.6;
+}
+
+/* Vidljiv fokus za tastaturu. Bez ovoga pada ocjena pristupacnosti. */
+:focus-visible {
+  outline: 2px solid var(--color-brand-yellow);
+  outline-offset: 3px;
+}
+
+/* Ko u postavkama telefona ugasi animacije, gasimo ih i mi. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

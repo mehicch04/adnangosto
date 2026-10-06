@@ -1,0 +1,29 @@
+{
+  // Formatiraj fajl svaki put kad snimis (Ctrl+S). Nikad vise rucnog poravnavanja.
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Pri snimanju ESLint sam popravi ono sto moze (npr. neiskoristene importe).
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Koristi TypeScript verziju iz projekta, ne onu ugradjenu u VS Code.
+  // Tako editor i "npm run build" vide iste greske.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Tailwind v4 nema tailwind.config, pa ekstenziji kazemo gdje su tokeni.
+  "tailwindCSS.experimental.configFile": "src/app/globals.css",
+
+  // Da VS Code ne prijavljuje @theme i @import kao nepoznata CSS pravila.
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Ne pretrazuj build fajlove i zavisnosti kad trazis nesto kroz projekat.
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true
+  }
+}
