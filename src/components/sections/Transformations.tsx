@@ -14,9 +14,9 @@ export function Transformations() {
     <section
       id="transformacije"
       aria-labelledby="transformacije-naslov"
-      className="scroll-mt-24 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
+      className="scroll-mt-24 overflow-hidden bg-brand-paper py-24 text-brand-black lg:py-32"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl px-5">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16">
           <div>
             <p className="flex items-center gap-3 text-sm font-bold tracking-[0.2em] uppercase">
@@ -55,9 +55,11 @@ export function Transformations() {
             </ul>
           </div>
         </div>
+      </div>
 
-        <TransformationsGrid photos={transformationPhotos} />
+      <TransformationsGrid photos={transformationPhotos} />
 
+      <div className="mx-auto max-w-7xl px-5">
         <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t-2 border-brand-black pt-8 sm:flex-row sm:items-center">
           <p className="font-display text-4xl leading-none sm:text-5xl">
             Sljedeća može biti tvoja.
