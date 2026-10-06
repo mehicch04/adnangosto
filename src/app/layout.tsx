@@ -47,7 +47,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // Obje font varijable idu na <html> da budu dostupne svuda ispod.
-    <html lang="bs" className={`${bebas.variable} ${barlow.variable}`}>
+    <html
+      lang="bs"
+      data-scroll-behavior="smooth"
+      className={`${bebas.variable} ${barlow.variable}`}
+    >
       <body className="bg-brand-black text-brand-white antialiased">{children}</body>
     </html>
   );
