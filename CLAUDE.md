@@ -64,6 +64,13 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Obilni komentari na bosanskom: objasni ZAŠTO, ne samo ŠTA.
 - Uz svaku izmjenu predloži git komande (add, commit s porukom, push).
 
+## Gdje je šta (početna)
+
+- Sadržaj i rezervni podaci: `src/content/site.ts` (sve sa PROVJERITI potvrđuje Adnan)
+- Dobavljanje iz Supabase-a s rezervom: `src/lib/content.ts` + `src/lib/supabase/public.ts`
+- Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
+- Potpis dizajna: kosa linija iz loga (rez G/A) na fotografiji u heroju. Ne ponavljati je svuda.
+
 ## Otvorena pitanja s klijentom
 
 - Tačan spisak paketa (12 sedmica ili 3 mjeseca?) i pitanja za svaki upitnik
@@ -71,3 +78,5 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Original loga (SVG/PDF) i pojednostavljena "GA" verzija za favicon
 - Fotografije u punoj rezoluciji (ne preko WhatsAppa)
 - Pristup domeni adnangosto.com (za Resend DNS i prebacivanje)
+- Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
+- Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
