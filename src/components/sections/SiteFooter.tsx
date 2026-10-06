@@ -1,31 +1,125 @@
 import Image from "next/image";
+import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
+import { getPackages } from "@/lib/content";
 
-export function SiteFooter() {
+const pages = [
+  { label: "Početna", href: "/" },
+  { label: "O meni", href: "/o-meni" },
+  { label: "Rezultati", href: "/#rezultati" },
+  { label: "Kako radimo", href: "/#kako-radimo" },
+];
+
+export async function SiteFooter() {
+  const packages = await getPackages();
+
   return (
-    <footer className="border-t border-brand-line px-5 py-10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 sm:flex-row sm:justify-between">
-        <Image
-          src="/images/logo-ga.png"
-          alt="Gosto Adnan"
-          width={560}
-          height={304}
-          className="h-9 w-auto"
-        />
-        <a
-          href={site.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-12 items-center gap-2 text-brand-muted transition-colors hover:text-brand-yellow"
-        >
-          <InstagramIcon />
-          {site.instagramHandle}
-        </a>
-        <p className="text-sm text-brand-muted">
-          © {new Date().getFullYear()} {site.name}
-        </p>
+    <footer className="relative overflow-hidden border-t border-brand-line bg-brand-black">
+      <div className="mx-auto max-w-7xl px-5 pt-20 lg:pt-28">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
+          <div>
+            <Image
+              src="/images/logo-ga.png"
+              alt="Gosto Adnan"
+              width={560}
+              height={304}
+              className="h-14 w-auto"
+            />
+            <p className="mt-6 max-w-xs text-brand-muted">
+              IFBB Pro i trener takmičara. Coaching, priprema za takmičenja i edukacija za trenere,
+              uživo i online.
+            </p>
+            <a
+              href={site.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-full border border-white/15 px-5 font-semibold transition-colors hover:border-brand-yellow hover:text-brand-yellow"
+            >
+              <InstagramIcon />
+              {site.instagramHandle}
+            </a>
+          </div>
+
+          <nav aria-label="Stranice">
+            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+              Stranice
+            </h2>
+            <ul className="mt-5 space-y-3">
+              {pages.map((p) => (
+                <li key={p.href}>
+                  <Link href={p.href} className="text-white/75 transition-colors hover:text-white">
+                    {p.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Saradnja">
+            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+              Saradnja
+            </h2>
+            <ul className="mt-5 space-y-3">
+              {packages.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/prijava/${p.slug}`}
+                    className="text-white/75 transition-colors hover:text-white"
+                  >
+                    {p.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className="text-sm font-semibold tracking-[0.15em] text-brand-yellow uppercase">
+              Rad
+            </h2>
+            <ul className="mt-5 space-y-3 text-white/75">
+              <li>Zagreb i Mostar</li>
+              <li>Online coaching bez obzira na lokaciju</li>
+              <li>Priprema takmičara kroz cijelu sezonu</li>
+            </ul>
+            <Link
+              href="/#saradnja"
+              className="mt-8 inline-flex min-h-12 items-center rounded-full bg-brand-yellow px-6 font-semibold text-brand-black transition-colors hover:bg-white"
+            >
+              Prijavi se
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-20 flex flex-col gap-4 border-t border-brand-line py-6 text-sm text-brand-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {site.name}. Sva prava zadržana.
+          </p>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 transition-colors hover:text-brand-yellow"
+          >
+            Nazad na vrh
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4" fill="none">
+              <path
+                d="M12 19V5m0 0-6 6m6-6 6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
+
+      <p
+        aria-hidden="true"
+        className="text-outline pointer-events-none -mb-[3vw] text-center font-display text-[19vw] leading-[0.8] whitespace-nowrap opacity-30 select-none [--outline:#2a2a2a]"
+      >
+        Gosto Adnan
+      </p>
     </footer>
   );
 }

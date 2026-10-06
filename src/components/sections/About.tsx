@@ -1,18 +1,29 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { Button } from "@/components/ui/Button";
 import { about } from "@/content/site";
 
 export function About() {
+  const common = { alt: "Adnan Gosto pozira", sizes: "100vw" };
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: "/images/stage-pose.jpg", width: 1920, height: 725 });
+  const {
+    props: { srcSet: mobile, ...rest },
+  } = getImageProps({ ...common, src: "/images/stage-pose-mobile.jpg", width: 595, height: 725 });
+
   return (
     <section id="o-meni" className="scroll-mt-16">
       <div className="relative isolate overflow-hidden">
-        <Image
-          src="/images/stage-pose.jpg"
-          alt="Adnan Gosto pozira"
-          fill
-          sizes="100vw"
-          className="-z-20 object-cover object-[75%_center]"
-        />
+        <picture className="absolute inset-0 -z-20">
+          <source media="(min-width: 768px)" srcSet={desktop} />
+          <source srcSet={mobile} />
+          <img
+            {...rest}
+            alt="Adnan Gosto pozira"
+            loading="lazy"
+            className="h-full w-full object-cover object-top md:object-[75%_center]"
+          />
+        </picture>
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent lg:bg-gradient-to-r lg:from-brand-black lg:via-brand-black/70" />
         <div className="mx-auto flex min-h-[70svh] max-w-7xl items-end px-5 pt-40 pb-16 lg:min-h-[640px] lg:items-center lg:py-24">
           <div className="max-w-xl">

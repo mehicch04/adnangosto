@@ -27,11 +27,11 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-brand-black to-transparent" />
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 left-[47%] -z-10 hidden w-24 bg-brand-yellow lg:block"
+        className="absolute top-24 bottom-0 left-[47%] -z-10 hidden w-24 bg-brand-yellow lg:block"
         style={{ clipPath: "polygon(70% 0, 100% 0, 30% 100%, 0 100%)" }}
       />
 
-      <div className="mx-auto flex w-full max-w-7xl flex-1 items-end px-5 pt-28 pb-10 lg:items-center lg:pt-24 lg:pb-0">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 items-end px-5 pt-28 pb-10 lg:items-center lg:pt-36 lg:pb-12">
         <div className="max-w-2xl">
           <p className="animate-rise text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
             {hero.kicker}
@@ -60,19 +60,23 @@ export function Hero() {
         </div>
       </div>
 
-      <dl className="mx-auto grid w-full max-w-7xl grid-cols-2 border-t border-white/15 px-5 lg:grid-cols-4">
-        {stats.map((s, i) => (
-          <div
-            key={s.label}
-            className={`py-6 lg:py-8 ${i % 2 === 1 ? "pl-5 lg:pl-8" : "pr-5 lg:pr-8"} ${
-              i > 0 ? "lg:border-l lg:border-white/15 lg:pl-8" : ""
-            } ${i < 2 ? "border-b border-white/15 lg:border-b-0" : ""}`}
-          >
-            <dt className="font-display text-5xl leading-none text-white lg:text-6xl">{s.value}</dt>
-            <dd className="mt-2 max-w-[14rem] text-sm text-white/60">{s.label}</dd>
-          </div>
-        ))}
-      </dl>
+      <div className="border-t border-white/15 bg-brand-black/70 backdrop-blur-md">
+        <dl className="mx-auto grid w-full max-w-7xl grid-cols-2 px-5 lg:grid-cols-4">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className={`py-6 lg:py-8 ${i % 2 === 1 ? "pl-5 lg:pl-8" : "pr-5 lg:pr-8"} ${
+                i > 0 ? "lg:border-l lg:border-white/15 lg:pl-8" : ""
+              } ${i < 2 ? "border-b border-white/15 lg:border-b-0" : ""}`}
+            >
+              <dt className="font-display text-5xl leading-none text-white lg:text-6xl">
+                {s.value}
+              </dt>
+              <dd className="mt-2 max-w-[14rem] text-sm text-white/60">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }
