@@ -3,10 +3,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 const nav = [
-  { label: "Saradnja", href: "#saradnja" },
-  { label: "Rezultati", href: "#rezultati" },
-  { label: "O meni", href: "#o-meni" },
-  { label: "Kako radimo", href: "#kako-radimo" },
+  { label: "Saradnja", href: "/#saradnja" },
+  { label: "Rezultati", href: "/#rezultati" },
+  { label: "O meni", href: "/o-meni" },
+  { label: "Kako radimo", href: "/#kako-radimo" },
 ];
 
 export function SiteHeader() {
@@ -27,17 +27,17 @@ export function SiteHeader() {
           <ul className="flex gap-9 text-sm font-semibold tracking-wide">
             {nav.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   className="text-white/70 transition-colors hover:text-brand-yellow"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <Button href="#saradnja" className="min-h-10 px-5 text-sm">
+        <Button href="/#saradnja" className="min-h-10 px-5 text-sm">
           Prijavi se
         </Button>
       </div>

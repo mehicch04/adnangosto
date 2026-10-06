@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
 import { about } from "@/content/site";
 
 export function About() {
@@ -23,6 +24,9 @@ export function About() {
                 {p}
               </p>
             ))}
+            <Button href="/o-meni" className="mt-8 min-h-14 px-8 text-lg">
+              Cijela priča i titule
+            </Button>
           </div>
         </div>
       </div>

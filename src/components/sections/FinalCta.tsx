@@ -23,7 +23,7 @@ export function FinalCta() {
           Izaberi paket, popuni prijavu za par minuta i javljam ti se s konkretnim prijedlogom.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Button href="#saradnja" className="min-h-14 px-8 text-lg">
+          <Button href="/#saradnja" className="min-h-14 px-8 text-lg">
             Izaberi saradnju
           </Button>
           <a
