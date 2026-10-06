@@ -43,7 +43,7 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 ## Brend pravila
 
 - Pozadina crna `brand-black`, kartice `brand-surface`, akcent `brand-yellow` (#EDB12D)
-- Žuta je SAMO akcent: dugmad, istaknute riječi, ikone. Nikad veliki žuti blokovi.
+- Žuta: akcenti, traka takmičenja (marquee) i kose plohe iz loga. Svijetla sekcija `brand-paper` razbija crnu (paketi, transformacije).
 - Kontrast: žuti tekst samo na crnoj. Na žutom dugmetu tekst je CRN, nikad bijel.
 - Naslovi: `font-display` (Bebas Neue), velika slova. Tekst: `font-body` (Barlow).
 - Motivi s njegovih objava (tačkice, XXXX, žute kvačice): štedljivo, najviše jedan po sekciji.
@@ -61,7 +61,7 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Server Components po defaultu. `"use client"` samo gdje treba interakcija.
 - Svaki unos s forme prolazi kroz Zod na serveru prije baze.
 - Tajni ključevi nikad u kodu koji ide u preglednik.
-- Obilni komentari na bosanskom: objasni ZAŠTO, ne samo ŠTA.
+- Bez komentara u kodu.
 - Uz svaku izmjenu predloži git komande (add, commit s porukom, push).
 
 ## Gdje je šta (početna)

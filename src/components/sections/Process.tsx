@@ -1,37 +1,28 @@
-/*
-  KAKO RADIMO: četiri koraka od prijave do napretka.
-  Ovo je stvaran redoslijed, zato su koraci numerisani.
-
-  Ova sekcija odgovara na pitanja koja Adnan inače kuca u porukama
-  svakom posebno ("kako to ide, šta dobijem, kad počinjemo").
-*/
 import { process } from "@/content/site";
 
 export function Process() {
   return (
     <section
       id="kako-radimo"
-      className="scroll-mt-20 border-y border-brand-line bg-brand-surface px-5 py-20 lg:py-28"
+      className="scroll-mt-16 border-t border-brand-line bg-brand-surface px-5 py-24 lg:py-32"
     >
-      <div className="mx-auto max-w-6xl">
-        <h2 className="max-w-2xl font-display text-5xl leading-none sm:text-6xl">
-          Od prijave do prvog plana
+      <div className="mx-auto max-w-7xl">
+        <h2 className="max-w-3xl font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">
+          Od prijave do <span className="text-brand-yellow">prvog plana</span>
         </h2>
-
-        {/* <ol> jer je redoslijed bitan; čitač ekrana sam kaže "korak 1 od 4" */}
-        <ol className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {process.map((step, index) => (
-            <li key={step.title} className="relative">
-              {/* Broj kao obris u žutoj: vidi se, a ne viče.
-                  WebkitTextStroke crta samo ivicu slova. */}
+        <ol className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+          {process.map((step, i) => (
+            <li
+              key={step.title}
+              className="relative lg:border-l lg:border-brand-line lg:px-8 lg:first:border-l-0 lg:first:pl-0"
+            >
               <span
                 aria-hidden="true"
-                className="block font-display text-7xl leading-none text-transparent"
-                style={{ WebkitTextStroke: "1.5px #edb12d" }}
+                className="text-outline block font-display text-8xl leading-none lg:text-9xl"
               >
-                {index + 1}
+                {i + 1}
               </span>
-              <h3 className="mt-3 font-display text-3xl">{step.title}</h3>
+              <h3 className="mt-4 font-display text-3xl lg:text-4xl">{step.title}</h3>
               <p className="mt-2 text-brand-muted">{step.text}</p>
             </li>
           ))}

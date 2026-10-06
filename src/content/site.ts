@@ -1,21 +1,3 @@
-/*
-  =========================================================
-  SADRŽAJ SAJTA (privremeno u kodu)
-  =========================================================
-  Zamisli ovaj fajl kao "rezervni rezervoar".
-  Paketi i transformacije se prvo traže u Supabase-u (lib/content.ts).
-  Ako baza nije spojena ili je prazna, sajt crpi odavde i nikad ne pukne.
-
-  Kad admin panel bude gotov, Adnan sve ovo mijenja sam, a ovaj fajl
-  ostaje samo kao sigurnosna mreža.
-
-  !!! Sve označeno sa PROVJERITI mora potvrditi Adnan prije objave.
-  Činjenice o karijeri su uzete iz javne baze rezultata (Fitness Volt).
-*/
-
-// ---------------------------------------------------------------------
-// Tipovi: isti oblik kao tabele u Supabase-u, da zamjena bude bezbolna
-// ---------------------------------------------------------------------
 export type Package = {
   slug: string;
   name: string;
@@ -35,51 +17,47 @@ export type Transformation = {
   after_image: string | null;
 };
 
-// ---------------------------------------------------------------------
-// Osnovni podaci
-// ---------------------------------------------------------------------
 export const site = {
   name: "Adnan Gosto",
-  // PROVJERITI: tačan Instagram profil
-  instagram: "https://www.instagram.com/",
-  instagramHandle: "@adnangosto",
+  instagram: "https://www.instagram.com/adnan.adoni.gosto/",
+  instagramHandle: "@adnan.adoni.gosto",
 };
 
-// ---------------------------------------------------------------------
-// Hero
-// ---------------------------------------------------------------------
 export const hero = {
-  // kratka rečenica iznad naslova, bez velikih slova i tačkica
-  kicker: "IFBB Pro i trener",
+  kicker: "IFBB Pro i trener takmičara",
   title: "Od prvog treninga",
   titleAccent: "do bine.",
   subtitle:
-    "Vodim takmičare kroz cijelu sezonu, pomažem rekreativcima da dođu u formu koja se zadrži i učim trenere kako da rade s ljudima. Izaberi način saradnje, popuni kratku prijavu i javljam ti se.",
+    "Trener od 2011, takmičar od 2012, IFBB Pro od 2021. Vodim takmičare kroz cijelu sezonu, rekreativce do forme koja se zadrži i trenere do znanja koje se ne uči iz knjiga.",
   primaryCta: { label: "Izaberi saradnju", href: "#saradnja" },
-  secondaryCta: { label: "Pogledaj rezultate", href: "#rezultati" },
+  secondaryCta: { label: "Rezultati takmičara", href: "#rezultati" },
 };
 
-// ---------------------------------------------------------------------
-// Traka autoriteta ispod heroja (ideja s J3U: dokaz odmah na vrhu)
-// PROVJERITI sve tri stavke s Adnanom
-// ---------------------------------------------------------------------
-export const credentials = [
-  { value: "IFBB Pro", label: "Nastupi na IFBB Pro takmičenjima 2021. i 2022." },
-  { value: "Od 2012.", label: "Takmičarska karijera, Balkansko prvenstvo i Amateur Olympia" },
-  { value: "Sezona", label: "Takmičare vodi i prati na takmičenjima uživo" },
+export const stats = [
+  { value: "19", label: "zlatnih medalja u vlastitoj karijeri" },
+  { value: "77+", label: "zlata koja su osvojili moji takmičari" },
+  { value: "4×", label: "zaredom apsolutni prvak BiH" },
+  { value: "Pro", label: "IFBB Pro Card, Fit Parade Budimpešta 2021." },
 ];
 
-// ---------------------------------------------------------------------
-// Paketi: rezerva ako Supabase nije spojen. Iste vrijednosti kao seed.sql
-// PROVJERITI: 12 sedmica ili 3 mjeseca, i tačni nazivi
-// ---------------------------------------------------------------------
+export const marquee = [
+  "Arnold Classic Barcelona",
+  "IFBB Svjetsko prvenstvo",
+  "Fit Parade Budimpešta",
+  "Romania Muscle Fest Pro",
+  "Diamond Cup",
+  "Balkansko prvenstvo",
+  "Amateur Olympia",
+  "Yamamoto Cup Pro",
+];
+
 export const fallbackPackages: Package[] = [
   {
     slug: "klasicni-coaching",
     name: "Klasični coaching",
     tagline: "Individualni plan treninga i ishrane uz redovne provjere.",
-    audience: "Za one koji žele ozbiljan napredak uz stručno vodstvo",
-    duration: "mjesečno",
+    audience: "Za ozbiljan napredak uz stručno vodstvo",
+    duration: "Mjesečno",
     price_label: "na upit",
     features: [
       "Plan treninga po mjeri",
@@ -92,7 +70,7 @@ export const fallbackPackages: Package[] = [
     slug: "paket-12-sedmica",
     name: "Paket 12 sedmica",
     tagline: "Tri mjeseca fokusiranog rada s jasnim ciljem.",
-    audience: "Za one koji žele vidljivu promjenu u zadanom roku",
+    audience: "Za vidljivu promjenu u zadanom roku",
     duration: "12 sedmica",
     price_label: "na upit",
     features: ["Početna procjena", "Plan po fazama", "Praćenje napretka", "Završna analiza"],
@@ -102,56 +80,92 @@ export const fallbackPackages: Package[] = [
     name: "Edukacija za trenere",
     tagline: "Znanje iz takmičarske prakse za trenere koji rade s klijentima.",
     audience: "Za trenere i one koji to žele postati",
-    duration: "po dogovoru",
+    duration: "Po dogovoru",
     price_label: "na upit",
-    features: ["Priprema takmičara", "Planiranje ishrane", "Rad s klijentima"],
+    features: [
+      "Priprema takmičara",
+      "Planiranje ishrane",
+      "Rad s klijentima",
+      "Predavanja i seminari",
+    ],
   },
 ];
 
-// ---------------------------------------------------------------------
-// Kako izgleda saradnja: stvarni redoslijed, zato je numerisan
-// ---------------------------------------------------------------------
 export const process = [
   {
     title: "Popuniš prijavu",
-    text: "Izabereš paket i odgovoriš na nekoliko pitanja o cilju, iskustvu i treningu. Traje par minuta.",
+    text: "Izabereš paket i odgovoriš na pitanja o cilju, iskustvu i treningu. Par minuta.",
   },
   {
     title: "Pregledam i javim se",
-    text: "Pročitam tvoje odgovore i javim ti se s prijedlogom. Ne moraš ništa objašnjavati ispočetka.",
+    text: "Pročitam odgovore i javim ti se s prijedlogom. Ne objašnjavaš ništa ispočetka.",
   },
   {
     title: "Dobiješ plan",
-    text: "Trening i ishrana složeni za tebe, tvoj raspored i tvoj cilj, a ne prepisani šablon.",
+    text: "Trening i ishrana složeni za tvoje tijelo, raspored i cilj. Bez šablona.",
   },
   {
-    title: "Pratimo i prilagođavamo",
-    text: "Redovne provjere napretka. Kad tijelo krene drugačije nego što smo planirali, plan se mijenja.",
+    title: "Pratimo i mijenjamo",
+    text: "Redovne provjere. Kad tijelo krene drugačije od plana, plan se prilagodi.",
   },
 ];
 
-// ---------------------------------------------------------------------
-// Transformacije: rezerva je prazna, sekcija tada crta okvire za slike
-// ---------------------------------------------------------------------
+export const coachingTotals = [
+  { value: "77+", label: "zlata" },
+  { value: "56", label: "srebra" },
+  { value: "26", label: "bronzi" },
+  { value: "4", label: "Elite Pro karte" },
+];
+
+export const clientResults = [
+  {
+    name: "Andrej Mandić",
+    title: "IFBB Elite Pro",
+    results: [
+      "Arnold Classic Barcelona 2019, 1. mjesto i apsolutni pobjednik",
+      "IFBB Svjetsko prvenstvo 2020, 1. mjesto preko 100 kg",
+    ],
+  },
+  {
+    name: "Vladica Jovanović",
+    title: "IFBB Elite Pro",
+    results: ["Diamond Cup Malta 2017, 1. mjesto", "Amateur Olympia Spain 2017, 3. mjesto"],
+  },
+  {
+    name: "Mirnes Husanović",
+    title: "IFBB Pro",
+    results: ["Juniorski apsolutni prvak BiH 2013", "Višestruki državni prvak do 80 kg"],
+  },
+  {
+    name: "Meldin Zimić",
+    title: "Classic bodybuilding",
+    results: ["Sarajevo Open 2017, apsolutni pobjednik", "Državni prvak BiH 2017"],
+  },
+  {
+    name: "Jasmin Hodžić",
+    title: "Bodybuilding do 100 kg",
+    results: ["Balkansko prvenstvo 2017, 1. mjesto"],
+  },
+];
+
 export const fallbackTransformations: Transformation[] = [];
 
-// ---------------------------------------------------------------------
-// O meni. PROVJERITI cijeli tekst, ovo je nacrt iz javnih podataka
-// ---------------------------------------------------------------------
 export const about = {
   title: "Iskustvo s bine, ne iz knjige",
   paragraphs: [
-    "Takmičim se od 2012. Prošao sam Balkansko prvenstvo, Amateur Olympiju i nastupio kao IFBB Pro. Svaku fazu, od offseasona do dana takmičenja, prošao sam na svojoj koži.",
-    "Danas to znanje prenosim na ljude s kojima radim. Neki se spremaju za binu, neki žele formu koja se zadrži, a neki su treneri koji žele raditi bolje. Svakom pristupam drugačije, jer niko ne kreće s iste tačke.",
+    "Zovem se Adnan Gosto i dolazim iz Mostara. Od 2011. radim kao privatni trener, a 2012. sam prvi put stao na binu i tu pronašao sebe.",
+    "Radio sam uz neka od najvećih imena ove scene, Patricka Tuora, Ahmada Askara i Maura Sassija. Sve što sam naučio na svojoj koži danas prenosim na ljude s kojima radim.",
   ],
-  highlights: [
-    "IFBB Pro takmičar",
-    "Priprema takmičara kroz cijelu sezonu",
-    "Edukacija i seminari za trenere",
+  timeline: [
+    { year: "2011", text: "Počinjem raditi kao privatni trener" },
+    { year: "2012", text: "Prvi nastup i titula apsolutnog prvaka BiH" },
+    {
+      year: "2015",
+      text: "Četvrta uzastopna titula apsolutnog prvaka BiH, Mr. Olympia Amateur Spain",
+    },
+    { year: "2016", text: "Pobjeda na Balkanskom prvenstvu" },
+    { year: "2018", text: "Elite Pro debi" },
+    { year: "2021", text: "Apsolutni pobjednik Fit Parade u Budimpešti i IFBB Pro Card" },
+    { year: "2022", text: "IFBB Pro nastup na Yamamoto Cup Pro" },
   ],
 };
-
-// ---------------------------------------------------------------------
-// Sponzori: prazno dok ne stignu logotipi. Sekcija se tada ne prikazuje.
-// ---------------------------------------------------------------------
-export const sponsors: { name: string; logo: string; url?: string }[] = [];

@@ -1,70 +1,66 @@
-/*
-  HERO: prvih pet sekundi. Mora reći ko je, šta radi i gdje se klikne.
-
-  Raspored (mobitel prvi):
-    mobitel:  tekst -> fotografija ispod
-    desktop:  tekst lijevo | fotografija desno
-
-  Potpis dizajna je kosa linija iz njegovog loga (rez između G i A).
-  Fotografija je odsječena tom istom kosinom, a iza nje viri žuta traka.
-  To je jedini "glasni" element na stranici, sve ostalo je mirno.
-*/
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { Button } from "@/components/ui/Button";
 import { hero } from "@/content/site";
 
 export function Hero() {
+  const common = { alt: "Adnan Gosto u teretani", sizes: "100vw", priority: true };
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: "/images/hero-gym.jpg", width: 1920, height: 725 });
+  const {
+    props: { srcSet: mobile, ...rest },
+  } = getImageProps({ ...common, src: "/images/hero-gym-mobile.jpg", width: 800, height: 725 });
+
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 pt-12 pb-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-6 lg:pt-20 lg:pb-24">
-        {/* ---------- TEKST ---------- */}
-        <div>
-          <p className="font-semibold text-brand-yellow">{hero.kicker}</p>
+    <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden lg:items-center">
+      <picture className="absolute inset-0 -z-20">
+        <source media="(min-width: 1024px)" srcSet={desktop} />
+        <source srcSet={mobile} />
+        <img
+          {...rest}
+          className="h-full w-full object-cover object-[60%_20%] lg:object-[22%_center]"
+          alt={common.alt}
+        />
+      </picture>
 
-          {/* Bebas je sam po sebi velikim slovima, pa uppercase ne treba.
-              leading-[0.9]: veliki naslovi trebaju zbijene redove, inače se raspadnu */}
-          <h1 className="mt-3 font-display text-[clamp(3.5rem,13vw,7.5rem)] leading-[0.88]">
-            {hero.title}
-            <br />
-            <span className="text-brand-yellow">{hero.titleAccent}</span>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-black via-brand-black/70 to-brand-black/10 lg:bg-gradient-to-r lg:from-brand-black lg:via-brand-black/80 lg:to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-brand-black to-transparent" />
+
+      <div
+        aria-hidden="true"
+        className="absolute top-0 bottom-0 left-[50%] -z-10 hidden w-24 bg-brand-yellow lg:block"
+        style={{ clipPath: "polygon(70% 0, 100% 0, 30% 100%, 0 100%)" }}
+      />
+
+      <span
+        aria-hidden="true"
+        className="text-outline pointer-events-none absolute right-[-2vw] bottom-[-4vw] -z-10 hidden font-display text-[18vw] leading-none whitespace-nowrap opacity-20 [--outline:#ffffff] lg:block"
+      >
+        Gosto
+      </span>
+
+      <div className="mx-auto w-full max-w-7xl px-5 pt-28 pb-14 lg:pt-32 lg:pb-24">
+        <div className="max-w-2xl">
+          <p className="flex animate-rise items-center gap-3 font-semibold text-brand-yellow">
+            <span className="h-0.5 w-10 bg-brand-yellow" />
+            {hero.kicker}
+          </p>
+          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,9.5rem)] leading-[0.84]">
+            <span className="block animate-rise [animation-delay:120ms]">{hero.title}</span>
+            <span className="block animate-rise text-brand-yellow [animation-delay:240ms]">
+              {hero.titleAccent}
+            </span>
           </h1>
-
-          <p className="mt-6 max-w-xl text-lg text-brand-muted">{hero.subtitle}</p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button href={hero.primaryCta.href}>{hero.primaryCta.label}</Button>
-            <Button href={hero.secondaryCta.href} variant="ghost">
+          <p className="mt-7 max-w-xl animate-rise text-lg text-white/80 [animation-delay:380ms] lg:text-xl">
+            {hero.subtitle}
+          </p>
+          <div className="mt-9 flex animate-rise flex-col gap-3 [animation-delay:500ms] sm:flex-row">
+            <Button href={hero.primaryCta.href} className="min-h-14 px-8 text-lg">
+              {hero.primaryCta.label}
+            </Button>
+            <Button href={hero.secondaryCta.href} variant="ghost" className="min-h-14 px-8 text-lg">
               {hero.secondaryCta.label}
             </Button>
-          </div>
-        </div>
-
-        {/* ---------- FOTOGRAFIJA ---------- */}
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          {/* Žuta kosa traka: ista kosina kao rez između G i A u logu.
-              Pomjerena je lijevo od slike (-translate-x-5), pa viri kao ivica. */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 -translate-x-5 bg-brand-yellow"
-            style={{ clipPath: "polygon(24% 0, 28% 0, 4% 100%, 0 100%)" }}
-          />
-          {/* Slika odsječena istom kosinom: lijeva ivica ide od 24% gore do 0 dolje */}
-          <div
-            className="relative aspect-[4/5] overflow-hidden"
-            style={{ clipPath: "polygon(24% 0, 100% 0, 100% 100%, 0 100%)" }}
-          >
-            {/* priority: najveća slika iznad pregiba, Google je mjeri za LCP ocjenu.
-                sizes: govori pregledniku koju veličinu da skine na kojem ekranu */}
-            <Image
-              src="/images/adnan-hero.jpg"
-              alt="Adnan Gosto"
-              fill
-              priority
-              sizes="(min-width: 1024px) 480px, 90vw"
-              className="object-cover object-top"
-            />
-            {/* blagi prelaz u crnu pri dnu, da se slika stopi s pozadinom */}
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-brand-black to-transparent" />
           </div>
         </div>
       </div>
