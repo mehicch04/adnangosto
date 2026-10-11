@@ -26,8 +26,7 @@ export const metadata: Metadata = {
   // metadataBase: iz ovoga Next pravi pune linkove za Open Graph slike
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Adnan Gosto | Coaching i priprema za takmičenja",
-    // podstranice ce dobiti npr. "Prijava | Adnan Gosto"
+    default: "Adnan Gosto",
     template: "%s | Adnan Gosto",
   },
   description:

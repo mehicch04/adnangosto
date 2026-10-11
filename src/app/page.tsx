@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
 import { Marquee } from "@/components/sections/Marquee";
@@ -16,6 +17,10 @@ import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: { absolute: "Početna | Adnan Gosto" },
+};
 
 export default function HomePage() {
   return (

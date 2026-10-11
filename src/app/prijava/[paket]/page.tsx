@@ -1,15 +1,13 @@
-/*
-  Upitnik za prijavu: /prijava/klasicni-coaching
-  [paket] u nazivu foldera = dinamicki dio URL-a, kao :id u React Routeru.
-
-  U Next 16 params je Promise, zato async + await.
-  KOSTUR: upitnik u koracima pravimo u sedmici 2.
-*/
 import type { Metadata } from "next";
+import { fallbackPackages } from "@/content/site";
 
 type Props = { params: Promise<{ paket: string }> };
 
-export const metadata: Metadata = { title: "Prijava" };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { paket } = await params;
+  const name = fallbackPackages.find((p) => p.slug === paket)?.name;
+  return { title: name ? `Prijava, ${name}` : "Prijava" };
+}
 
 export default async function ApplicationPage({ params }: Props) {
   const { paket } = await params;
