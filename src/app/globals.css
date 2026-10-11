@@ -120,10 +120,3 @@ body {
 body {
   overflow-x: clip;
 }
-
-.transformations-track {
-  scrollbar-width: none;
-}
-.transformations-track::-webkit-scrollbar {
-  display: none;
-}
