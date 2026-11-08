@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { ArrowRightIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import type { ContactLink } from "@/lib/contact";
 
@@ -45,7 +45,9 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
   const [panel, setPanel] = useState(false);
   const [sheet, setSheet] = useState(false);
   const bar = useRef<HTMLDivElement>(null);
-  const item = useRef<HTMLLIElement>(null);
+  const item = useRef<HTMLDivElement>(null);
+  const pill = useRef<HTMLDivElement>(null);
+  const indicator = useRef<HTMLSpanElement>(null);
   const timer = useRef(0);
   const wa = chat.kind === "whatsapp";
 
@@ -116,6 +118,34 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
     timer.current = window.setTimeout(() => setPanel(false), 180);
   };
 
+  const place = useCallback((el: HTMLElement | null) => {
+    const ind = indicator.current;
+    if (!ind) return;
+    if (!el) {
+      ind.style.opacity = "0";
+      return;
+    }
+    ind.style.opacity = "1";
+    ind.style.width = `${el.offsetWidth}px`;
+    ind.style.transform = `translateX(${el.offsetLeft}px)`;
+  }, []);
+
+  const activeItem = useCallback(
+    () => pill.current?.querySelector<HTMLElement>('[data-active="true"]') ?? null,
+    [],
+  );
+
+  useEffect(() => {
+    const sync = () => place(activeItem());
+    const frame = requestAnimationFrame(sync);
+    document.fonts?.ready.then(sync);
+    window.addEventListener("resize", sync);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", sync);
+    };
+  }, [pathname, place, activeItem]);
+
   const clear = pathname === "/" && !scrolled && !panel;
   const packagesActive = pathname.startsWith("/paketi") || pathname === "/cjenovnik";
 
@@ -125,11 +155,16 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${
           clear
             ? "border-b border-transparent bg-transparent"
-            : "border-b border-white/10 bg-brand-black/90 backdrop-blur-xl"
+            : "border-b border-white/5 bg-brand-black/80 backdrop-blur-xl"
         }`}
       >
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-8 px-5 lg:h-[76px]">
-          <Link href="/" aria-label="Adnan Gosto, početna" className="shrink-0" onClick={goHome}>
+        <div className="mx-auto grid h-[72px] max-w-7xl grid-cols-[auto_1fr] items-center gap-6 px-5 lg:h-[84px] lg:grid-cols-[1fr_auto_1fr]">
+          <Link
+            href="/"
+            aria-label="Adnan Gosto, početna"
+            className="justify-self-start"
+            onClick={goHome}
+          >
             <Image
               src="/images/logo-ga.png"
               alt="Gosto Adnan"
@@ -140,23 +175,31 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
             />
           </Link>
 
-          <nav aria-label="Glavni meni" className="hidden flex-1 lg:block">
-            <ul className="flex items-center gap-1">
-              <li ref={item} onMouseEnter={enter} onMouseLeave={leave}>
+          <nav aria-label="Glavni meni" className="hidden justify-self-center lg:block">
+            <div
+              ref={pill}
+              onMouseLeave={() => place(activeItem())}
+              className="relative flex items-center gap-0.5 rounded-full border border-white/10 bg-black/45 p-1.5 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl"
+            >
+              <span
+                ref={indicator}
+                aria-hidden="true"
+                className="pointer-events-none absolute top-1.5 bottom-1.5 left-0 rounded-full bg-white/10 opacity-0 transition-[transform,width,opacity] duration-300 ease-out"
+              />
+              <div ref={item} onMouseEnter={enter} onMouseLeave={leave}>
                 <button
                   type="button"
+                  data-active={packagesActive}
                   aria-expanded={panel}
                   aria-controls="meni-paketi"
+                  onMouseEnter={(e) => place(e.currentTarget)}
+                  onFocus={(e) => place(e.currentTarget)}
                   onClick={() => {
                     window.clearTimeout(timer.current);
                     setPanel((v) => !v);
                   }}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
-                    panel
-                      ? "bg-white/10 text-white"
-                      : packagesActive
-                        ? "text-brand-yellow"
-                        : "text-white/75 hover:text-white"
+                  className={`relative inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
+                    panel || packagesActive ? "text-white" : "text-white/70 hover:text-white"
                   }`}
                 >
                   Paketi i cijene
@@ -176,8 +219,11 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                   </svg>
                 </button>
                 {panel && (
-                  <div id="meni-paketi" className="absolute inset-x-0 top-full px-5 pt-2">
-                    <div className="menu-pop mx-auto max-w-7xl rounded-3xl border border-white/10 bg-brand-surface p-2 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)]">
+                  <div
+                    id="meni-paketi"
+                    className="absolute top-full left-1/2 w-[min(80rem,calc(100vw-2.5rem))] -translate-x-1/2 pt-3"
+                  >
+                    <div className="menu-pop rounded-3xl border border-white/10 bg-brand-surface p-2 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)]">
                       <div className="grid grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,0.9fr)] gap-2">
                         {packages.map((p, i) => (
                           <Link
@@ -235,42 +281,48 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                     </div>
                   </div>
                 )}
-              </li>
+              </div>
               {links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    onClick={close}
-                    className={`block rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
-                      l.href === pathname ? "text-brand-yellow" : "text-white/75 hover:text-white"
-                    }`}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={close}
+                  data-active={l.href === pathname}
+                  onMouseEnter={(e) => place(e.currentTarget)}
+                  onFocus={(e) => place(e.currentTarget)}
+                  className={`relative block rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
+                    l.href === pathname ? "text-white" : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  {l.label}
+                </Link>
               ))}
-            </ul>
+            </div>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 justify-self-end">
             <a
               href={chat.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden min-h-11 items-center gap-2 px-2 text-[15px] font-semibold text-white/80 transition-colors hover:text-white xl:inline-flex"
+              aria-label={chat.label}
+              className={`hidden size-12 place-items-center rounded-full ring-1 transition-colors sm:grid ${
+                wa
+                  ? "bg-[#25D366]/10 text-[#25D366] ring-[#25D366]/30 hover:bg-[#25D366] hover:text-brand-black"
+                  : "bg-white/5 text-white ring-white/15 hover:bg-white hover:text-brand-black"
+              }`}
             >
-              <ChatIcon
-                chat={chat}
-                className={`size-5 ${wa ? "text-[#25D366]" : "text-brand-yellow"}`}
-              />
-              {chat.label}
+              <ChatIcon chat={chat} className="size-5" />
             </a>
             <Link
               href="/#saradnja"
               onClick={close}
-              className="inline-flex h-11 items-center rounded-full bg-brand-yellow px-5 text-[15px] font-bold text-brand-black transition-colors hover:bg-white lg:h-12 lg:px-6"
+              className="group inline-flex h-11 items-center gap-2 rounded-full bg-brand-yellow pr-1.5 pl-4 text-[15px] font-bold text-brand-black transition-colors hover:bg-white lg:h-12 lg:pl-5"
             >
-              Prijavi se
+              Započni<span className="hidden min-[400px]:inline"> saradnju</span>
+              <span className="grid size-8 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-0.5 lg:size-9">
+                <ArrowRightIcon className="size-4" />
+              </span>
             </Link>
             <button
               type="button"
@@ -358,7 +410,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 onClick={close}
                 className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand-yellow font-bold text-brand-black"
               >
-                Prijavi se
+                Započni saradnju
               </Link>
             </div>
           </div>

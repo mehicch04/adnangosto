@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 // next/font skida fontove pri buildu i servira ih s tvog domena.
 // Nema poziva prema Googleu u pregledniku, pa ne pada PageSpeed ocjena.
-import { Bebas_Neue, Barlow } from "next/font/google";
+import { Bebas_Neue, Barlow, Mrs_Saint_Delafield } from "next/font/google";
 import "./globals.css";
 
 // Bebas Neue: uski masni naslovi, kao na njegovim objavama. Ima samo tezinu 400.
@@ -18,6 +18,14 @@ const barlow = Barlow({
   subsets: ["latin", "latin-ext"],
   variable: "--font-barlow",
   display: "swap",
+});
+
+const signature = Mrs_Saint_Delafield({
+  weight: "400",
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-mrs",
+  display: "swap",
+  preload: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -49,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="bs"
       data-scroll-behavior="smooth"
-      className={`${bebas.variable} ${barlow.variable}`}
+      className={`${bebas.variable} ${barlow.variable} ${signature.variable}`}
     >
       <body className="bg-brand-black text-brand-white antialiased">{children}</body>
     </html>

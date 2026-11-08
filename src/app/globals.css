@@ -14,6 +14,7 @@
 
   --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
   --font-body: var(--font-barlow), system-ui, sans-serif;
+  --font-signature: var(--font-mrs), cursive;
 
   --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-marquee: marquee 40s linear infinite;
