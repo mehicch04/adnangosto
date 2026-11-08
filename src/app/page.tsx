@@ -32,7 +32,7 @@ export default function HomePage() {
     "@type": "Person",
     name: "Adnan Gosto",
     url: siteUrl,
-    image: `${siteUrl}/images/hero-gym.jpg`,
+    image: `${siteUrl}/images/om-majica.jpg`,
     jobTitle: "IFBB Pro i trener",
     sameAs: [site.instagram],
     makesOffer: packages.map((p) => ({

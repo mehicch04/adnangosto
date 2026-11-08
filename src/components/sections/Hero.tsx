@@ -1,71 +1,136 @@
 import { getImageProps } from "next/image";
-import { Button } from "@/components/ui/Button";
-import { hero, stats } from "@/content/site";
+import { preload } from "react-dom";
+import type { CSSProperties } from "react";
+import { hero, heroProof } from "@/content/site";
+import { contactLink } from "@/lib/contact";
+import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { HeroPaths } from "@/components/sections/HeroPaths";
+import { HeroDepth } from "@/components/sections/HeroDepth";
 
-export function Hero() {
-  const common = { alt: "Adnan Gosto u teretani", sizes: "100vw", priority: true };
+const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
+const fit = "absolute inset-0 h-full w-full object-cover object-[50%_10%] lg:object-[58%_22%]";
+
+function layer(wide: string, tall: string, alt: string, lead: boolean) {
+  const common = {
+    alt,
+    sizes: "100vw",
+    quality: 60,
+    loading: "eager" as const,
+    fetchPriority: lead ? ("high" as const) : ("auto" as const),
+  };
   const {
-    props: { srcSet: desktop },
-  } = getImageProps({ ...common, src: "/images/hero-gym.jpg", width: 1920, height: 725 });
+    props: { srcSet: desktop, src: desktopSrc },
+  } = getImageProps({ ...common, src: wide, width: 3200, height: 1800 });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ ...common, src: "/images/hero-gym-mobile.jpg", width: 800, height: 725 });
+  } = getImageProps({ ...common, src: tall, width: 1259, height: 1800 });
+  if (lead) {
+    const options = { as: "image" as const, imageSizes: "100vw", fetchPriority: "high" as const };
+    preload(desktopSrc, { ...options, imageSrcSet: desktop, media: "(min-width: 1024px)" });
+    preload(rest.src, { ...options, imageSrcSet: mobile, media: "(max-width: 1023.98px)" });
+  }
+  return { desktop, mobile, rest };
+}
+
+export function Hero() {
+  const photo = layer(
+    "/images/hero-adnan-wide.jpg",
+    "/images/om-majica.jpg",
+    "Adnan Gosto u teretani",
+    true,
+  );
+  const front = layer("/images/hero-adnan-wide-cut.webp", "/images/hero-adnan-cut.webp", "", false);
+  const chat = contactLink();
+  const wa = chat.kind === "whatsapp";
 
   return (
-    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
-      <picture className="absolute inset-0 -z-20">
-        <source media="(min-width: 1024px)" srcSet={desktop} />
-        <source srcSet={mobile} />
-        <img
-          {...rest}
-          alt={common.alt}
-          className="h-full w-full object-cover object-[60%_20%] lg:object-[22%_center]"
-        />
-      </picture>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-black via-brand-black/60 to-brand-black/20 lg:bg-gradient-to-r lg:from-brand-black lg:via-brand-black/75 lg:to-brand-black/10" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-brand-black to-transparent" />
-      <div
-        aria-hidden="true"
-        className="absolute top-24 bottom-0 left-[47%] -z-10 hidden w-24 bg-brand-yellow lg:block"
-        style={{ clipPath: "polygon(70% 0, 100% 0, 30% 100%, 0 100%)" }}
-      />
-
-      <div className="mx-auto flex w-full max-w-7xl flex-1 items-end px-5 pt-28 pb-10 lg:items-center lg:pt-36 lg:pb-12">
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
-            {hero.kicker}
-          </p>
-          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,8.75rem)] leading-[0.84]">
-            <span className="block">{hero.title}</span>
-            <span className="block text-brand-yellow">{hero.titleAccent}</span>
-          </h1>
-          <p className="mt-7 max-w-lg text-lg text-white/75">{hero.subtitle}</p>
-          <div className="mt-9">
-            <Button href={hero.primaryCta.href} className="min-h-14 px-8 text-lg">
-              {hero.primaryCta.label}
-            </Button>
+    <section id="hero" className="relative isolate min-h-[100svh] overflow-hidden bg-brand-black">
+      <HeroDepth target="hero" />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="hero-zoom absolute inset-0">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={photo.desktop} />
+            <source srcSet={photo.mobile} />
+            <img {...photo.rest} alt="Adnan Gosto u teretani" className={fit} />
+          </picture>
+          <div aria-hidden="true" className="hero-depth absolute inset-x-0 top-[78px] lg:top-[8%]">
+            <p className="text-center font-display text-[42vw] leading-[0.8] tracking-[-0.01em] text-brand-yellow select-none lg:pl-[16%] lg:text-[28vw]">
+              {"GOSTO".split("").map((ch, i) => (
+                <span key={i} className="hero-letter" style={delay(0.2 + i * 0.06)}>
+                  {ch}
+                </span>
+              ))}
+            </p>
           </div>
-          <HeroPaths />
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={front.desktop} />
+            <source srcSet={front.mobile} />
+            <img {...front.rest} alt="" aria-hidden="true" className={fit} />
+          </picture>
         </div>
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-brand-black/80 to-transparent to-28% lg:block" />
+        <div className="absolute inset-0 hidden bg-[radial-gradient(80%_75%_at_0%_100%,rgba(10,10,10,0.96)_35%,transparent_72%)] lg:block" />
+        <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-brand-black via-brand-black/85 via-45% to-transparent lg:h-[42%] lg:via-brand-black/50 lg:via-50%" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/50 to-transparent" />
+        <div aria-hidden="true" className="hero-lights absolute inset-0 bg-brand-black" />
       </div>
 
-      <div className="border-t border-white/15 bg-brand-black/85">
-        <dl className="mx-auto grid w-full max-w-7xl grid-cols-2 px-5 lg:grid-cols-4">
-          {stats.map((s, i) => (
+      <div className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-end px-5 pt-[50svh] pb-10 lg:pt-28 lg:pb-12">
+        <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="max-w-xl">
+            <h1 className="font-display text-[clamp(3.5rem,11vw,6.5rem)] leading-[0.86]">
+              <span className="block">{hero.title}</span>
+              <span className="block">{hero.titleAccent}</span>
+            </h1>
+            <p className="mt-5 max-w-md text-[17px] text-white/75">{hero.subtitle}</p>
             <div
-              key={s.label}
-              className={`py-6 lg:py-8 ${i % 2 === 1 ? "pl-5 lg:pl-8" : "pr-5 lg:pr-8"} ${
-                i > 0 ? "lg:border-l lg:border-white/15 lg:pl-8" : ""
-              } ${i < 2 ? "border-b border-white/15 lg:border-b-0" : ""}`}
+              className="fade-up mt-7 flex flex-wrap items-center gap-x-6 gap-y-4"
+              style={delay(0.63)}
             >
-              <dt className="font-display text-5xl leading-none text-white lg:text-6xl">
-                {s.value}
-              </dt>
-              <dd className="mt-2 max-w-[14rem] text-sm text-white/60">{s.label}</dd>
+              <a
+                href={hero.primaryCta.href}
+                className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-brand-yellow py-2 pr-2 pl-7 text-lg font-bold text-brand-black transition-colors hover:bg-white"
+              >
+                {hero.primaryCta.label}
+                <span className="grid size-10 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRightIcon className="size-5" />
+                </span>
+              </a>
+              <a
+                href={chat.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 font-semibold text-white/80 transition-colors hover:text-white"
+              >
+                {wa ? (
+                  <WhatsAppIcon className="size-5 text-[#25D366]" />
+                ) : (
+                  <InstagramIcon className="size-5 text-brand-yellow" />
+                )}
+                Pitaj me na {wa ? "WhatsAppu" : "Instagramu"}
+              </a>
             </div>
-          ))}
-        </dl>
+            <div className="fade-up mt-6" style={delay(0.7)}>
+              <HeroPaths />
+            </div>
+          </div>
+          <ul
+            className="fade-up hidden w-72 divide-y divide-white/10 rounded-2xl border border-white/10 bg-black/60 px-4 lg:block"
+            style={delay(0.75)}
+          >
+            {heroProof.map((t) => (
+              <li
+                key={t}
+                className="flex items-center gap-3 py-3.5 text-[15px] font-semibold text-white/90"
+              >
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-yellow text-brand-black">
+                  <TickIcon className="size-3.5" />
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

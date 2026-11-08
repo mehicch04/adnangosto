@@ -12,13 +12,18 @@ export const site = {
 };
 
 export const hero = {
-  kicker: "Online coaching · IFBB Pro trener",
   title: "Tvoja forma.",
   titleAccent: "Tvoj tempo.",
   subtitle:
     "Plan treninga i prehrane koji se uklapa u tvoj posao i obaveze, bez spartanskog režima. Iza njega stoji trener čiji su takmičari osvojili Arnold Classic i četiri pro karte.",
   primaryCta: { label: "Pogledaj pakete i cijene", href: "#saradnja" },
 };
+
+export const heroProof = [
+  "IFBB Pro Card, Budimpešta 2021.",
+  "Takmičari sa zlatom na Arnold Classicu",
+  "15 godina online coachinga",
+];
 
 export const heroPaths = [
   { id: "forma", label: "Želim formu i zdravlje" },

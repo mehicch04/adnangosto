@@ -74,7 +74,8 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Admin: `src/app/admin/(panel)` lista i detalj prijave, `src/app/admin/login`
 - Ostali sadržaj početne: `src/content/site.ts`, O meni: `src/content/about.ts`
 - Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
-- Potpis dizajna: kosa linija iz loga (rez G/A) na fotografiji u heroju. Ne ponavljati je svuda.
+- Potpis dizajna: žuto GOSTO iza Adnana u heroju. Slojevi: `hero-adnan-wide.jpg` (proširena pozadina), slova, pa `hero-adnan-wide-cut.webp` (izrez iste veličine, mora ostati poravnat s pozadinom). Na mobitelu `om-majica.jpg` i `hero-adnan-cut.webp`
+- Meni: `SiteHeader.tsx` (server, pripremi pakete) i `HeaderNav.tsx` (padajući "Paketi i cijene" na desktopu, meni odozdo na mobitelu)
 
 ## Otvorena pitanja s klijentom
 
