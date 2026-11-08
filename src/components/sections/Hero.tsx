@@ -8,26 +8,36 @@ import { HeroPaths } from "@/components/sections/HeroPaths";
 import { HeroDepth } from "@/components/sections/HeroDepth";
 
 const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
+const sizes = { desktop: "140vw", mobile: "175vw" };
 const fit = "absolute inset-0 h-full w-full object-cover object-[50%_10%] lg:object-[58%_22%]";
 
-function layer(wide: string, tall: string, alt: string, lead: boolean) {
+function layer(wide: string, tall: string, alt: string, quality: number, lead: boolean) {
   const common = {
     alt,
-    sizes: "100vw",
-    quality: 60,
+    quality,
     loading: "eager" as const,
     fetchPriority: lead ? ("high" as const) : ("auto" as const),
   };
   const {
     props: { srcSet: desktop, src: desktopSrc },
-  } = getImageProps({ ...common, src: wide, width: 3200, height: 1800 });
+  } = getImageProps({ ...common, src: wide, width: 3200, height: 1800, sizes: sizes.desktop });
   const {
     props: { srcSet: mobile, ...rest },
-  } = getImageProps({ ...common, src: tall, width: 1259, height: 1800 });
+  } = getImageProps({ ...common, src: tall, width: 1259, height: 1800, sizes: sizes.mobile });
   if (lead) {
-    const options = { as: "image" as const, imageSizes: "100vw", fetchPriority: "high" as const };
-    preload(desktopSrc, { ...options, imageSrcSet: desktop, media: "(min-width: 1024px)" });
-    preload(rest.src, { ...options, imageSrcSet: mobile, media: "(max-width: 1023.98px)" });
+    const options = { as: "image" as const, fetchPriority: "high" as const };
+    preload(desktopSrc, {
+      ...options,
+      imageSrcSet: desktop,
+      imageSizes: sizes.desktop,
+      media: "(min-width: 1024px)",
+    });
+    preload(rest.src, {
+      ...options,
+      imageSrcSet: mobile,
+      imageSizes: sizes.mobile,
+      media: "(max-width: 1023.98px)",
+    });
   }
   return { desktop, mobile, rest };
 }
@@ -37,9 +47,16 @@ export function Hero() {
     "/images/hero-adnan-wide.jpg",
     "/images/om-majica.jpg",
     "Adnan Gosto u teretani",
+    75,
     true,
   );
-  const front = layer("/images/hero-adnan-wide-cut.webp", "/images/hero-adnan-cut.webp", "", false);
+  const front = layer(
+    "/images/hero-adnan-wide-cut.webp",
+    "/images/hero-adnan-cut.webp",
+    "",
+    90,
+    false,
+  );
   const chat = contactLink();
   const wa = chat.kind === "whatsapp";
 
@@ -49,8 +66,8 @@ export function Hero() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="hero-zoom absolute inset-0">
           <picture>
-            <source media="(min-width: 1024px)" srcSet={photo.desktop} />
-            <source srcSet={photo.mobile} />
+            <source media="(min-width: 1024px)" srcSet={photo.desktop} sizes={sizes.desktop} />
+            <source srcSet={photo.mobile} sizes={sizes.mobile} />
             <img {...photo.rest} alt="Adnan Gosto u teretani" className={fit} />
           </picture>
           <div aria-hidden="true" className="hero-depth absolute inset-x-0 top-[78px] lg:top-[8%]">
@@ -63,8 +80,8 @@ export function Hero() {
             </p>
           </div>
           <picture>
-            <source media="(min-width: 1024px)" srcSet={front.desktop} />
-            <source srcSet={front.mobile} />
+            <source media="(min-width: 1024px)" srcSet={front.desktop} sizes={sizes.desktop} />
+            <source srcSet={front.mobile} sizes={sizes.mobile} />
             <img {...front.rest} alt="" aria-hidden="true" className={fit} />
           </picture>
         </div>
