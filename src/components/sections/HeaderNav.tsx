@@ -41,7 +41,6 @@ function ChatIcon({ chat, className }: { chat: ContactLink; className?: string }
 
 export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: ContactLink }) {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [panel, setPanel] = useState(false);
   const [sheet, setSheet] = useState(false);
   const bar = useRef<HTMLDivElement>(null);
@@ -58,7 +57,6 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
       frame = requestAnimationFrame(() => {
         frame = 0;
         const y = window.scrollY;
-        setScrolled((prev) => (prev === y > 24 ? prev : y > 24));
         const max = document.documentElement.scrollHeight - window.innerHeight;
         if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
       });
@@ -146,18 +144,11 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
     };
   }, [pathname, place, activeItem]);
 
-  const clear = pathname === "/" && !scrolled && !panel;
   const packagesActive = pathname.startsWith("/paketi") || pathname === "/cjenovnik";
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${
-          clear
-            ? "border-b border-transparent bg-transparent"
-            : "border-b border-white/5 bg-brand-black/80 backdrop-blur-xl"
-        }`}
-      >
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-brand-black/70 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.9)] backdrop-blur-xl backdrop-saturate-150">
         <div className="mx-auto grid h-[72px] max-w-7xl grid-cols-[auto_1fr] items-center gap-6 px-5 lg:h-[84px] lg:grid-cols-[1fr_auto_1fr]">
           <Link
             href="/"
@@ -179,7 +170,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
             <div
               ref={pill}
               onMouseLeave={() => place(activeItem())}
-              className="relative flex items-center gap-0.5 rounded-full border border-white/10 bg-black/45 p-1.5 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl"
+              className="relative flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.05] p-1.5"
             >
               <span
                 ref={indicator}
@@ -319,7 +310,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
               onClick={close}
               className="group inline-flex h-11 items-center gap-2 rounded-full bg-brand-yellow pr-1.5 pl-4 text-[15px] font-bold text-brand-black transition-colors hover:bg-white lg:h-12 lg:pl-5"
             >
-              Započni<span className="hidden min-[400px]:inline"> saradnju</span>
+              Pokreni se
               <span className="grid size-8 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-0.5 lg:size-9">
                 <ArrowRightIcon className="size-4" />
               </span>
@@ -410,7 +401,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 onClick={close}
                 className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand-yellow font-bold text-brand-black"
               >
-                Započni saradnju
+                Pokreni se
               </Link>
             </div>
           </div>
