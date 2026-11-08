@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { clientResults, coachingTotals } from "@/content/site";
+import { clientResults, coachingAchievements, coachingTotals } from "@/content/site";
 
 function initials(name: string) {
   return name
@@ -21,8 +21,8 @@ export function ClientResults() {
               <span className="text-brand-yellow">na bini</span>
             </h2>
             <p className="mt-6 max-w-md text-lg text-brand-muted">
-              Od državnih prvenstava do Arnold Classica i svjetskog prvenstva. Ljudi koje sam
-              pripremao za takmičenja.
+              Sa svojim takmičarima osvojio sam sve što se u amaterskom bodybuildingu može osvojiti,
+              od državnih prvenstava do Arnold Classica.
             </p>
           </div>
           <dl className="grid grid-cols-4 border-t border-brand-line pt-6 lg:border-t-0 lg:pt-0">
@@ -37,7 +37,19 @@ export function ClientResults() {
           </dl>
         </div>
 
-        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+        <ul className="mt-12 flex flex-wrap gap-2 lg:mt-14">
+          {coachingAchievements.map((a) => (
+            <li
+              key={a}
+              className="reveal inline-flex min-h-11 items-center gap-2.5 rounded-full border border-brand-line bg-brand-surface px-4 text-[15px] font-semibold"
+            >
+              <span className="size-2 rounded-full bg-brand-yellow" />
+              {a}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {clientResults.map((c) => (
             <li
               key={c.name}
@@ -89,7 +101,7 @@ export function ClientResults() {
               Ti?
             </span>
             <Link
-              href="/#saradnja"
+              href="/paketi/takmicarske-pripreme"
               className="group relative flex h-full flex-col justify-between p-8"
             >
               <span className="text-sm font-bold tracking-[0.14em] uppercase">

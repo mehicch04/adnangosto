@@ -56,7 +56,7 @@ export function MobileCta() {
         tabIndex={show ? 0 : -1}
         className="flex min-h-12 items-center justify-center rounded-sm bg-brand-yellow text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase"
       >
-        Izaberi saradnju i prijavi se
+        Pogledaj pakete i cijene
       </Link>
     </div>
   );

@@ -24,11 +24,11 @@ export function FinalCta() {
           <span className="text-brand-yellow">prvi korak?</span>
         </h2>
         <p className="mt-8 max-w-md text-lg text-white/80">
-          Izaberi paket, popuni prijavu za par minuta i javljam ti se s konkretnim prijedlogom.
+          Izaberi paket, popuni upitnik i javljam ti se na mail s dogovorom oko početka.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
           <Button href="/#saradnja" className="min-h-14 px-8 text-lg">
-            Izaberi saradnju
+            Pogledaj pakete
           </Button>
           <a
             href={site.instagram}

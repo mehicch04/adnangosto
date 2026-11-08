@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
 
-// Slike iz Supabase Storage-a (transformacije, sponzori) prolaze kroz next/image,
-// koji ih smanji i pretvori u moderni format. Za to Next mora znati da je domena sigurna.
 const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL
   ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname
   : undefined;
@@ -11,6 +9,7 @@ const nextConfig: NextConfig = {
     inlineCss: true,
   },
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: supabaseHost
       ? [
           {
@@ -20,6 +19,22 @@ const nextConfig: NextConfig = {
           },
         ]
       : [],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/prijava/klasicni-coaching",
+        destination: "/prijava/online-coaching",
+        permanent: true,
+      },
+      {
+        source: "/prijava/edukacija-za-trenere",
+        destination: "/prijava/coaching-i-edukacija",
+        permanent: true,
+      },
+      { source: "/paketi", destination: "/#saradnja", permanent: false },
+      { source: "/prijava", destination: "/#saradnja", permanent: false },
+    ];
   },
 };
 

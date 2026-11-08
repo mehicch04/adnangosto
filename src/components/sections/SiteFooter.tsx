@@ -2,18 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
-import { getPackages } from "@/lib/content";
+import { packages } from "@/content/packages";
 
 const pages = [
   { label: "Početna", href: "/" },
   { label: "O meni", href: "/o-meni" },
+  { label: "Cjenovnik", href: "/cjenovnik" },
   { label: "Rezultati", href: "/#rezultati" },
-  { label: "Kako radimo", href: "/#kako-radimo" },
+  { label: "Transformacije", href: "/#transformacije" },
+  { label: "Česta pitanja", href: "/#pitanja" },
 ];
 
-export async function SiteFooter() {
-  const packages = await getPackages();
-
+export function SiteFooter() {
   return (
     <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
       <svg
@@ -38,8 +38,8 @@ export async function SiteFooter() {
             <Image
               src="/images/logo-ga.png"
               alt="Gosto Adnan"
-              width={560}
-              height={304}
+              width={129}
+              height={70}
               className="h-14 w-auto"
             />
             <p className="mt-6 max-w-xs text-brand-muted">
@@ -74,13 +74,13 @@ export async function SiteFooter() {
 
           <nav aria-label="Saradnja">
             <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
-              Saradnja
+              Paketi
             </h2>
             <ul className="mt-5 space-y-3">
               {packages.map((p) => (
                 <li key={p.slug}>
                   <Link
-                    href={`/prijava/${p.slug}`}
+                    href={`/paketi/${p.slug}`}
                     className="text-white/75 transition-colors hover:text-white"
                   >
                     {p.name}
@@ -92,12 +92,19 @@ export async function SiteFooter() {
 
           <div>
             <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
-              Rad
+              Kontakt
             </h2>
             <ul className="mt-5 space-y-3 text-white/75">
-              <li>Zagreb i Mostar</li>
+              <li>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="[overflow-wrap:anywhere] transition-colors hover:text-white"
+                >
+                  {site.email}
+                </a>
+              </li>
               <li>Online coaching bez obzira na lokaciju</li>
-              <li>Priprema takmičara kroz cijelu sezonu</li>
+              <li>Zagreb i Mostar</li>
             </ul>
             <Link
               href="/#saradnja"
@@ -109,8 +116,13 @@ export async function SiteFooter() {
         </div>
 
         <div className="mt-20 flex flex-col gap-4 border-t border-brand-line py-6 text-sm text-brand-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {site.name}. Sva prava zadržana.
+          <p className="flex flex-wrap gap-x-5 gap-y-2">
+            <span>
+              © {new Date().getFullYear()} {site.name}. Sva prava zadržana.
+            </span>
+            <Link href="/politika-privatnosti" className="transition-colors hover:text-white">
+              Politika privatnosti
+            </Link>
           </p>
           <a
             href="https://mehiccdev.com"

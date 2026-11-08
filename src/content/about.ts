@@ -8,17 +8,19 @@ export type Result = {
 };
 
 export const profileFacts = [
-  { value: "2011", label: "privatni trener" },
+  { value: "2011", label: "online coaching" },
   { value: "2012", label: "prvi nastup na bini" },
   { value: "2021", label: "IFBB Pro Card" },
-  { value: "Mostar", label: "rodni grad, danas Zagreb" },
+  { value: "2024", label: "predavač u Zagrebu" },
 ];
 
 export const story = [
-  "Zovem se Adnan Gosto i dolazim iz Mostara. Moje odrastanje nije pratio sportski život kakav bi se očekivao. Jurio sam borilačke sportove, a onda je sve počelo da se svodi na izgradnju tijela.",
+  "Zovem se Adnan Gosto i dolazim iz Mostara. U sportu sam od svoje osme godine, a u teretanu sam prvi put ušao 2008. Znanje sam usvajao brzo i bio sam administrator na više regionalnih fitness foruma, hrvatskim, srpskim i bosanskim.",
+  "Već 2011. su mi se počeli javljati prvi ljudi i tražiti pomoć oko treninga i prehrane. To sam ubrzo pretvorio u posao i od tada radim online coaching.",
   "Brze promjene na tijelu probudile su volju, inat i disciplinu. Taj način života mi je s vremenom promijenio pogled na sve, od rada do odnosa prema ljudima. Naučio me upornosti i stalnoj gladi za napretkom.",
-  "Od 2011. radim kao privatni trener, a 2012. sam sasvim spontano odlučio da vidim kako je stajati na bini. Tu sam pronašao sebe i smjer u kojem želim ići. Iste godine sam počeo i da spremam takmičare.",
-  "Krajem 2015. preselio sam se u Zagreb, bliže ljudima i trenerima čije znanje i iskustvo daleko nadilaze ono što je dostupno na Balkanu. Bio sam vlasnik velikog fitness centra, sponzorisan od više brendova, i od hobija sam izgradio posao od kojeg živim.",
+  "Godine 2012. sam prvi put stao na binu i od samog starta postao apsolutni prvak države, više godina zaredom, pa i balkanski prvak. Onda sam krenuo na internacionalnu scenu. Takmičio sam se kao profesionalac u dvije federacije i bio sam prvi i jedini profesionalni takmičar iz BiH u open kategoriji.",
+  "Krajem 2015. preselio sam se u Zagreb, bliže ljudima i trenerima čije znanje i iskustvo daleko nadilaze ono što je dostupno na Balkanu. Radio sam s četvoricom najboljih trenera na svijetu, a znanje sam prenosio dalje kroz seminare i predavanja. Od 2024. sam i predavač na fitness učilištu u Zagrebu.",
+  "S takmičarima sam osvojio sve što se u amaterskom bodybuildingu moglo osvojiti, ali me rad s rekreativcima najviše odredio. Većini ljudi teretana nije prioritet, i baš zato sam napravio sistem koji radi za svakoga, onoliko koliko se želi posvetiti.",
 ];
 
 export const quote = {
@@ -157,10 +159,10 @@ export const coachingHighlights = [
 ];
 
 export const coachingTitles = [
-  "Zlato na IFBB Svjetskom prvenstvu",
+  "4 pro karte s takmičarima",
+  "Pobjeda na svjetskom prvenstvu",
+  "Pobjeda na evropskom prvenstvu",
   "Apsolutni pobjednik Arnold Classic Barcelona",
-  "Više osvojenih Pro karata",
-  "Pobjede na Diamond Cup takmičenjima",
 ];
 
 export const gallery = [

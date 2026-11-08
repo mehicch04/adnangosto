@@ -1,14 +1,24 @@
 import Link from "next/link";
-import { transformationPhotos } from "@/content/site";
+import { transformationCategories, transformationPhotos } from "@/content/site";
 import { TransformationsGrid } from "@/components/sections/TransformationsGrid";
+import { TransformationsTabs } from "@/components/sections/TransformationsTabs";
 
 const steps = [
   { label: "Prije", text: "Lijeva fotografija je stanje na početku saradnje." },
   { label: "Poslije", text: "Desna fotografija je forma nakon programa." },
 ];
 
-export function Transformations() {
+export function Transformations({
+  ctaHref = "/#saradnja",
+  ctaLabel = "Pogledaj pakete",
+}: {
+  ctaHref?: string;
+  ctaLabel?: string;
+} = {}) {
   if (transformationPhotos.length === 0) return null;
+  const tabs = transformationCategories
+    .map((c) => ({ ...c, photos: transformationPhotos.filter((p) => p.category === c.id) }))
+    .filter((t) => t.photos.length > 0);
 
   return (
     <section
@@ -36,8 +46,8 @@ export function Transformations() {
           </div>
           <div>
             <p className="max-w-md text-lg text-brand-ink-muted">
-              Ljudi koji su krenuli od nule, s viškom kilograma ili bez napretka godinama. Isti
-              plan, ista disciplina, rezultat se vidi.
+              Obični ljudi s poslom, obavezama i punim rasporedom. Krenuli su s viškom kilograma ili
+              bez napretka godinama, a sistem se uklopio u njihov život.
             </p>
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
               {steps.map((s, i) => (
@@ -57,7 +67,11 @@ export function Transformations() {
         </div>
       </div>
 
-      <TransformationsGrid photos={transformationPhotos} />
+      {tabs.length > 1 ? (
+        <TransformationsTabs tabs={tabs} />
+      ) : (
+        <TransformationsGrid photos={transformationPhotos} />
+      )}
 
       <div className="mx-auto max-w-7xl px-5">
         <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t-2 border-brand-black pt-8 sm:flex-row sm:items-center">
@@ -65,10 +79,10 @@ export function Transformations() {
             Sljedeća može biti tvoja.
           </p>
           <Link
-            href="/#saradnja"
+            href={ctaHref}
             className="inline-flex min-h-12 items-center rounded-sm bg-brand-black px-7 text-[13px] font-bold tracking-[0.14em] text-white uppercase transition-colors hover:bg-brand-yellow hover:text-brand-black"
           >
-            Izaberi saradnju
+            {ctaLabel}
           </Link>
         </div>
       </div>

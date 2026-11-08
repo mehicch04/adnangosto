@@ -1,26 +1,13 @@
-export type Package = {
-  slug: string;
-  name: string;
-  tagline: string | null;
-  audience: string | null;
-  duration: string | null;
-  price_label: string | null;
-  features: string[];
-};
-
-export type Transformation = {
-  client_name: string;
-  client_label: string | null;
-  result: string | null;
-  testimonial: string | null;
-  before_image: string | null;
-  after_image: string | null;
-};
-
 export const site = {
   name: "Adnan Gosto",
+  email: "adnan.adoni.gosto@gmail.com",
   instagram: "https://www.instagram.com/adnan.adoni.gosto/",
   instagramHandle: "@adnan.adoni.gosto",
+  shop: {
+    url: null as string | null,
+    discount: "10%",
+    code: null as string | null,
+  },
 };
 
 export const hero = {
@@ -28,8 +15,8 @@ export const hero = {
   title: "Od prvog treninga",
   titleAccent: "do bine.",
   subtitle:
-    "Trener od 2011, takmičar od 2012, IFBB Pro od 2021. Vodim takmičare kroz cijelu sezonu, rekreativce do forme koja se zadrži i trenere do znanja koje se ne uči iz knjiga.",
-  primaryCta: { label: "Izaberi saradnju", href: "#saradnja" },
+    "Online coaching od 2011. Sistem treninga i prehrane koji se uklapa u tvoj posao i obaveze, za rekreativce, takmičare i trenere.",
+  primaryCta: { label: "Pogledaj pakete", href: "#saradnja" },
   secondaryCta: { label: "Rezultati takmičara", href: "#rezultati" },
 };
 
@@ -51,63 +38,30 @@ export const marquee = [
   "Yamamoto Cup Pro",
 ];
 
-export const fallbackPackages: Package[] = [
+export const process = [
   {
-    slug: "klasicni-coaching",
-    name: "Klasični coaching",
-    tagline: "Individualni plan treninga i ishrane uz redovne provjere.",
-    audience: "Za ozbiljan napredak uz stručno vodstvo",
-    duration: "Mjesečno",
-    price_label: "na upit",
-    features: [
-      "Plan treninga po mjeri",
-      "Plan ishrane",
-      "Sedmične provjere",
-      "Podrška kroz poruke",
-    ],
+    title: "Izabereš paket",
+    text: "Četiri paketa, svaki s jasnom cijenom i načinom rada. Ako nisi siguran, pomoći će ti kratko pitanje iznad paketa.",
   },
   {
-    slug: "paket-12-sedmica",
-    name: "Paket 12 sedmica",
-    tagline: "Tri mjeseca fokusiranog rada s jasnim ciljem.",
-    audience: "Za vidljivu promjenu u zadanom roku",
-    duration: "12 sedmica",
-    price_label: "na upit",
-    features: ["Početna procjena", "Plan po fazama", "Praćenje napretka", "Završna analiza"],
+    title: "Popuniš upitnik",
+    text: "Pitanja o tvom stanju, rutini i ciljevima, plus slike. Oko deset minuta i odmah vidim kompletnu situaciju.",
   },
   {
-    slug: "edukacija-za-trenere",
-    name: "Edukacija za trenere",
-    tagline: "Znanje iz takmičarske prakse za trenere koji rade s klijentima.",
-    audience: "Za trenere i one koji to žele postati",
-    duration: "Po dogovoru",
-    price_label: "na upit",
-    features: [
-      "Priprema takmičara",
-      "Planiranje ishrane",
-      "Rad s klijentima",
-      "Predavanja i seminari",
-    ],
+    title: "Dobiješ početni plan",
+    text: "Javim ti se na mail, dogovorimo početak, a plan treninga i prehrane složim prema tvojim mogućnostima.",
+  },
+  {
+    title: "Check-in i prilagodbe",
+    text: "Svakih 7 dana ili svake 4 sedmice, zavisno od paketa. Kad tijelo krene drugačije od plana, plan se mijenja.",
   },
 ];
 
-export const process = [
-  {
-    title: "Popuniš prijavu",
-    text: "Izabereš paket i odgovoriš na pitanja o cilju, iskustvu i treningu. Par minuta.",
-  },
-  {
-    title: "Pregledam i javim se",
-    text: "Pročitam odgovore i javim ti se s prijedlogom. Ne objašnjavaš ništa ispočetka.",
-  },
-  {
-    title: "Dobiješ plan",
-    text: "Trening i ishrana složeni za tvoje tijelo, raspored i cilj. Bez šablona.",
-  },
-  {
-    title: "Pratimo i mijenjamo",
-    text: "Redovne provjere. Kad tijelo krene drugačije od plana, plan se prilagodi.",
-  },
+export const coachingAchievements = [
+  "4 pro karte s takmičarima",
+  "Pobjeda na svjetskom prvenstvu",
+  "Pobjeda na evropskom prvenstvu",
+  "Arnold Classic, apsolutna pobjeda",
 ];
 
 export const coachingTotals = [
@@ -158,21 +112,34 @@ export const clientResults: {
   },
 ];
 
-export const fallbackTransformations: Transformation[] = [];
+export type TransformationCategory = "rekreativci" | "takmicari";
 
-export const transformationPhotos = Array.from({ length: 11 }, (_, i) => ({
+export type TransformationPhoto = {
+  src: string;
+  alt: string;
+  category: TransformationCategory;
+};
+
+export const transformationCategories: { id: TransformationCategory; label: string }[] = [
+  { id: "rekreativci", label: "Rekreativci" },
+  { id: "takmicari", label: "Takmičari" },
+];
+
+export const transformationPhotos: TransformationPhoto[] = Array.from({ length: 11 }, (_, i) => ({
   src: `/images/transformacije/tr-${String(i + 1).padStart(2, "0")}.jpg`,
   alt: `Transformacija klijenta ${i + 1}: fotografija prije i poslije saradnje`,
+  category: "rekreativci",
 }));
 
 export const about = {
   title: "Iskustvo s bine, ne iz knjige",
   paragraphs: [
-    "Zovem se Adnan Gosto i dolazim iz Mostara. Od 2011. radim kao privatni trener, a 2012. sam prvi put stao na binu i tu pronašao sebe.",
-    "Radio sam uz neka od najvećih imena ove scene, Patricka Tuora, Ahmada Askara i Maura Sassija. Sve što sam naučio na svojoj koži danas prenosim na ljude s kojima radim.",
+    "U sportu sam od svoje osme godine, a u teretanu sam prvi put ušao 2008. Već 2011. su mi se javljali prvi ljudi za plan treninga i prehrane, i to je postalo posao od kojeg živim.",
+    "Sa takmičarima sam osvojio sve što se u amaterskom bodybuildingu može osvojiti, a s rekreativcima napravio transformacije i u najtežim uslovima. Danas sistem pravim tako da radi za svakoga, uz posao i obaveze.",
   ],
   timeline: [
-    { year: "2011", text: "Počinjem raditi kao privatni trener" },
+    { year: "2008", text: "Prvi put u teretani, administrator regionalnih fitness foruma" },
+    { year: "2011", text: "Prvi klijenti i početak online coachinga" },
     { year: "2012", text: "Prvi nastup i titula apsolutnog prvaka BiH" },
     {
       year: "2015",
@@ -182,29 +149,42 @@ export const about = {
     { year: "2018", text: "Elite Pro debi" },
     { year: "2021", text: "Apsolutni pobjednik Fit Parade u Budimpešti i IFBB Pro Card" },
     { year: "2022", text: "IFBB Pro nastup na Yamamoto Cup Pro" },
+    { year: "2024", text: "Predavač na fitness učilištu u Zagrebu" },
   ],
 };
 
 export const faq = [
   {
-    q: "Moram li biti takmičar da bih radio s tobom?",
-    a: "Ne. Radim i s rekreativcima koji žele formu koja se zadrži, i s takmičarima koji se spremaju za binu. Plan se pravi prema tvom cilju, ne prema tuđem.",
+    q: "Koji paket je za mene?",
+    a: "Ako želiš sedmično praćenje i stalne izmjene, uzmi online coaching. Ako želiš napredak bez velikog pritiska i check-in jednom mjesečno, paket 12 sedmica. Trenerima je namijenjen coaching i edukacija, a takmičarima pripreme.",
   },
   {
-    q: "Radiš li online ili samo uživo?",
-    a: "Oboje. Online coaching radi bez obzira gdje živiš. Trening, ishrana i provjere idu na daljinu, a ti dobiješ isto vodstvo kao i uživo.",
+    q: "Kako izgleda check-in?",
+    a: "Pošalješ slike i podatke koje tražim, a ja na osnovu njih postavim plan za naredni period. Kod online coachinga je to svakih 7 dana, a kod paketa 12 sedmica svake 4 sedmice.",
   },
   {
-    q: "Koliko košta saradnja?",
-    a: "Cijena zavisi od paketa i od toga šta ti treba. Konkretnu ponudu dobiješ nakon što popuniš prijavu, bez ikakve obaveze.",
+    q: "Šta ako zakasnim s check-inom?",
+    a: "Ništa strašno. Razmak od 7 do 10 dana je potpuno u redu. Trenutni plan ne prestaje davati rezultate zato što je prošlo par dana više.",
   },
   {
-    q: "Nikad nisam nastupao. Mogu li se spremiti za prvo takmičenje?",
-    a: "Možeš. Pripremao sam takmičare od prvog državnog prvenstva do Arnold Classica. Na početku procijenimo gdje si i koliko vremena realno treba.",
+    q: "Radiš li vikendom?",
+    a: "Ne. Vikendom uglavnom nisam dostupan. Od ponedjeljka radim izmjene redom, kako su check-inovi stizali od subote.",
+  },
+  {
+    q: "Moram li se odreći svega što volim?",
+    a: "Ne. Sistem je napravljen tako da radi uz posao, obaveze i društveni život. U upitniku navedeš navike kojih se ne želiš odreći i plan se slaže oko njih.",
+  },
+  {
+    q: "Mogu li raditi s tobom ako nisam iz BiH?",
+    a: "Možeš. Sve se radi online, bez obzira gdje živiš. U upitniku samo navedeš državu iz koje ide uplata.",
+  },
+  {
+    q: "Šta trebam pripremiti za prijavu?",
+    a: "Slike cijelog tijela, od glave do pete, uz dobro svjetlo i bez sjenki. Uz to jutarnju kilažu i kratak opis treninga, prehrane i dnevne rutine.",
   },
   {
     q: "Šta se desi kad pošaljem prijavu?",
-    a: "Pročitam tvoje odgovore i javim ti se s prijedlogom kako da krenemo. Ne moraš ništa objašnjavati ispočetka.",
+    a: "Stigne ti potvrda na mail. Pregledam odgovore i slike, javim ti se s dogovorom oko početka i uplate, i nakon toga dobiješ početni plan.",
   },
 ];
 
@@ -215,25 +195,6 @@ export const instagramFallback = [
   { src: "/images/om-portret.jpg", alt: "Prednja poza" },
   { src: "/images/om-ledja-krov.jpg", alt: "Poza leđa na krovu" },
   { src: "/images/om-majica.jpg", alt: "U teretani" },
-];
-
-export type SponsorStyle = "display" | "heavy" | "italic" | "wide";
-
-export type Sponsor = {
-  name: string;
-  logo: string | null;
-  url: string | null;
-  style?: SponsorStyle;
-};
-
-export const fallbackSponsors: Sponsor[] = [
-  { name: "Olimp Sport Nutrition", logo: null, url: null, style: "heavy" },
-  { name: "BioTechUSA", logo: null, url: null, style: "heavy" },
-  { name: "Scitec", logo: null, url: null, style: "italic" },
-  { name: "Applied Nutrition", logo: null, url: null, style: "wide" },
-  { name: "MuscleTech", logo: null, url: null, style: "display" },
-  { name: "Dymatize", logo: null, url: null, style: "italic" },
-  { name: "Gymshark", logo: null, url: null, style: "wide" },
 ];
 
 export type Testimonial = {

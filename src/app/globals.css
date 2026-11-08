@@ -17,6 +17,7 @@
 
   --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-marquee: marquee 40s linear infinite;
+  --animate-step: step-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 
   @keyframes rise {
     from {
@@ -26,6 +27,16 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  @keyframes step-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
     }
   }
   @keyframes marquee {
@@ -119,4 +130,35 @@ body {
 
 body {
   overflow-x: clip;
+}
+
+.draw-check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: draw 0.6s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

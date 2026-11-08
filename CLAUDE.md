@@ -9,8 +9,9 @@ Ovaj fajl Claude Code čita na početku svake sesije. Drži ga ažurnim.
 
 Jedna duga stranica koja se skrola, plus upitnik za prijavu i admin panel.
 
-- Javno: Hero, O meni, Usluge (paketi), Transformacije, Sponzori, Instagram i Kontakt
-- Upitnik u koracima po paketu: `/prijava/[paket]`
+- Javno: Hero, O meni, Paketi, Transformacije, Iskustva, Instagram i Kontakt
+- Stranica svakog paketa: `/paketi/[slug]`, cjenovnik `/cjenovnik`, `/politika-privatnosti`
+- Upitnik u koracima po paketu: `/prijava/[paket]` (slike idu direktno u privatni bucket `prijave`)
 - Po prijavi: upis u bazu + mail Adnanu ("<Naziv paketa>, prijava") + potvrda podnosiocu
 - Admin `/admin`: prijave sa statusom, paketi, pitanja, transformacije, sponzori, tekstovi
 
@@ -23,7 +24,7 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 
 - Next.js 16 (App Router, `src/`), React 19, TypeScript
 - Tailwind CSS v4: tokeni su u `src/app/globals.css` pod `@theme`, NEMA tailwind.config
-- Supabase: baza, auth za admina, Storage bucket `media`
+- Supabase: baza, auth za admina, Storage bucket `media` (javni) i `prijave` (privatni, migracija 0002)
 - Zod v4 za validaciju, Resend za mailove
 - Hosting: Vercel
 
@@ -64,24 +65,35 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Bez komentara u kodu.
 - Uz svaku izmjenu predloži git komande (add, commit s porukom, push).
 
-## Gdje je šta (početna)
+## Gdje je šta
 
-- Sadržaj i rezervni podaci: `src/content/site.ts` (sve sa PROVJERITI potvrđuje Adnan)
-- Dobavljanje iz Supabase-a s rezervom: `src/lib/content.ts` + `src/lib/supabase/public.ts`
+- Paketi, cijene, cjenovnik: `src/content/packages.ts` (jedini izvor za početnu, stranice paketa, cjenovnik i mailove)
+- Pitanja u upitniku i validacija (ista na klijentu i serveru): `src/content/questionnaire.ts`
+- Slanje prijave: `src/app/prijava/[paket]/actions.ts` (Zod, Supabase, Resend). Bez Supabase ključeva radi samo u razvoju ili uz `APPLICATIONS_DEMO=1`
+- Mailovi: `src/lib/email/templates.ts`
+- Admin: `src/app/admin/(panel)` lista i detalj prijave, `src/app/admin/login`
+- Ostali sadržaj početne: `src/content/site.ts`, O meni: `src/content/about.ts`
 - Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
 - Potpis dizajna: kosa linija iz loga (rez G/A) na fotografiji u heroju. Ne ponavljati je svuda.
 
 ## Otvorena pitanja s klijentom
 
-- Tačan spisak paketa (12 sedmica ili 3 mjeseca?) i pitanja za svaki upitnik
-- Ton prema posjetiocu na sajtu: "ti" ili "Vi"
+- Paket 12 sedmica: u opisu piše 480 €, u cjenovniku 380 €. Na sajtu je 480 € (`src/content/packages.ts`)
+- Jesu li cijene s PDV-om, i smiju li rasponi (npr. 30 do 50 €) stajati u cjenovniku firme
+- Jezik: hrvatski (tjedan, natjecatelj) ili bosanski (sedmica, takmičar). Sada je bosanski
+- Ukupan broj medalja takmičara (77+, 56, 26, 4 su sa starog sajta) i ime četvrtog trenera (na sajtu su tri)
+- Naziv fitness učilišta u Zagrebu i naziv firme za Politiku privatnosti; rokovi čuvanja podataka (6 mjeseci / 2 godine) su prijedlog
+- Web shop: link i kod za popust idu u `site.shop` u `src/content/site.ts`; dok je `url` prazan, blok se ne prikazuje
+- Transformacije takmičara: nove slike dodati u `transformationPhotos` s `category: "takmicari"`, kartice se pojave same
 - Original loga (SVG/PDF) i pojednostavljena "GA" verzija za favicon
 - Fotografije u punoj rezoluciji (ne preko WhatsAppa)
 - Pristup domeni adnangosto.com (za Resend DNS i prebacivanje)
 - Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
 - Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
 - Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
+- Ton prema posjetiocu: "ti" (potvrdio Adnan)
+- Mail za prijave: adnan.adoni.gosto@gmail.com (`APPLICATIONS_TO_EMAIL`)
 - Instagram feed: zadnje objave dolaze preko Behold.so (JSON feed), URL ide u `BEHOLD_FEED_URL`. Adnan jednom povezuje svoj profesionalni Instagram nalog u Beholdu; bez URL-a se prikazuju lokalne fotografije
-- Sponzori na početnoj su šablon (`fallbackSponsors` u `src/content/site.ts`): Adnan šalje prave logotipe i linkove, unose se kroz tabelu `sponsors`
+- Sponzora trenutno nema, sekcija je uklonjena
 - Iskustva klijenata (`fallbackTestimonials` u `src/content/site.ts`) su šablon: prije objave zamijeniti pravim izjavama, imenima, ulogama i fotografijama uz dozvolu klijenata
 - Fotografije takmičara (`public/images/takmicari`) su sa starog sajta bez imena: Adnan mora potvrditi ko je ko i poslati sliku za Jasmina Hodžića

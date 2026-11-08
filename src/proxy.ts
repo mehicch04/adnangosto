@@ -2,6 +2,13 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url || url.includes("xxxx")) {
+    if (request.nextUrl.pathname === "/admin/login") return NextResponse.next();
+    const login = request.nextUrl.clone();
+    login.pathname = "/admin/login";
+    return NextResponse.redirect(login);
+  }
   // Pocetni odgovor: "pusti dalje". Kolacice cemo mozda dopisati na njega.
   let response = NextResponse.next({ request });
 

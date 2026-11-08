@@ -10,11 +10,11 @@ import { site } from "@/content/site";
 
 const nav = [
   { label: "Početna", href: "/" },
-  { label: "Saradnja", href: "/#saradnja" },
+  { label: "Paketi", href: "/#saradnja" },
   { label: "Rezultati", href: "/#rezultati" },
   { label: "Transformacije", href: "/#transformacije" },
-  { label: "Kako radimo", href: "/#kako-radimo" },
   { label: "O meni", href: "/o-meni" },
+  { label: "Cjenovnik", href: "/cjenovnik" },
   { label: "Pitanja", href: "/#pitanja" },
 ];
 
@@ -77,8 +77,8 @@ export function SiteHeader() {
             <Image
               src="/images/logo-ga.png"
               alt="Gosto Adnan"
-              width={560}
-              height={304}
+              width={129}
+              height={70}
               priority
               className="h-10 w-auto lg:h-12"
             />

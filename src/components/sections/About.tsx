@@ -53,7 +53,11 @@ export function About() {
               <p className="mt-3 text-white/85">{t.text}</p>
             </li>
           ))}
-          <li className="bg-brand-yellow p-6 text-brand-black lg:p-8">
+          <li
+            className={`bg-brand-yellow p-6 text-brand-black lg:p-8 ${
+              ["sm:col-span-2", ""][about.timeline.length % 2]
+            } ${["lg:col-span-4", "lg:col-span-3", "lg:col-span-2", ""][about.timeline.length % 4]}`}
+          >
             <p className="font-display text-5xl leading-none">Danas</p>
             <p className="mt-3 font-semibold">Pripremam takmičare i držim edukacije za trenere</p>
           </li>

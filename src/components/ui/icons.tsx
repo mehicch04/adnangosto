@@ -82,3 +82,31 @@ export function CarouselIcon({ className = "size-4" }: IconProps) {
     </svg>
   );
 }
+
+export function ArrowRightIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" className={className}>
+      <path
+        d="M4 10h12m0 0-5-5m5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="2.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function TickIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={className}>
+      <path
+        d="m3 8.5 3 3 7-7"
+        stroke="currentColor"
+        strokeWidth="2.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
