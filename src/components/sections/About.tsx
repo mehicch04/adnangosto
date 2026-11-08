@@ -41,28 +41,6 @@ export function About() {
           </div>
         </div>
       </div>
-
-      <div className="px-5 py-20 lg:py-28">
-        <ol className="mx-auto grid max-w-7xl gap-px overflow-hidden rounded-2xl bg-brand-line sm:grid-cols-2 lg:grid-cols-4">
-          {about.timeline.map((t) => (
-            <li
-              key={t.year}
-              className="bg-brand-black p-6 transition-colors hover:bg-brand-surface lg:p-8"
-            >
-              <p className="font-display text-5xl leading-none text-brand-yellow">{t.year}</p>
-              <p className="mt-3 text-white/85">{t.text}</p>
-            </li>
-          ))}
-          <li
-            className={`bg-brand-yellow p-6 text-brand-black lg:p-8 ${
-              ["sm:col-span-2", ""][about.timeline.length % 2]
-            } ${["lg:col-span-4", "lg:col-span-3", "lg:col-span-2", ""][about.timeline.length % 4]}`}
-          >
-            <p className="font-display text-5xl leading-none">Danas</p>
-            <p className="mt-3 font-semibold">Pripremam takmičare i držim edukacije za trenere</p>
-          </li>
-        </ol>
-      </div>
     </section>
   );
 }

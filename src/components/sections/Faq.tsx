@@ -1,6 +1,9 @@
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { faq } from "@/content/site";
+import { contactLink } from "@/lib/contact";
 
 export function Faq() {
+  const chat = contactLink("Zdravo Adnane, imam pitanje prije prijave.");
   return (
     <section
       id="pitanja"
@@ -32,6 +35,25 @@ export function Faq() {
               <p className="faq-body max-w-2xl pb-8 text-brand-ink-muted">{item.a}</p>
             </details>
           ))}
+          <div className="mt-10 flex flex-col gap-4 rounded-lg bg-brand-black p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-7">
+            <div>
+              <p className="font-display text-3xl leading-none">Nisi našao odgovor?</p>
+              <p className="mt-2 text-white/65">Piši mi direktno, odgovaram radnim danima.</p>
+            </div>
+            <a
+              href={chat.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 rounded-md px-6 font-bold text-brand-black transition-colors ${
+                chat.kind === "whatsapp"
+                  ? "bg-[#25D366] hover:bg-[#3ae07a]"
+                  : "bg-brand-yellow hover:bg-white"
+              }`}
+            >
+              {chat.kind === "whatsapp" ? <WhatsAppIcon /> : <InstagramIcon />}
+              {chat.kind === "whatsapp" ? "Pitaj na WhatsAppu" : "Pitaj na Instagramu"}
+            </a>
+          </div>
         </div>
       </div>
     </section>

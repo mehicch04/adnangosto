@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GOAL_EVENT } from "@/components/sections/HeroPaths";
 import { ArrowRightIcon, TickIcon } from "@/components/ui/icons";
 import type { PackageSlug } from "@/content/packages";
 
@@ -65,6 +66,18 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
   const [goal, setGoal] = useState<Goal | null>(null);
   const [p, setPace] = useState<string | null>(null);
   const picked = recommend(goal, p);
+
+  useEffect(() => {
+    const onGoal = (e: Event) => {
+      const id = (e as CustomEvent<string>).detail;
+      if (goals.some((g) => g.id === id)) {
+        setGoal(id as Goal);
+        setPace(null);
+      }
+    };
+    window.addEventListener(GOAL_EVENT, onGoal);
+    return () => window.removeEventListener(GOAL_EVENT, onGoal);
+  }, []);
   const pickedPkg = packages.find((x) => x.slug === picked);
 
   return (

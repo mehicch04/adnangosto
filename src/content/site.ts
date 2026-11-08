@@ -3,6 +3,7 @@ export const site = {
   email: "adnan.adoni.gosto@gmail.com",
   instagram: "https://www.instagram.com/adnan.adoni.gosto/",
   instagramHandle: "@adnan.adoni.gosto",
+  whatsapp: null as string | null,
   shop: {
     url: null as string | null,
     discount: "10%",
@@ -11,19 +12,24 @@ export const site = {
 };
 
 export const hero = {
-  kicker: "IFBB Pro i trener takmičara",
-  title: "Od prvog treninga",
-  titleAccent: "do bine.",
+  kicker: "Online coaching · IFBB Pro trener",
+  title: "Tvoja forma.",
+  titleAccent: "Tvoj tempo.",
   subtitle:
-    "Online coaching od 2011. Sistem treninga i prehrane koji se uklapa u tvoj posao i obaveze, za rekreativce, takmičare i trenere.",
-  primaryCta: { label: "Pogledaj pakete", href: "#saradnja" },
-  secondaryCta: { label: "Rezultati takmičara", href: "#rezultati" },
+    "Plan treninga i prehrane koji se uklapa u tvoj posao i obaveze, bez spartanskog režima. Iza njega stoji trener čiji su takmičari osvojili Arnold Classic i četiri pro karte.",
+  primaryCta: { label: "Pogledaj pakete i cijene", href: "#saradnja" },
 };
 
+export const heroPaths = [
+  { id: "forma", label: "Želim formu i zdravlje" },
+  { id: "bina", label: "Spremam takmičenje" },
+  { id: "znanje", label: "Trener sam" },
+] as const;
+
 export const stats = [
-  { value: "19", label: "zlatnih medalja u vlastitoj karijeri" },
+  { value: "15", label: "godina online coachinga" },
   { value: "77+", label: "zlata koja su osvojili moji takmičari" },
-  { value: "4×", label: "zaredom apsolutni prvak BiH" },
+  { value: "4", label: "pro karte s takmičarima" },
   { value: "Pro", label: "IFBB Pro Card, Fit Parade Budimpešta 2021." },
 ];
 

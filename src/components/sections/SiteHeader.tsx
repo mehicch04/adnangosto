@@ -10,9 +10,9 @@ import { site } from "@/content/site";
 
 const nav = [
   { label: "Početna", href: "/" },
+  { label: "Transformacije", href: "/#transformacije" },
   { label: "Paketi", href: "/#saradnja" },
   { label: "Rezultati", href: "/#rezultati" },
-  { label: "Transformacije", href: "/#transformacije" },
   { label: "O meni", href: "/o-meni" },
   { label: "Cjenovnik", href: "/cjenovnik" },
   { label: "Pitanja", href: "/#pitanja" },

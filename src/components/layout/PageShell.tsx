@@ -1,6 +1,8 @@
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { BackToTop } from "@/components/sections/BackToTop";
+import { ChatButton } from "@/components/sections/ChatButton";
+import { contactLink } from "@/lib/contact";
 
 export function PageShell({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +17,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
       <main id="sadrzaj">{children}</main>
       <SiteFooter />
       <BackToTop />
+      <ChatButton link={contactLink()} />
     </>
   );
 }

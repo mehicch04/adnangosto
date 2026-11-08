@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
+import { contactLink } from "@/lib/contact";
 import { packages } from "@/content/packages";
 
 const pages = [
@@ -14,6 +15,7 @@ const pages = [
 ];
 
 export function SiteFooter() {
+  const chat = contactLink();
   return (
     <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
       <svg
@@ -103,8 +105,17 @@ export function SiteFooter() {
                   {site.email}
                 </a>
               </li>
+              <li>
+                <a
+                  href={chat.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-white"
+                >
+                  {chat.kind === "whatsapp" ? "WhatsApp poruka" : "Poruka na Instagramu"}
+                </a>
+              </li>
               <li>Online coaching bez obzira na lokaciju</li>
-              <li>Zagreb i Mostar</li>
             </ul>
             <Link
               href="/#saradnja"

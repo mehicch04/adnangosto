@@ -1,7 +1,7 @@
 import { getImageProps } from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { hero, stats } from "@/content/site";
+import { HeroPaths } from "@/components/sections/HeroPaths";
 
 export function Hero() {
   const common = { alt: "Adnan Gosto u teretani", sizes: "100vw", priority: true };
@@ -36,23 +36,17 @@ export function Hero() {
           <p className="text-sm font-semibold tracking-[0.2em] text-brand-yellow uppercase">
             {hero.kicker}
           </p>
-          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,10rem)] leading-[0.82]">
+          <h1 className="mt-5 font-display text-[clamp(4rem,15vw,8.75rem)] leading-[0.84]">
             <span className="block">{hero.title}</span>
             <span className="block text-brand-yellow">{hero.titleAccent}</span>
           </h1>
           <p className="mt-7 max-w-lg text-lg text-white/75">{hero.subtitle}</p>
-          <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div className="mt-9">
             <Button href={hero.primaryCta.href} className="min-h-14 px-8 text-lg">
               {hero.primaryCta.label}
             </Button>
-            <Link
-              href={hero.secondaryCta.href}
-              className="group inline-flex items-center gap-3 font-semibold text-white"
-            >
-              <span className="h-px w-8 bg-white transition-all group-hover:w-12 group-hover:bg-brand-yellow" />
-              {hero.secondaryCta.label}
-            </Link>
           </div>
+          <HeroPaths />
         </div>
       </div>
 

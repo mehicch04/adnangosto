@@ -7,7 +7,9 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Transformations } from "@/components/sections/Transformations";
 import { ClientResults } from "@/components/sections/ClientResults";
 import { StickyCta } from "@/components/packages/StickyCta";
-import { ArrowRightIcon, TickIcon } from "@/components/ui/icons";
+import { ChatButton } from "@/components/sections/ChatButton";
+import { contactLink } from "@/lib/contact";
+import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { formatPrice, getPackage, packages } from "@/content/packages";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -38,6 +40,7 @@ export default async function PackagePage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const apply = `/prijava/${pkg.slug}`;
   const others = packages.filter((p) => p.slug !== pkg.slug);
+  const chat = contactLink(`Zdravo Adnane, imam pitanje u vezi paketa ${pkg.name}.`);
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -164,6 +167,19 @@ export default async function PackagePage({ params }: Props) {
                   <p className="mt-4 text-center text-sm text-white/55">
                     Upitnik traje oko 10 minuta. Prijava te ni na šta ne obavezuje.
                   </p>
+                  <a
+                    href={chat.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 flex min-h-12 items-center justify-center gap-2.5 rounded-md border border-white/15 px-5 text-[15px] font-semibold text-white transition-colors hover:border-white/40"
+                  >
+                    {chat.kind === "whatsapp" ? (
+                      <WhatsAppIcon className="size-5 text-[#25D366]" />
+                    ) : (
+                      <InstagramIcon className="size-5" />
+                    )}
+                    Imaš pitanje? Piši mi na {chat.label}
+                  </a>
                 </div>
               </div>
             </aside>
@@ -379,6 +395,7 @@ export default async function PackagePage({ params }: Props) {
         </section>
       </main>
       <SiteFooter />
+      <ChatButton link={chat} />
       <StickyCta
         href={apply}
         price={formatPrice(pkg.price)}

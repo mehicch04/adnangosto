@@ -10,6 +10,8 @@ import { CareerResults } from "@/components/about/CareerResults";
 import { CoachLegacy } from "@/components/about/CoachLegacy";
 import { Gallery } from "@/components/about/Gallery";
 import { BackToTop } from "@/components/sections/BackToTop";
+import { ChatButton } from "@/components/sections/ChatButton";
+import { contactLink } from "@/lib/contact";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 
@@ -37,6 +39,7 @@ export default function AboutPage() {
       </main>
       <SiteFooter />
       <BackToTop />
+      <ChatButton link={contactLink()} />
     </>
   );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
-import { Marquee } from "@/components/sections/Marquee";
 import { Packages } from "@/components/sections/Packages";
 import { ClientResults } from "@/components/sections/ClientResults";
 import { Transformations } from "@/components/sections/Transformations";
@@ -15,6 +14,8 @@ import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { ShopPromo } from "@/components/sections/ShopPromo";
+import { ChatButton } from "@/components/sections/ChatButton";
+import { contactLink } from "@/lib/contact";
 import { packages } from "@/content/packages";
 import { site } from "@/content/site";
 
@@ -58,12 +59,11 @@ export default function HomePage() {
       <SiteHeader />
       <main id="sadrzaj">
         <Hero />
-        <Marquee />
-        <Packages />
-        <ClientResults />
         <Transformations />
-        <Testimonials />
         <Process />
+        <Packages />
+        <Testimonials />
+        <ClientResults />
         <About />
         <ShopPromo />
         <Faq />
@@ -72,6 +72,7 @@ export default function HomePage() {
       </main>
       <SiteFooter />
       <BackToTop />
+      <ChatButton link={contactLink()} />
       <MobileCta />
     </>
   );
