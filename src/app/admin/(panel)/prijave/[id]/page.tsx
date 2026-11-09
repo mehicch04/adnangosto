@@ -1,20 +1,35 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { saveNotes, updateStatus } from "@/app/admin/actions";
-import { createClient } from "@/lib/supabase/server";
+import { ArchiveIcon, ChatIcon, ChevronLeft, MailIcon, PhoneIcon } from "@/components/admin/icons";
+import { Badge, Card, CardHeader, buttonClass } from "@/components/admin/ui";
+import { requireAdmin } from "@/lib/admin/auth";
+import {
+  dateTime,
+  initials,
+  phoneDigits,
+  statusMeta,
+  timeAgo,
+  type ApplicationRow,
+} from "@/lib/admin/applications";
 import { APPLICATIONS_BUCKET } from "@/lib/supabase/bucket";
-import { dateTime, statusMeta, statuses, type ApplicationRow } from "@/lib/admin/applications";
+import { CopyButton } from "./CopyButton";
+import { RecordActions, StatusControl } from "./DetailActions";
+import { NotesEditor } from "./NotesEditor";
+import { PhotoGallery } from "./PhotoGallery";
 
 type Props = { params: Promise<{ id: string }> };
+
+export const metadata = { title: "Prijava" };
 
 export default async function ApplicationDetail({ params }: Props) {
   const { id } = await params;
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const supabase = await createClient();
+  const { supabase } = await requireAdmin();
   const { data } = await supabase.from("applications").select("*").eq("id", id).maybeSingle();
   if (!data) notFound();
   const app = data as ApplicationRow;
   const meta = statusMeta(app.status);
+  const first = app.full_name.split(/\s+/)[0] ?? app.full_name;
 
   let photos: string[] = [];
   if (app.photos?.length) {
@@ -31,147 +46,164 @@ export default async function ApplicationDetail({ params }: Props) {
     if (last && last.title === title) last.rows.push(a);
     else sections.push({ title, rows: [a] });
   }
-  const phone = app.phone?.replace(/[^\d+]/g, "");
+
+  const digits = phoneDigits(app.phone);
+  const mail = `mailto:${app.email}?subject=${encodeURIComponent(`${app.package_name}, tvoja prijava`)}&body=${encodeURIComponent(`Zdravo ${first},\n\n`)}`;
+  const wa = `https://wa.me/${digits}?text=${encodeURIComponent(`Zdravo ${first}, Adnan ovdje. Javljam se u vezi tvoje prijave za ${app.package_name}.`)}`;
+  const archived = Boolean(app.archived_at);
 
   return (
     <>
-      <Link href="/admin" className="text-sm font-semibold text-white/60 hover:text-white">
-        ← Sve prijave
+      <Link
+        href={archived ? "/admin/prijave?arhiva=1" : "/admin/prijave"}
+        className="inline-flex h-9 items-center gap-1 rounded-lg pr-3 pl-1.5 text-sm font-semibold text-white/55 transition-colors hover:bg-white/[0.05] hover:text-white"
+      >
+        <ChevronLeft className="size-4" />
+        {archived ? "Arhiva" : "Sve prijave"}
       </Link>
-      <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_20rem]">
-        <div className="min-w-0">
-          <p className="flex flex-wrap items-center gap-3 text-sm text-white/60">
-            <span className={`rounded-sm px-2 py-0.5 text-xs font-bold ${meta.tone}`}>
-              {meta.label}
-            </span>
-            {dateTime.format(new Date(app.created_at))}
-          </p>
-          <h1 className="mt-3 font-display text-6xl leading-none">{app.full_name}</h1>
-          <p className="mt-2 text-lg text-white/70">{app.package_name}</p>
 
+      <div className="mt-4 flex flex-wrap items-start gap-x-6 gap-y-5">
+        <div className="flex min-w-0 flex-1 items-center gap-4">
+          <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-brand-yellow font-display text-2xl leading-none text-brand-black sm:size-16 sm:text-3xl">
+            {initials(app.full_name)}
+          </span>
+          <div className="min-w-0">
+            <h1 className="truncate font-display text-5xl leading-none tracking-wide sm:text-6xl">
+              {app.full_name}
+            </h1>
+            <p className="mt-2 flex flex-wrap items-center gap-2 text-[13px] text-white/55">
+              <Badge className={meta.tone}>{meta.label}</Badge>
+              {archived && (
+                <Badge className="bg-white/[0.06] text-white/60">
+                  <ArchiveIcon className="size-3.5" />
+                  Arhivirana
+                </Badge>
+              )}
+              <span className="font-semibold text-white/80">{app.package_name}</span>
+              <span aria-hidden="true">·</span>
+              <time dateTime={app.created_at} title={dateTime.format(new Date(app.created_at))}>
+                {timeAgo(app.created_at)}
+              </time>
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <RecordActions
+            id={app.id}
+            name={app.full_name}
+            archived={archived}
+            photos={app.photos?.length ?? 0}
+          />
+        </div>
+      </div>
+
+      <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-6">
+        <aside className="space-y-4 lg:sticky lg:top-8 lg:order-last lg:self-start">
+          <Card>
+            <CardHeader title="Status" />
+            <div className="p-4 sm:p-5">
+              <StatusControl key={app.status} id={app.id} value={app.status} />
+            </div>
+          </Card>
+
+          <Card>
+            <CardHeader title="Kontakt" />
+            <div className="space-y-2 p-4 sm:p-5">
+              <a href={mail} className={buttonClass("primary", "md", "w-full")}>
+                <MailIcon className="size-[18px]" />
+                Odgovori mailom
+              </a>
+              {digits && (
+                <div className="grid grid-cols-2 gap-2">
+                  <a
+                    href={wa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={buttonClass("secondary", "md")}
+                  >
+                    <ChatIcon className="size-[18px]" />
+                    WhatsApp
+                  </a>
+                  <a href={`tel:+${digits}`} className={buttonClass("secondary", "md")}>
+                    <PhoneIcon className="size-[18px]" />
+                    Pozovi
+                  </a>
+                </div>
+              )}
+              <dl className="mt-3 divide-y divide-white/[0.06] rounded-xl border border-white/[0.06]">
+                <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3.5">
+                  <dt className="sr-only">E-mail</dt>
+                  <dd className="min-w-0 flex-1 truncate text-sm text-white/80">{app.email}</dd>
+                  <CopyButton value={app.email} label="Kopiraj e-mail" />
+                </div>
+                {app.phone && (
+                  <div className="flex items-center gap-2 py-1.5 pr-1.5 pl-3.5">
+                    <dt className="sr-only">Telefon</dt>
+                    <dd className="min-w-0 flex-1 truncate text-sm text-white/80 tabular-nums">
+                      {app.phone}
+                    </dd>
+                    <CopyButton value={app.phone} label="Kopiraj broj" />
+                  </div>
+                )}
+              </dl>
+            </div>
+          </Card>
+
+          <Card>
+            <CardHeader title="Bilješke" description="Interno, klijent ih nikad ne vidi." />
+            <div className="p-4 sm:p-5">
+              <NotesEditor id={app.id} initial={app.admin_notes ?? ""} />
+            </div>
+          </Card>
+
+          <dl className="grid grid-cols-2 gap-3 px-1 text-[12px] text-white/40">
+            <div>
+              <dt>Primljena</dt>
+              <dd className="mt-0.5 font-medium text-white/65">
+                {dateTime.format(new Date(app.created_at))}
+              </dd>
+            </div>
+            <div>
+              <dt>Zadnja izmjena</dt>
+              <dd className="mt-0.5 font-medium text-white/65">
+                {dateTime.format(new Date(app.updated_at ?? app.created_at))}
+              </dd>
+            </div>
+          </dl>
+        </aside>
+
+        <div className="min-w-0 space-y-4 lg:space-y-6">
           {photos.length > 0 && (
-            <section className="mt-10">
-              <h2 className="text-xs font-bold tracking-[0.16em] text-brand-yellow uppercase">
-                Slike ({photos.length})
-              </h2>
-              <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {photos.map((src, i) => (
-                  <li key={src}>
-                    <a
-                      href={src}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block aspect-[3/4] overflow-hidden rounded-md bg-brand-surface"
-                    >
-                      <img
-                        src={src}
-                        alt={`Slika ${i + 1}`}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <Card>
+              <CardHeader
+                title="Slike"
+                description={`${photos.length} ${photos.length === 1 ? "slika" : photos.length < 5 ? "slike" : "slika"}, klikni za veći prikaz`}
+              />
+              <div className="p-4 sm:p-5">
+                <PhotoGallery photos={photos} name={app.full_name} />
+              </div>
+            </Card>
           )}
 
           {sections.map((s) => (
-            <section key={s.title} className="mt-10">
-              <h2 className="text-xs font-bold tracking-[0.16em] text-brand-yellow uppercase">
-                {s.title}
-              </h2>
-              <dl className="mt-3 divide-y divide-brand-line rounded-lg border border-brand-line bg-brand-surface">
-                {s.rows.map((r) => (
+            <Card key={s.title}>
+              <CardHeader title={s.title} />
+              <dl className="divide-y divide-white/[0.06]">
+                {s.rows.map((r, i) => (
                   <div
-                    key={r.question}
-                    className="grid gap-1 p-4 sm:grid-cols-[14rem_1fr] sm:gap-6"
+                    key={`${r.question}-${i}`}
+                    className="grid gap-1 px-5 py-4 sm:grid-cols-[13rem_minmax(0,1fr)] sm:gap-6 sm:px-6"
                   >
-                    <dt className="text-sm text-white/55">{r.question}</dt>
-                    <dd className="[overflow-wrap:anywhere] whitespace-pre-line">{r.answer}</dd>
+                    <dt className="text-[13px] text-white/50">{r.question}</dt>
+                    <dd className="text-[15px] [overflow-wrap:anywhere] whitespace-pre-line text-white/90">
+                      {r.answer || <span className="text-white/30">Bez odgovora</span>}
+                    </dd>
                   </div>
                 ))}
               </dl>
-            </section>
+            </Card>
           ))}
         </div>
-
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-lg border border-brand-line bg-brand-surface p-5">
-            <h2 className="text-xs font-bold tracking-[0.16em] text-white/50 uppercase">Kontakt</h2>
-            <a
-              href={`mailto:${app.email}?subject=${encodeURIComponent(`${app.package_name}, tvoja prijava`)}`}
-              className="mt-4 flex min-h-12 items-center justify-center rounded-md bg-brand-yellow font-bold text-brand-black transition-colors hover:bg-[#f5c24a]"
-            >
-              Odgovori na mail
-            </a>
-            {phone && (
-              <a
-                href={`https://wa.me/${phone.replace(/^\+/, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 flex min-h-12 items-center justify-center rounded-md border border-white/15 font-semibold transition-colors hover:border-white/40"
-              >
-                WhatsApp
-              </a>
-            )}
-            <p className="mt-4 text-sm [overflow-wrap:anywhere] text-white/70">{app.email}</p>
-            {app.phone && <p className="text-sm text-white/70">{app.phone}</p>}
-          </div>
-
-          <form
-            action={updateStatus}
-            className="rounded-lg border border-brand-line bg-brand-surface p-5"
-          >
-            <input type="hidden" name="id" value={app.id} />
-            <h2 className="text-xs font-bold tracking-[0.16em] text-white/50 uppercase">Status</h2>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {statuses.map((s) => (
-                <button
-                  key={s.id}
-                  type="submit"
-                  name="status"
-                  value={s.id}
-                  aria-pressed={app.status === s.id}
-                  className={`min-h-11 rounded-md border px-3 text-sm font-semibold transition-colors ${
-                    app.status === s.id
-                      ? "border-brand-yellow bg-brand-yellow/10 text-brand-yellow"
-                      : "border-white/15 text-white/75 hover:border-white/40"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-          </form>
-
-          <form
-            action={saveNotes}
-            className="rounded-lg border border-brand-line bg-brand-surface p-5"
-          >
-            <input type="hidden" name="id" value={app.id} />
-            <label
-              htmlFor="notes"
-              className="text-xs font-bold tracking-[0.16em] text-white/50 uppercase"
-            >
-              Bilješke
-            </label>
-            <textarea
-              id="notes"
-              name="notes"
-              rows={5}
-              defaultValue={app.admin_notes ?? ""}
-              placeholder="Vidiš ih samo ti."
-              className="mt-3 block w-full rounded-md border border-white/15 bg-brand-black p-3 text-sm text-white outline-none focus:border-brand-yellow"
-            />
-            <button
-              type="submit"
-              className="mt-3 min-h-11 w-full rounded-md border border-white/15 text-sm font-semibold transition-colors hover:border-white/40"
-            >
-              Sačuvaj bilješke
-            </button>
-          </form>
-        </aside>
       </div>
     </>
   );

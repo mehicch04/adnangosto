@@ -67,11 +67,13 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 
 ## Gdje je šta
 
-- Paketi, cijene, cjenovnik: `src/content/packages.ts` (jedini izvor za početnu, stranice paketa, cjenovnik i mailove)
+- Paketi, cijene, cjenovnik: `src/content/packages.ts` je osnova i rezerva. Adnan u `/admin/paketi` mijenja naziv, cijenu, stavke, oznaku, redoslijed, vidljivost i "najpopularnije" (tabela `packages`), a cjenovnik ispod online paketa je u `site_content` pod ključem `cjenovnik`
+- Sajt čita pakete i cjenovnik samo preko `src/lib/content/packages.ts` (`getPackages`, `getPackage`, `getPriceList`). Keš je `cachedContent` u `src/lib/content/store.ts`, admin akcije zovu `refreshContent("paketi")`. Sakriven paket nestaje s početne, iz menija, cjenovnika i sitemapa, a njegove stranice vraćaju 404
 - Pitanja u upitniku i validacija (ista na klijentu i serveru): `src/content/questionnaire.ts`
 - Slanje prijave: `src/app/prijava/[paket]/actions.ts` (Zod, Supabase, Resend). Bez Supabase ključeva radi samo u razvoju ili uz `APPLICATIONS_DEMO=1`
 - Mailovi: `src/lib/email/templates.ts`
-- Admin: `src/app/admin/(panel)` lista i detalj prijave, `src/app/admin/login`
+- Admin: `src/app/admin/(panel)`: `/admin` pregled (brojke, prijave po danima i paketima), `/admin/prijave` lista (pretraga, filteri, arhiva, status iz liste), detalj prijave (slike, bilješke se čuvaju same, arhiva, trajno brisanje sa slikama), `/admin/paketi`, `/admin/podesavanja`. Prijava: `src/app/admin/login`
+- Migracije: `supabase/migrations`, 0003 dodaje `archived_at` na prijave i polja paketa (cijena, oznaka, stavke, `featured`) sa početnim podacima
 - Ostali sadržaj početne: `src/content/site.ts`, O meni: `src/content/about.ts`
 - Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
 - Potpis dizajna: žuto GOSTO iza Adnana u heroju. Slojevi: `hero-adnan-wide.jpg` (proširena pozadina), slova, pa `hero-adnan-wide-cut.webp` (izrez iste veličine, mora ostati poravnat s pozadinom). Na mobitelu `om-majica.jpg` i `hero-adnan-cut.webp`

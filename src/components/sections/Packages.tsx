@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { PackagesGrid } from "@/components/sections/PackagesGrid";
-import { formatPrice, packages } from "@/content/packages";
+import { formatPrice } from "@/content/packages";
+import { getPackages } from "@/lib/content/packages";
 
-export function Packages() {
+export async function Packages() {
+  const packages = await getPackages();
   const cards = packages.map((p) => ({
     slug: p.slug,
     name: p.name,
     badge: p.badge,
+    featured: p.featured,
     audience: p.audience,
     price: formatPrice(p.price),
     priceUnit: p.priceUnit,

@@ -10,7 +10,8 @@ import { StickyCta } from "@/components/packages/StickyCta";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
 import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { formatPrice, getPackage, packages } from "@/content/packages";
+import { formatPrice, packages } from "@/content/packages";
+import { getPackage, getPackages } from "@/lib/content/packages";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,7 +23,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const pkg = getPackage(slug);
+  const pkg = await getPackage(slug);
   if (!pkg) return {};
   return {
     title: pkg.name,
@@ -34,12 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PackagePage({ params }: Props) {
   const { slug } = await params;
-  const pkg = getPackage(slug);
+  const pkg = await getPackage(slug);
   if (!pkg) notFound();
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const apply = `/prijava/${pkg.slug}`;
-  const others = packages.filter((p) => p.slug !== pkg.slug);
+  const others = (await getPackages()).filter((p) => p.slug !== pkg.slug);
   const chat = contactLink(`Zdravo Adnane, imam pitanje u vezi paketa ${pkg.name}.`);
   const jsonLd = [
     {

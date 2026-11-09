@@ -1,0 +1,23 @@
+alter table public.applications
+  add column if not exists archived_at timestamptz;
+
+create index if not exists applications_archived_idx
+  on public.applications (archived_at, created_at desc);
+
+alter table public.packages
+  add column if not exists short_name text,
+  add column if not exists badge text,
+  add column if not exists price numeric(10, 2),
+  add column if not exists price_unit text,
+  add column if not exists price_note text,
+  add column if not exists check_in text,
+  add column if not exists includes jsonb not null default '[]',
+  add column if not exists featured boolean not null default false;
+
+insert into public.packages (slug, name, short_name, badge, tagline, audience, price, price_unit, price_note, check_in, features, includes, featured, position)
+values
+  ('online-coaching', 'Online coaching', 'Online coaching', null, 'Klasični online coaching uz sedmični check-in i stalno prilagođavanje plana.', 'Za one koji žele redovno praćenje i plan koji se mijenja zajedno s njima.', 180, 'mjesečno', 'Plaća se mjesečno', 'Check-in svakih 7 dana', array['Početni plan treninga i prehrane po upitniku', 'Check-in i izmjene svakih 7 dana', 'Dostupan za pitanja između check-inova']::text[], '[{"title":"Upitnik i početni plan","text":"Detaljan upitnik o tvom stanju, rutini i ciljevima, pa plan treninga i prehrane složen prema njemu."},{"title":"Check-in svakih 7 dana","text":"Šalješ slike i podatke, a ja na osnovu njih postavljam sve parametre za narednu sedmicu."},{"title":"Stalna prilagodba","text":"Trening, prehrana i suplementacija se mijenjaju kad tijelo krene drugačije od plana."},{"title":"Pitanja između check-inova","text":"Radnim danima sam na raspolaganju za sva pitanja vezana za sam proces."}]'::jsonb, false, 1),
+  ('paket-12-sedmica', 'Paket 12 sedmica', '12 sedmica', 'Za početnike', 'Napredak bez pritiska. Plan koji se uklapa u tvoj život, a ne obrnuto.', 'Za početnike i srednje iskusne koji žele rezultat bez spartanskog pristupa.', 480, 'za 12 sedmica', 'Plaća se jednom unaprijed, za sva 3 mjeseca', 'Check-in svake 4 sedmice', array['Početni plan treninga i prehrane po upitniku', '3 check-ina, svake 4 sedmice, preko e-maila', 'Bez odricanja od svega i bez spartanskog režima']::text[], '[{"title":"Upitnik i polazni plan","text":"Plan treninga i prehrane složen prema tvom stanju, rutini i navikama kojih se ne želiš odreći."},{"title":"3 check-ina u 12 sedmica","text":"Svake 4 sedmice šalješ check-in, a ja prilagodim plan za naredni period."},{"title":"Tempo koji sam biraš","text":"Sistem radi onoliko koliko se posvetiš. Može donijeti male pomake ili iznadprosječnu transformaciju."},{"title":"Nastavak po želji","text":"Nakon 12 sedmica produžiš isti paket ili pređeš na online coaching sa sedmičnim check-inom."}]'::jsonb, false, 2),
+  ('coaching-i-edukacija', 'Coaching i edukacija', 'Coaching i edukacija', null, 'Učiš kroz praksu, na stvarnoj transformaciji, korak po korak.', 'Za trenere i iskusnije vježbače koji žele razumjeti cijeli proces.', 350, 'mjesečno', 'Coaching i edukacija u istoj cijeni', 'Proces vodimo zajedno', array['Kompletan coaching proces i edukacija u jednom', 'Radimo na tebi ili na tvom klijentu', 'Svaka odluka objašnjena do detalja']::text[], '[{"title":"Coaching kroz cijeli proces","text":"Transformacija tebe ili tvog klijenta, s planom treninga i prehrane i redovnim izmjenama."},{"title":"Objašnjenje svakog koraka","text":"Za svaku izmjenu znaš zašto se radi, kako se donosi odluka i šta se očekuje."},{"title":"Rješavanje stagnacije","text":"Kroz stvarne situacije pokazujem kako se prepozna i riješi zastoj u napretku."},{"title":"Pitanja kad god zatrebaju","text":"Na raspolaganju sam i za sva dodatna pitanja vezana za trening i prehranu."}]'::jsonb, false, 3),
+  ('takmicarske-pripreme', 'Takmičarske pripreme', 'Takmičarske pripreme', null, 'Priprema za binu od trenera čiji su takmičari osvojili sve u amaterskom bodybuildingu.', 'Za takmičare, od prvog nastupa do pro karte.', 220, 'mjesečno', 'Plaća se mjesečno', 'Plan do dana takmičenja', array['Priprema za konkretno takmičenje i datum', 'Trening, prehrana i završnica do bine', 'Pomoć oko pozinga po dogovoru']::text[], '[{"title":"Plan za cijelu pripremu","text":"Trening, prehrana i suplementacija složeni prema datumu nastupa i tvom iskustvu."},{"title":"Završnica do detalja","text":"Zadnje sedmice i dani pred binu, gdje se priprema dobija ili gubi."},{"title":"Pozing po dogovoru","text":"Ako ti treba pomoć oko pozinga, navedeš to u upitniku pa se dogovorimo."},{"title":"Iskustvo s velikih bina","text":"Arnold Classic, svjetsko i evropsko prvenstvo, četiri pro karte s takmičarima."}]'::jsonb, false, 4)
+on conflict (slug) do nothing;

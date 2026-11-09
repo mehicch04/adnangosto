@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ExternalIcon,
   FormIcon,
+  HomeIcon,
   ImagesIcon,
   InboxIcon,
   LogoutIcon,
@@ -20,6 +21,7 @@ import { Toaster } from "@/components/admin/Toaster";
 import { adminNav, isActive, type AdminNavItem } from "@/lib/admin/nav";
 
 const icons: Record<AdminNavItem["icon"], (p: { className?: string }) => ReactNode> = {
+  home: HomeIcon,
   inbox: InboxIcon,
   package: PackageIcon,
   images: ImagesIcon,
@@ -42,10 +44,12 @@ function NavIcon({
 export function AdminShell({
   email,
   signOut,
+  counts = {},
   children,
 }: {
   email: string;
   signOut: () => Promise<void>;
+  counts?: Record<string, number>;
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -165,7 +169,12 @@ export function AdminShell({
                         name={n.icon}
                         className={`size-5 ${on ? "text-brand-yellow" : ""}`}
                       />
-                      {n.label}
+                      <span className="flex-1">{n.label}</span>
+                      {counts[n.href] ? (
+                        <span className="min-w-6 rounded-full bg-brand-yellow px-1.5 py-0.5 text-center text-[11px] leading-none font-bold text-brand-black tabular-nums">
+                          {counts[n.href]}
+                        </span>
+                      ) : null}
                     </Link>
                   </li>
                 );
@@ -254,8 +263,13 @@ export function AdminShell({
               key={n.href}
               href={n.href}
               aria-current={on ? "page" : undefined}
-              className={`flex flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-semibold ${on ? "text-brand-yellow" : "text-white/55"}`}
+              className={`relative flex flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-semibold ${on ? "text-brand-yellow" : "text-white/55"}`}
             >
+              {counts[n.href] ? (
+                <span className="absolute top-0.5 left-1/2 ml-2 min-w-[18px] rounded-full bg-brand-yellow px-1 py-0.5 text-center text-[10px] leading-none font-bold text-brand-black tabular-nums">
+                  {counts[n.href]}
+                </span>
+              ) : null}
               <NavIcon name={n.icon} className="size-[22px]" />
               {n.label.split(" ")[0]}
             </Link>

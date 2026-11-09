@@ -1,7 +1,7 @@
 export type AdminNavItem = {
   href: string;
   label: string;
-  icon: "inbox" | "package" | "images" | "text" | "form" | "settings";
+  icon: "home" | "inbox" | "package" | "images" | "text" | "form" | "settings";
   ready: boolean;
   keywords: string;
 };
@@ -9,16 +9,23 @@ export type AdminNavItem = {
 export const adminNav: AdminNavItem[] = [
   {
     href: "/admin",
+    label: "Pregled",
+    icon: "home",
+    ready: true,
+    keywords: "pocetna statistika pregled",
+  },
+  {
+    href: "/admin/prijave",
     label: "Prijave",
     icon: "inbox",
     ready: true,
-    keywords: "prijave klijenti upitnik",
+    keywords: "prijave klijenti upitnik nove",
   },
   {
     href: "/admin/paketi",
     label: "Paketi i cijene",
     icon: "package",
-    ready: false,
+    ready: true,
     keywords: "paketi cijene cjenovnik",
   },
   {
@@ -52,6 +59,6 @@ export const adminNav: AdminNavItem[] = [
 ];
 
 export function isActive(pathname: string, href: string) {
-  if (href === "/admin") return pathname === "/admin" || pathname.startsWith("/admin/prijave");
+  if (href === "/admin") return pathname === "/admin";
   return pathname === href || pathname.startsWith(`${href}/`);
 }

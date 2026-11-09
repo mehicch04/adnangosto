@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/admin/auth";
-import { statuses } from "@/lib/admin/applications";
+import { statusIds, statusMeta } from "@/lib/admin/applications";
+import { APPLICATIONS_BUCKET } from "@/lib/supabase/bucket";
 
 export type LoginState = { error: string | null };
 
@@ -33,40 +34,66 @@ export async function signOut() {
   redirect("/admin/login");
 }
 
-const statusSchema = z.object({
-  id: z.uuid(),
-  status: z.enum(statuses.map((s) => s.id) as [string, ...string[]]),
-});
+export type ActionResult = { ok: boolean; message: string };
 
-export async function updateStatus(formData: FormData) {
-  const parsed = statusSchema.safeParse({ id: formData.get("id"), status: formData.get("status") });
-  if (!parsed.success) return;
+const statusSchema = z.object({ id: z.uuid(), status: z.enum(statusIds) });
+
+export async function setStatus(id: string, status: string): Promise<ActionResult> {
+  const parsed = statusSchema.safeParse({ id, status });
+  if (!parsed.success) return { ok: false, message: "Neispravan status." };
   const { supabase } = await requireAdmin();
-  await supabase
+  const { error } = await supabase
     .from("applications")
     .update({ status: parsed.data.status })
     .eq("id", parsed.data.id);
-  revalidatePath("/admin");
-  revalidatePath(`/admin/prijave/${parsed.data.id}`);
+  if (error) return { ok: false, message: "Status nije sačuvan. Pokušaj ponovo." };
+  revalidatePath("/admin", "layout");
+  return { ok: true, message: `Status promijenjen: ${statusMeta(parsed.data.status).label}` };
 }
 
 const notesSchema = z.object({ id: z.uuid(), notes: z.string().max(5000) });
 
-export async function saveNotes(formData: FormData) {
-  const parsed = notesSchema.safeParse({
-    id: formData.get("id"),
-    notes: formData.get("notes") ?? "",
-  });
-  if (!parsed.success) return;
+export async function saveNotes(id: string, notes: string): Promise<ActionResult> {
+  const parsed = notesSchema.safeParse({ id, notes });
+  if (!parsed.success) return { ok: false, message: "Bilješka je preduga." };
   const { supabase } = await requireAdmin();
-  await supabase
+  const { error } = await supabase
     .from("applications")
-    .update({ admin_notes: parsed.data.notes || null })
+    .update({ admin_notes: parsed.data.notes.trim() || null })
     .eq("id", parsed.data.id);
-  revalidatePath(`/admin/prijave/${parsed.data.id}`);
+  if (error) return { ok: false, message: "Bilješka nije sačuvana." };
+  return { ok: true, message: "Sačuvano" };
 }
 
-export type ActionResult = { ok: boolean; message: string };
+export async function setArchived(id: string, archived: boolean): Promise<ActionResult> {
+  if (!z.uuid().safeParse(id).success) return { ok: false, message: "Nepoznata prijava." };
+  const { supabase } = await requireAdmin();
+  const { error } = await supabase
+    .from("applications")
+    .update({ archived_at: archived ? new Date().toISOString() : null })
+    .eq("id", id);
+  if (error) return { ok: false, message: "Promjena nije sačuvana. Pokušaj ponovo." };
+  revalidatePath("/admin", "layout");
+  return {
+    ok: true,
+    message: archived ? "Prijava je arhivirana." : "Prijava je vraćena iz arhive.",
+  };
+}
+
+export async function deleteApplication(id: string): Promise<ActionResult> {
+  if (!z.uuid().safeParse(id).success) return { ok: false, message: "Nepoznata prijava." };
+  const { supabase } = await requireAdmin();
+  const { data } = await supabase.from("applications").select("photos").eq("id", id).maybeSingle();
+  const photos = (data?.photos as string[] | null) ?? [];
+  if (photos.length) {
+    const { error } = await supabase.storage.from(APPLICATIONS_BUCKET).remove(photos);
+    if (error) return { ok: false, message: "Slike nisu obrisane, prijava je ostala." };
+  }
+  const { error } = await supabase.from("applications").delete().eq("id", id);
+  if (error) return { ok: false, message: "Prijava nije obrisana. Pokušaj ponovo." };
+  revalidatePath("/admin", "layout");
+  return { ok: true, message: "Prijava i slike su trajno obrisane." };
+}
 
 const passwordSchema = z
   .object({

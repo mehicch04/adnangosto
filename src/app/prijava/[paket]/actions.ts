@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { getPackage } from "@/content/packages";
+import { getPackage } from "@/lib/content/packages";
 import {
   PHOTO_MAX,
   PHOTO_MIN,
@@ -28,7 +28,7 @@ const demoMode = () =>
 const pathRe = /^\d{4}-\d{2}\/[0-9a-f-]{36}\/[1-6]\.jpg$/;
 
 export async function requestPhotoUploads(slug: string, count: number): Promise<UploadResult> {
-  if (!getPackage(slug)) return { mode: "error", message: "Nepoznat paket." };
+  if (!(await getPackage(slug))) return { mode: "error", message: "Nepoznat paket." };
   if (!Number.isInteger(count) || count < PHOTO_MIN || count > PHOTO_MAX)
     return { mode: "error", message: "Neispravan broj slika." };
   if (!isSupabaseConfigured()) {
@@ -81,7 +81,7 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
   if (!parsed.success)
     return { ok: false, message: "Prijava nije ispravno poslana. Pokušaj ponovo." };
   const input = parsed.data;
-  const pkg = getPackage(input.slug);
+  const pkg = await getPackage(input.slug);
   if (!pkg) return { ok: false, message: "Nepoznat paket." };
 
   if (input.website || Date.now() - input.startedAt < 4000) return { ok: true };

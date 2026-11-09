@@ -8,6 +8,7 @@ export type CoachingPackage = {
   name: string;
   shortName: string;
   badge?: string;
+  featured?: boolean;
   tagline: string;
   audience: string;
   price: number;
@@ -390,19 +391,22 @@ export type PriceItem = {
 
 export type PriceGroup = { id: string; title: string; text: string; items: PriceItem[] };
 
-export const priceList: PriceGroup[] = [
-  {
+export function onlinePriceGroup(list: CoachingPackage[]): PriceGroup {
+  return {
     id: "online",
     title: "Online coaching",
     text: "Paketi s upitnikom i prijavom preko stranice.",
-    items: packages.map((p) => ({
+    items: list.map((p) => ({
       name: p.name,
       detail: `${p.checkIn}. ${p.priceNote}.`,
       price: formatPrice(p.price),
       unit: p.priceUnit,
       href: `/paketi/${p.slug}`,
     })),
-  },
+  };
+}
+
+export const extraPriceGroups: PriceGroup[] = [
   {
     id: "konzultacije",
     title: "Konzultacije",
@@ -441,3 +445,5 @@ export const priceList: PriceGroup[] = [
     ],
   },
 ];
+
+export const priceList: PriceGroup[] = [onlinePriceGroup(packages), ...extraPriceGroups];

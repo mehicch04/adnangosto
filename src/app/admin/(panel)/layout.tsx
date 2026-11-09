@@ -9,9 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
-  const { email } = await requireAdmin();
+  const { supabase, email } = await requireAdmin();
+  const { count } = await supabase
+    .from("applications")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "nova")
+    .is("archived_at", null);
   return (
-    <AdminShell email={email} signOut={signOut}>
+    <AdminShell email={email} signOut={signOut} counts={{ "/admin/prijave": count ?? 0 }}>
       {children}
     </AdminShell>
   );

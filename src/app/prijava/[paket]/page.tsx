@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ApplicationForm } from "@/components/application/ApplicationForm";
-import { formatPrice, getPackage, packages } from "@/content/packages";
+import { formatPrice, packages } from "@/content/packages";
+import { getPackage } from "@/lib/content/packages";
 import { site } from "@/content/site";
 
 type Props = { params: Promise<{ paket: string }> };
@@ -16,7 +17,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { paket } = await params;
-  const pkg = getPackage(paket);
+  const pkg = await getPackage(paket);
   return {
     title: pkg ? `Prijava, ${pkg.name}` : "Prijava",
     description: pkg ? `Upitnik za prijavu: ${pkg.name}. ${pkg.checkIn}.` : undefined,
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ApplicationPage({ params }: Props) {
   const { paket } = await params;
-  const pkg = getPackage(paket);
+  const pkg = await getPackage(paket);
   if (!pkg) notFound();
 
   return (

@@ -10,6 +10,7 @@ export type PackageCard = {
   slug: PackageSlug;
   name: string;
   badge?: string;
+  featured?: boolean;
   audience: string;
   price: string;
   priceUnit: string;
@@ -148,14 +149,16 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
         {packages.map((pkg) => {
           const active = picked === pkg.slug;
           const dimmed = picked !== null && !active;
-          const tag = active ? "Preporuka za tebe" : pkg.badge;
+          const tag = active
+            ? "Preporuka za tebe"
+            : (pkg.badge ?? (pkg.featured ? "Najpopularnije" : undefined));
           return (
             <li
               key={pkg.slug}
               className={`group relative row-span-6 grid grid-rows-subgrid gap-0 rounded-lg border bg-white px-6 pt-7 pb-6 transition-[transform,box-shadow,border-color,opacity] duration-500 ease-out lg:px-7 ${
                 active
                   ? "border-brand-black shadow-[0_24px_50px_-24px_rgba(10,10,10,0.55)] lg:-translate-y-2"
-                  : "border-brand-paper-line hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(10,10,10,0.4)]"
+                  : `${pkg.featured ? "border-brand-black" : "border-brand-paper-line"} hover:-translate-y-1 hover:shadow-[0_20px_40px_-24px_rgba(10,10,10,0.4)]`
               } ${dimmed ? "opacity-60 hover:opacity-100" : ""}`}
             >
               {tag && (

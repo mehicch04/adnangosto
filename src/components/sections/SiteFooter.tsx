@@ -3,7 +3,7 @@ import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 import { contactLink } from "@/lib/contact";
-import { packages } from "@/content/packages";
+import { getPackages } from "@/lib/content/packages";
 
 const pages = [
   { label: "Početna", href: "/" },
@@ -14,8 +14,9 @@ const pages = [
   { label: "Česta pitanja", href: "/#pitanja" },
 ];
 
-export function SiteFooter() {
+export async function SiteFooter() {
   const chat = contactLink();
+  const packages = await getPackages();
   return (
     <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
       <svg

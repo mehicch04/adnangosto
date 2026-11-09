@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/PageShell";
 import { ArrowRightIcon } from "@/components/ui/icons";
-import { ADNAN_EMAIL, priceList } from "@/content/packages";
+import { ADNAN_EMAIL } from "@/content/packages";
+import { getPriceList } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
   title: "Cjenovnik",
@@ -15,7 +16,8 @@ function mailto(subject: string) {
   return `mailto:${ADNAN_EMAIL}?subject=${encodeURIComponent(subject)}`;
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const priceList = await getPriceList();
   return (
     <PageShell>
       <section className="px-5 pt-32 pb-12 lg:pt-44 lg:pb-16">

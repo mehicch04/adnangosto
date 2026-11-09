@@ -7,6 +7,7 @@ export type ContentTag = "paketi" | "transformacije" | "tekstovi" | "pitanja" | 
 type Db = NonNullable<ReturnType<typeof createPublicClient>>;
 
 export function cachedContent<T>(
+  key: string,
   tag: ContentTag,
   load: (db: Db) => Promise<T | null | undefined>,
   fallback: T,
@@ -19,7 +20,7 @@ export function cachedContent<T>(
       if (value === null || value === undefined) throw new Error("empty");
       return value;
     },
-    ["content", tag],
+    ["content", tag, key],
     { tags: [tag], revalidate: 3600 },
   );
   return async () => {

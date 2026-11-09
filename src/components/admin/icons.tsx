@@ -131,3 +131,110 @@ export const XIcon = (p: P) => (
     <path d="M6 6l12 12M18 6 6 18" />
   </Base>
 );
+
+export const HomeIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-8.5Z" />
+  </Base>
+);
+
+export const TrashIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M4 7h16M10 11v6M14 11v6M9 7V4.5h6V7M6 7l1 12.5h10L18 7" />
+  </Base>
+);
+
+export const ArchiveIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M3.5 4.5h17v4h-17zM5 8.5V19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8.5M10 12.5h4" />
+  </Base>
+);
+
+export const MailIcon = (p: P) => (
+  <Base {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m4 7 8 6 8-6" />
+  </Base>
+);
+
+export const PhoneIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M5 4h3.5l1.5 4.5-2 1.5a11 11 0 0 0 6 6l1.5-2 4.5 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z" />
+  </Base>
+);
+
+export const ChatIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M4 19.5 5.3 16A8 8 0 1 1 8 18.7L4 19.5Z" />
+  </Base>
+);
+
+export const CopyIcon = (p: P) => (
+  <Base {...p}>
+    <rect x="8.5" y="8.5" width="11" height="11" rx="2" />
+    <path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5" />
+  </Base>
+);
+
+export const CheckIcon = (p: P) => (
+  <Base {...p}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </Base>
+);
+
+export const ChevronLeft = (p: P) => (
+  <Base {...p}>
+    <path d="m14.5 6-6 6 6 6" />
+  </Base>
+);
+
+export const ChevronRight = (p: P) => (
+  <Base {...p}>
+    <path d="m9.5 6 6 6-6 6" />
+  </Base>
+);
+
+export const ChevronDown = (p: P) => (
+  <Base {...p}>
+    <path d="m6 9.5 6 6 6-6" />
+  </Base>
+);
+
+export const ArrowUpIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M12 19V5M6 11l6-6 6 6" />
+  </Base>
+);
+
+export const ArrowDownIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M12 5v14M6 13l6 6 6-6" />
+  </Base>
+);
+
+export const GripIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01" strokeWidth="2.6" />
+  </Base>
+);
+
+export const PlusIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Base>
+);
+
+export const StarIcon = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <Base {...p}>
+    <path
+      d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6L12 4Z"
+      fill={filled ? "currentColor" : "none"}
+    />
+  </Base>
+);
+
+export const FilterIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M4 6h16M7 12h10M10 18h4" />
+  </Base>
+);

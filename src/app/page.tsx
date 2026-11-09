@@ -16,7 +16,7 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { ShopPromo } from "@/components/sections/ShopPromo";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
-import { packages } from "@/content/packages";
+import { getPackages } from "@/lib/content/packages";
 import { site } from "@/content/site";
 
 export const revalidate = 60;
@@ -25,7 +25,8 @@ export const metadata: Metadata = {
   title: { absolute: "Početna | Adnan Gosto" },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const packages = await getPackages();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const jsonLd = {
     "@context": "https://schema.org",

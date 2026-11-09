@@ -1,32 +1,36 @@
 import type { ReactNode } from "react";
 import { process } from "@/content/site";
-import { formatPrice, packages } from "@/content/packages";
+import { formatPrice } from "@/content/packages";
+import { getPackages } from "@/lib/content/packages";
 import { ArrowRightIcon, TickIcon } from "@/components/ui/icons";
 import { ProcessCard } from "@/components/sections/ProcessCard";
 
 const anim = "transition-all duration-700 ease-[cubic-bezier(.2,.75,.1,1)]";
 
-function PackagesVisual() {
+async function PackagesVisual() {
+  const packages = await getPackages();
+  const anyFeatured = packages.some((p) => p.featured);
   return (
     <ul className="mx-auto max-w-sm space-y-2">
-      {packages.map((p, i) => (
-        <li
-          key={p.slug}
-          style={{ transitionDelay: `${i * 90}ms` }}
-          className={`${anim} flex translate-x-6 items-center justify-between rounded-2xl border px-4 py-3 opacity-0 group-data-[in=true]:translate-x-0 group-data-[in=true]:opacity-100 ${
-            i === 1
-              ? "border-brand-yellow bg-brand-yellow text-brand-black"
-              : "border-white/10 bg-black/40"
-          }`}
-        >
-          <span className="font-semibold">{p.shortName}</span>
-          <span
-            className={`font-display text-2xl leading-none ${i === 1 ? "" : "text-brand-yellow"}`}
+      {packages.map((p, i) => {
+        const hi = anyFeatured ? p.featured : i === 1;
+        return (
+          <li
+            key={p.slug}
+            style={{ transitionDelay: `${i * 90}ms` }}
+            className={`${anim} flex translate-x-6 items-center justify-between rounded-2xl border px-4 py-3 opacity-0 group-data-[in=true]:translate-x-0 group-data-[in=true]:opacity-100 ${
+              hi
+                ? "border-brand-yellow bg-brand-yellow text-brand-black"
+                : "border-white/10 bg-black/40"
+            }`}
           >
-            {formatPrice(p.price)}
-          </span>
-        </li>
-      ))}
+            <span className="font-semibold">{p.shortName}</span>
+            <span className={`font-display text-2xl leading-none ${hi ? "" : "text-brand-yellow"}`}>
+              {formatPrice(p.price)}
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }
