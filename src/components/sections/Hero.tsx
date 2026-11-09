@@ -70,7 +70,10 @@ export function Hero() {
             <source srcSet={photo.mobile} sizes={sizes.mobile} />
             <img {...photo.rest} alt="Adnan Gosto u teretani" className={fit} />
           </picture>
-          <div aria-hidden="true" className="hero-depth absolute inset-x-0 top-[100px] lg:top-[128px]">
+          <div
+            aria-hidden="true"
+            className="hero-depth absolute inset-x-0 top-[100px] lg:top-[128px]"
+          >
             <p className="text-center font-display text-[42vw] leading-[0.8] tracking-[-0.01em] text-brand-yellow select-none lg:pl-[16%] lg:text-[28vw]">
               {"GOSTO".split("").map((ch, i) => (
                 <span key={i} className="hero-letter" style={delay(0.2 + i * 0.06)}>
@@ -100,34 +103,32 @@ export function Hero() {
               <span className="block">{hero.titleAccent}</span>
             </h1>
             <p className="mt-5 max-w-md text-[17px] text-white/75">{hero.subtitle}</p>
-            <div
-              className="fade-up mt-7 flex flex-wrap items-center gap-x-6 gap-y-4"
-              style={delay(0.63)}
-            >
+            <div className="fade-up mt-7 flex items-center gap-3" style={delay(0.63)}>
               <a
                 href={hero.primaryCta.href}
-                className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-brand-yellow py-2 pr-2 pl-7 text-lg font-bold text-brand-black transition-colors hover:bg-white"
+                className="group inline-flex h-12 items-center gap-2.5 rounded-full bg-brand-yellow pr-1.5 pl-5 text-[15px] font-bold text-brand-black transition-colors hover:bg-white"
               >
                 {hero.primaryCta.label}
-                <span className="grid size-10 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRightIcon className="size-5" />
+                <span className="grid size-9 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-0.5">
+                  <ArrowRightIcon className="size-4" />
                 </span>
               </a>
               <a
                 href={chat.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 font-semibold text-white/80 transition-colors hover:text-white"
+                aria-label={`Pitaj me na ${wa ? "WhatsAppu" : "Instagramu"}`}
+                className="group inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3.5 text-[15px] font-semibold text-white/85 backdrop-blur transition-colors hover:border-white/50 hover:text-white sm:px-5"
               >
                 {wa ? (
                   <WhatsAppIcon className="size-5 text-[#25D366]" />
                 ) : (
                   <InstagramIcon className="size-5 text-brand-yellow" />
                 )}
-                Pitaj me na {wa ? "WhatsAppu" : "Instagramu"}
+                <span className="hidden sm:inline">Pitaj me</span>
               </a>
             </div>
-            <div className="fade-up mt-6" style={delay(0.7)}>
+            <div className="fade-up mt-7 border-t border-white/10 pt-5" style={delay(0.7)}>
               <HeroPaths />
             </div>
           </div>
