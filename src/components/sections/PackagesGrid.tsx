@@ -312,7 +312,7 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
       <ul
         ref={list}
         onScroll={onScroll}
-        className="-mx-5 mt-8 flex snap-x snap-mandatory [scrollbar-width:none] gap-3 overflow-x-auto scroll-smooth px-5 pt-5 pb-6 lg:mx-0 lg:mt-10 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0 lg:pb-0"
+        className="relative -mx-5 mt-8 flex snap-x snap-mandatory [scrollbar-width:none] gap-3 overflow-x-auto scroll-smooth px-5 pt-5 pb-6 lg:mx-0 lg:mt-10 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {packages.map((p, i) => {
           const on = picked === p.slug;
@@ -432,7 +432,7 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
             <span className="hidden sm:inline">Klikni na naziv paketa da ga istakneš</span>
           </p>
         </div>
-        <div className="[scrollbar-width:thin] overflow-x-auto">
+        <div className="relative [scrollbar-width:thin] overflow-x-auto">
           <table className="w-full min-w-[54rem] table-fixed border-collapse text-left text-[14px]">
             <caption className="sr-only">Poređenje paketa</caption>
             <colgroup>
