@@ -69,6 +69,7 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 
 - Paketi, cijene, cjenovnik: `src/content/packages.ts` je osnova i rezerva. Adnan u `/admin/paketi` mijenja naziv, cijenu, stavke, oznaku, redoslijed, vidljivost i "najpopularnije" (tabela `packages`), a cjenovnik ispod online paketa je u `site_content` pod ključem `cjenovnik`
 - Sajt čita pakete i cjenovnik samo preko `src/lib/content/packages.ts` (`getPackages`, `getPackage`, `getPriceList`). Keš je `cachedContent` u `src/lib/content/store.ts`, admin akcije zovu `refreshContent("paketi")`. Sakriven paket nestaje s početne, iz menija, cjenovnika i sitemapa, a njegove stranice vraćaju 404
+- Sekcija paketa na početnoj: `PackagesGrid.tsx` (izbor cilja, istaknuta kartica, demo kursor koji se pokrene tek kad je sekcija u vidu). Tabela "Uporedi pakete" i oznake iznad naziva su u `packageCompare` u `src/content/packages.ts`, cijena u tabeli dolazi iz baze
 - Pitanja u upitniku i validacija (ista na klijentu i serveru): `src/content/questionnaire.ts`
 - Slanje prijave: `src/app/prijava/[paket]/actions.ts` (Zod, Supabase, Resend). Bez Supabase ključeva radi samo u razvoju ili uz `APPLICATIONS_DEMO=1`
 - Mailovi: `src/lib/email/templates.ts`

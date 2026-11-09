@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PackagesGrid } from "@/components/sections/PackagesGrid";
-import { formatPrice } from "@/content/packages";
+import { formatPrice, packageCompare } from "@/content/packages";
 import { getPackages } from "@/lib/content/packages";
 
 export async function Packages() {
@@ -13,8 +13,9 @@ export async function Packages() {
     audience: p.audience,
     price: formatPrice(p.price),
     priceUnit: p.priceUnit,
-    checkIn: p.checkIn,
+    priceNote: p.priceNote,
     features: p.cardFeatures,
+    compare: packageCompare[p.slug],
   }));
 
   return (
@@ -24,27 +25,6 @@ export async function Packages() {
       className="scroll-mt-20 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <div>
-            <p className="flex items-center gap-3 text-sm font-bold tracking-[0.2em] uppercase">
-              <span className="h-0.5 w-8 bg-brand-yellow" />
-              Paketi i cijene
-            </p>
-            <h2
-              id="saradnja-naslov"
-              className="mt-4 font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]"
-            >
-              Izaberi kako
-              <br />
-              radimo
-            </h2>
-          </div>
-          <p className="max-w-md text-lg text-brand-ink-muted lg:justify-self-end">
-            Sistem treninga i prehrane koji se uklapa u tvoj posao i obaveze. Svaki paket ima svoj
-            upitnik, pa odmah dobijem sve što trebam da krenemo.
-          </p>
-        </div>
-
         <PackagesGrid packages={cards} />
 
         <div className="mt-10 flex flex-col gap-4 border-t-2 border-brand-black pt-6 sm:flex-row sm:items-center sm:justify-between">

@@ -27,6 +27,50 @@ export type CoachingPackage = {
   image: string;
 };
 
+export type PackageCompare = {
+  tag: string;
+  bestFor: string;
+  payment: string;
+  tracking: string;
+  duration: string;
+  edge: string;
+};
+
+export const packageCompare: Record<PackageSlug, PackageCompare> = {
+  "online-coaching": {
+    tag: "Sedmično praćenje",
+    bestFor: "Imaš jasan cilj i želiš da neko prati svaki tvoj korak",
+    payment: "Mjesečno",
+    tracking: "Check-in svakih 7 dana, dan biraš sam",
+    duration: "Mjesec po mjesec, sve do cilja",
+    edge: "Plan se mijenja čim tijelo krene drugačije",
+  },
+  "paket-12-sedmica": {
+    tag: "Bez pritiska",
+    bestFor: "Početnici i srednje iskusni koji žele rezultat bez odricanja od svega",
+    payment: "Jednom unaprijed, za sva 3 mjeseca",
+    tracking: "Check-in svake 4 sedmice, ukupno 3, preko e-maila",
+    duration: "12 sedmica, pa produžiš ili pređeš na online coaching",
+    edge: "Plan složen oko navika kojih se ne želiš odreći",
+  },
+  "coaching-i-edukacija": {
+    tag: "Za trenere",
+    bestFor: "Treneri i iskusniji vježbači koji žele razumjeti cijeli proces",
+    payment: "Mjesečno, coaching i edukacija u istoj cijeni",
+    tracking: "Redovni check-in, svaki je ujedno i lekcija",
+    duration: "Cijeli proces, dok ne znaš raditi samostalno",
+    edge: "Radimo na tebi ili na tvom klijentu, uz objašnjenje svake odluke",
+  },
+  "takmicarske-pripreme": {
+    tag: "Za binu",
+    bestFor: "Takmičari, od prvog nastupa do pro karte",
+    payment: "Mjesečno",
+    tracking: "Plan se vodi sedmicu po sedmicu, sve do završnice",
+    duration: "Do dana takmičenja, priprema traje najmanje 3 mjeseca",
+    edge: "Završnica do bine i pomoć oko pozinga po dogovoru",
+  },
+};
+
 export const ADNAN_EMAIL = "adnan.adoni.gosto@gmail.com";
 
 export const packages: CoachingPackage[] = [

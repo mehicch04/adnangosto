@@ -19,6 +19,7 @@
   --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-marquee: marquee 40s linear infinite;
   --animate-step: step-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-tap: tap-ring 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 
   @keyframes rise {
     from {
@@ -38,6 +39,16 @@
     to {
       opacity: 1;
       transform: none;
+    }
+  }
+  @keyframes tap-ring {
+    from {
+      opacity: 0.55;
+      transform: scale(0.55);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.35);
     }
   }
   @keyframes marquee {

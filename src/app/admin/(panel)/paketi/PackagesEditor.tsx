@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/components/admin/Toaster";
 import { Button, Card, CardHeader, Field, Spinner, inputClass } from "@/components/admin/ui";
 import { TickIcon } from "@/components/ui/icons";
-import { formatPrice } from "@/content/packages";
+import { formatPrice, packageCompare, type PackageSlug } from "@/content/packages";
 import { savePackage, savePackageOrder, setPackageFeatured, setPackageVisible } from "./actions";
 
 export type PackageFields = {
@@ -76,33 +76,34 @@ function Section({ title, hint, children }: { title: string; hint: string; child
 }
 
 function Preview({ p }: { p: EditorPackage }) {
-  const tag = p.badge || (p.featured ? "Najpopularnije" : "");
+  const ribbon = p.badge || (p.featured ? "Najpopularnije" : "");
+  const price = formatPrice(Number.isFinite(p.price) ? p.price : 0);
   return (
     <div className="rounded-2xl bg-brand-paper p-4 pt-7 text-brand-black sm:p-5 sm:pt-8">
-      <div
-        className={`relative rounded-lg border bg-white px-6 pt-7 pb-6 ${p.featured ? "border-brand-black" : "border-brand-paper-line"}`}
-      >
-        {tag && (
-          <span className="absolute -top-3 left-6 rounded-sm bg-brand-black px-2.5 py-1 text-[11px] font-bold tracking-[0.12em] text-white uppercase">
-            {tag}
+      <div className="relative rounded-2xl border border-brand-paper-line bg-white p-6">
+        {ribbon && (
+          <span className="absolute -top-3 right-6 rounded-full bg-brand-black px-3 py-1 text-[11px] font-bold tracking-[0.12em] text-white uppercase">
+            {ribbon}
           </span>
         )}
         <p className="text-xs font-bold tracking-[0.14em] text-brand-ink-muted uppercase">
-          {p.checkIn || "Check-in"}
+          {packageCompare[p.slug as PackageSlug]?.tag}
         </p>
         <h3 className="mt-4 font-display text-[2.4rem] leading-[0.9]">
           {p.name || "Naziv paketa"}
         </h3>
         <p className="mt-3 text-[15px] leading-snug text-brand-ink-muted">{p.audience}</p>
-        <p className="mt-6 flex items-baseline gap-2 border-t border-brand-paper-line pt-5">
-          <span className="font-display text-6xl leading-none">
-            {formatPrice(Number.isFinite(p.price) ? p.price : 0)}
-          </span>
+        <p className="mt-5 flex items-baseline gap-2">
+          <span className="font-display text-6xl leading-none">{price}</span>
           <span className="text-sm font-semibold text-brand-ink-muted">{p.priceUnit}</span>
         </p>
-        <ul className="mt-5 space-y-3">
+        <p className="mt-1 text-[13px] text-brand-ink-muted/80">{p.priceNote}</p>
+        <span className="mt-6 flex min-h-12 items-center justify-center rounded-full bg-brand-black font-semibold text-white">
+          Prijavi se
+        </span>
+        <ul className="mt-6 space-y-3 border-t border-brand-paper-line pt-6">
           {p.features.filter(Boolean).map((f, i) => (
-            <li key={`${f}-${i}`} className="flex gap-3 text-[15px] leading-snug">
+            <li key={`${f}-${i}`} className="flex gap-3 text-[14px] leading-snug">
               <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-yellow">
                 <TickIcon className="size-3" />
               </span>
@@ -110,17 +111,12 @@ function Preview({ p }: { p: EditorPackage }) {
             </li>
           ))}
         </ul>
-        <span className="mt-7 flex min-h-12 items-center justify-center rounded-md bg-brand-black font-semibold text-white">
-          Prijavi se
-        </span>
       </div>
       <div className="mt-4 rounded-xl bg-brand-black px-4 py-3 text-white">
         <p className="text-[11px] font-bold tracking-[0.14em] text-white/40 uppercase">U meniju</p>
         <p className="mt-1.5 flex items-baseline justify-between gap-3">
           <span className="font-semibold">{p.shortName || p.name}</span>
-          <span className="font-display text-xl text-brand-yellow">
-            {formatPrice(Number.isFinite(p.price) ? p.price : 0)}
-          </span>
+          <span className="font-display text-xl text-brand-yellow">{price}</span>
         </p>
         <p className="mt-1 line-clamp-2 text-[13px] text-white/55">{p.tagline}</p>
       </div>
@@ -394,7 +390,11 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
                     className={inputClass}
                   />
                 </Field>
-                <Field label="Oznaka" htmlFor="badge" hint="Npr. Za početnike. Može ostati prazno.">
+                <Field
+                  label="Oznaka"
+                  htmlFor="badge"
+                  hint="Mala oznaka na vrhu kartice. Može ostati prazno."
+                >
                   <input
                     id="badge"
                     value={draft.badge}
@@ -404,7 +404,11 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
                   />
                 </Field>
               </div>
-              <Field label="Check-in" htmlFor="checkIn" hint="Mali tekst iznad naziva.">
+              <Field
+                label="Check-in"
+                htmlFor="checkIn"
+                hint="Ide u cjenovnik i na stranicu paketa."
+              >
                 <input
                   id="checkIn"
                   value={draft.checkIn}
@@ -450,6 +454,15 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
                   />
                 </Field>
               </div>
+              <Field label="Napomena o plaćanju" htmlFor="priceNote">
+                <input
+                  id="priceNote"
+                  value={draft.priceNote}
+                  maxLength={120}
+                  onChange={(e) => update({ priceNote: e.target.value })}
+                  className={inputClass}
+                />
+              </Field>
               <ListField
                 label="Stavke s kvačicom"
                 items={draft.features}
@@ -469,10 +482,7 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
               />
             </Section>
 
-            <Section
-              title="Meni i opis"
-              hint="Kratki naziv i opis idu u padajući meni, a napomena u cjenovnik."
-            >
+            <Section title="Meni i opis" hint="Kratki naziv i opis idu u padajući meni.">
               <Field
                 label="Kratki naziv"
                 htmlFor="shortName"
@@ -494,15 +504,6 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
                   rows={2}
                   onChange={(e) => update({ tagline: e.target.value })}
                   className={areaClass}
-                />
-              </Field>
-              <Field label="Napomena o plaćanju" htmlFor="priceNote">
-                <input
-                  id="priceNote"
-                  value={draft.priceNote}
-                  maxLength={120}
-                  onChange={(e) => update({ priceNote: e.target.value })}
-                  className={inputClass}
                 />
               </Field>
             </Section>
