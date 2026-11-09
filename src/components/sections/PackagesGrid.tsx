@@ -327,10 +327,10 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
               className={`flex w-[84%] shrink-0 snap-center transition-[opacity,transform] duration-700 sm:w-[46%] lg:w-auto ${ease} group-data-[in=false]/pk:translate-y-10 group-data-[in=false]/pk:opacity-0`}
             >
               <article
-                className={`group relative flex w-full flex-col rounded-2xl border p-6 transition-[background-color,color,border-color,box-shadow,transform] duration-500 ${ease} ${
+                className={`group relative flex w-full flex-col rounded-2xl border p-6 transition-[background-color,color,border-color,box-shadow,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${
                   on
-                    ? "border-brand-black bg-brand-black text-white shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] lg:-translate-y-4"
-                    : "border-brand-paper-line bg-white hover:-translate-y-1.5 hover:border-brand-black/25 hover:shadow-[0_28px_50px_-30px_rgba(10,10,10,0.45)]"
+                    ? "border-brand-black bg-brand-black text-white shadow-[0_2px_6px_rgba(10,10,10,0.08),0_24px_48px_-18px_rgba(10,10,10,0.35),0_48px_90px_-40px_rgba(10,10,10,0.45)] lg:-translate-y-3"
+                    : "border-brand-paper-line bg-white shadow-[0_1px_2px_rgba(10,10,10,0.04),0_8px_20px_-14px_rgba(10,10,10,0.06)] hover:-translate-y-1 hover:border-brand-black/10 hover:shadow-[0_2px_4px_rgba(10,10,10,0.03),0_14px_28px_-12px_rgba(10,10,10,0.08),0_36px_70px_-30px_rgba(10,10,10,0.18)]"
                 }`}
               >
                 {ribbon && (
@@ -390,7 +390,7 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
                     <li key={f} className="flex gap-3 text-[14px] leading-snug">
                       <span
                         style={{ transitionDelay: `${j * 60}ms` }}
-                        className={`mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-yellow text-brand-black transition-transform duration-300 group-hover:scale-110 ${ease}`}
+                        className={`mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-brand-yellow text-brand-black transition-transform duration-500 group-hover:scale-105 ${ease}`}
                       >
                         <TickIcon className="size-3" />
                       </span>
