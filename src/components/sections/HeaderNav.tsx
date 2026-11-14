@@ -4,13 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
-import { ArrowRightIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
 import type { ContactLink } from "@/lib/contact";
 
 export type MenuPackage = {
   slug: string;
   name: string;
-  tagline: string;
+  tag: string;
+  audience: string;
+  features: string[];
   price: string;
   unit: string;
 };
@@ -31,6 +33,15 @@ const mobileLinks = [
   { label: "Pitanja", href: "/#pitanja" },
 ];
 
+const photos: Record<string, { src: string; pos: string }> = {
+  "online-coaching": { src: "/images/om-ledja.jpg", pos: "object-[50%_20%]" },
+  "paket-12-sedmica": { src: "/images/transformacije/tr-01.jpg", pos: "object-[50%_30%]" },
+  "coaching-i-edukacija": { src: "/images/om-konstrukcija.jpg", pos: "object-[50%_40%]" },
+  "takmicarske-pripreme": { src: "/images/takmicari/t1.jpg", pos: "object-[50%_20%]" },
+};
+
+const ease = "ease-[cubic-bezier(0.22,1,0.36,1)]";
+
 function ChatIcon({ chat, className }: { chat: ContactLink; className?: string }) {
   return chat.kind === "whatsapp" ? (
     <WhatsAppIcon className={className} />
@@ -42,13 +53,21 @@ function ChatIcon({ chat, className }: { chat: ContactLink; className?: string }
 export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: ContactLink }) {
   const pathname = usePathname();
   const [panel, setPanel] = useState(false);
+  const [armed, setArmed] = useState(false);
   const [sheet, setSheet] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState(packages[0]?.slug ?? "");
   const bar = useRef<HTMLDivElement>(null);
   const item = useRef<HTMLDivElement>(null);
+  const drop = useRef<HTMLDivElement>(null);
   const pill = useRef<HTMLDivElement>(null);
   const indicator = useRef<HTMLSpanElement>(null);
+  const rows = useRef<HTMLUListElement>(null);
+  const marker = useRef<HTMLSpanElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
   const timer = useRef(0);
-  const wa = chat.kind === "whatsapp";
+
+  const current = packages.find((p) => p.slug === active) ?? packages[0];
 
   useEffect(() => {
     let frame = 0;
@@ -59,6 +78,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
         const y = window.scrollY;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+        setScrolled(y > 24);
       });
     };
     onScroll();
@@ -72,11 +92,16 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      setPanel(false);
+      setPanel((open) => {
+        if (open) trigger.current?.focus();
+        return false;
+      });
       setSheet(false);
     };
     const onDown = (e: PointerEvent) => {
-      if (item.current && !item.current.contains(e.target as Node)) setPanel(false);
+      const t = e.target as Node;
+      if (item.current?.contains(t) || drop.current?.contains(t)) return;
+      setPanel(false);
     };
     window.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onDown);
@@ -95,6 +120,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
   }, [sheet]);
 
   const close = () => {
+    window.clearTimeout(timer.current);
     setPanel(false);
     setSheet(false);
   };
@@ -107,13 +133,20 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const show = () => {
+    setArmed(true);
+    setPanel(true);
+  };
+
   const enter = () => {
     window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setPanel(true), 80);
+    setArmed(true);
+    timer.current = window.setTimeout(show, 90);
   };
+
   const leave = () => {
     window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setPanel(false), 180);
+    timer.current = window.setTimeout(() => setPanel(false), 200);
   };
 
   const place = useCallback((el: HTMLElement | null) => {
@@ -144,17 +177,44 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
     };
   }, [pathname, place, activeItem]);
 
+  useEffect(() => {
+    place(panel ? trigger.current : activeItem());
+  }, [panel, place, activeItem]);
+
+  useEffect(() => {
+    const list = rows.current;
+    const m = marker.current;
+    const row = list?.querySelector<HTMLElement>(`[data-slug="${active}"]`);
+    if (!m || !row) return;
+    m.style.height = `${row.offsetHeight}px`;
+    m.style.transform = `translateY(${row.offsetTop}px)`;
+  }, [active, armed]);
+
   const packagesActive = pathname.startsWith("/paketi") || pathname === "/cjenovnik";
+  const linkClass = (on: boolean) =>
+    `relative inline-flex items-center text-[13px] font-bold tracking-[0.16em] uppercase transition-colors duration-300 ${
+      on ? "text-white" : "text-white/70 hover:text-white"
+    }`;
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-brand-black/70 shadow-[0_12px_32px_-16px_rgba(0,0,0,0.9)] backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto grid h-[72px] max-w-7xl grid-cols-[auto_1fr] items-center gap-6 px-5 lg:h-[84px] lg:grid-cols-[1fr_auto_1fr]">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 border-b border-white/10 transition-[background-color,box-shadow] duration-500 ${
+          scrolled || panel
+            ? "bg-brand-black shadow-[0_18px_40px_-24px_rgba(0,0,0,0.95)]"
+            : "bg-brand-black/90 backdrop-blur-xl"
+        }`}
+      >
+        <div
+          className={`flex items-stretch transition-[height] duration-500 ${ease} ${
+            scrolled ? "h-[64px] lg:h-[68px]" : "h-[68px] lg:h-[80px]"
+          }`}
+        >
           <Link
             href="/"
             aria-label="Adnan Gosto, početna"
-            className="justify-self-start"
             onClick={goHome}
+            className="group flex shrink-0 items-center bg-brand-yellow pr-12 pl-5 [clip-path:polygon(0_0,100%_0,calc(100%-28px)_100%,0_100%)] lg:pr-20 lg:pl-[max(1.25rem,calc((100vw-80rem)/2+1.25rem))] lg:[clip-path:polygon(0_0,100%_0,calc(100%-40px)_100%,0_100%)]"
           >
             <Image
               src="/images/logo-ga.png"
@@ -162,176 +222,275 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
               width={129}
               height={70}
               priority
-              className="h-9 w-auto lg:h-10"
+              style={{ filter: "brightness(0)" }}
+              className={`w-auto transition-[height,transform] duration-500 ${ease} group-hover:scale-[1.04] ${
+                scrolled ? "h-8 lg:h-9" : "h-9 lg:h-10"
+              }`}
             />
           </Link>
 
-          <nav aria-label="Glavni meni" className="hidden justify-self-center lg:block">
-            <div
-              ref={pill}
-              onMouseLeave={() => place(activeItem())}
-              className="relative flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.05] p-1.5"
-            >
-              <span
-                ref={indicator}
-                aria-hidden="true"
-                className="pointer-events-none absolute top-1.5 bottom-1.5 left-0 rounded-full bg-white/10 opacity-0 transition-[transform,width,opacity] duration-300 ease-out"
-              />
-              <div ref={item} onMouseEnter={enter} onMouseLeave={leave}>
-                <button
-                  type="button"
-                  data-active={packagesActive}
-                  aria-expanded={panel}
-                  aria-controls="meni-paketi"
-                  onMouseEnter={(e) => place(e.currentTarget)}
-                  onFocus={(e) => place(e.currentTarget)}
-                  onClick={() => {
-                    window.clearTimeout(timer.current);
-                    setPanel((v) => !v);
-                  }}
-                  className={`relative inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
-                    panel || packagesActive ? "text-white" : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Paketi i cijene
-                  <svg
-                    viewBox="0 0 12 12"
-                    aria-hidden="true"
-                    className={`size-3 transition-transform duration-300 ${panel ? "rotate-180" : ""}`}
+          <div className="flex min-w-0 flex-1 items-center pr-5 lg:mx-auto lg:max-w-[68rem] lg:pl-8">
+            <nav aria-label="Glavni meni" className="hidden h-full lg:block">
+              <div
+                ref={pill}
+                onMouseLeave={() => !panel && place(activeItem())}
+                className="relative flex h-full items-stretch gap-8"
+              >
+                <div ref={item} onMouseEnter={enter} onMouseLeave={leave} className="flex">
+                  <button
+                    ref={trigger}
+                    type="button"
+                    data-active={packagesActive}
+                    aria-expanded={panel}
+                    aria-controls="meni-paketi"
+                    onMouseEnter={(e) => place(e.currentTarget)}
+                    onFocus={(e) => place(e.currentTarget)}
+                    onClick={() => {
+                      window.clearTimeout(timer.current);
+                      if (panel) setPanel(false);
+                      else show();
+                    }}
+                    className={`${linkClass(panel || packagesActive)} gap-2 ${panel ? "text-brand-yellow!" : ""}`}
                   >
-                    <path
-                      d="m2.5 4.5 3.5 3.5 3.5-3.5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                {panel && (
-                  <div
-                    id="meni-paketi"
-                    className="absolute top-full left-1/2 w-[min(80rem,calc(100vw-2.5rem))] -translate-x-1/2 pt-3"
+                    Paketi i cijene
+                    <svg
+                      viewBox="0 0 12 12"
+                      aria-hidden="true"
+                      className={`size-3 transition-transform duration-500 ${ease} ${panel ? "rotate-180" : ""}`}
+                    >
+                      <path
+                        d="m2.5 4.5 3.5 3.5 3.5-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {links.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    onClick={close}
+                    data-active={l.href === pathname}
+                    onMouseEnter={(e) => place(e.currentTarget)}
+                    onFocus={(e) => place(e.currentTarget)}
+                    className={linkClass(l.href === pathname)}
                   >
-                    <div className="menu-pop rounded-3xl border border-white/10 bg-brand-surface p-2 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)]">
-                      <div className="grid grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,0.9fr)] gap-2">
-                        {packages.map((p, i) => (
-                          <Link
-                            key={p.slug}
-                            href={`/paketi/${p.slug}`}
-                            onClick={close}
-                            className="fade-up group flex flex-col rounded-2xl p-5 transition-colors hover:bg-white/[0.06]"
-                            style={{ ["--d" as string]: `${0.03 + i * 0.04}s` }}
-                          >
-                            <span className="font-display text-[28px] leading-none text-white">
-                              {p.name}
-                            </span>
-                            <span className="mt-2 line-clamp-2 text-sm text-white/55">
-                              {p.tagline}
-                            </span>
-                            <span className="mt-auto flex items-end justify-between gap-3 pt-6">
-                              <span>
-                                <span className="font-display text-4xl leading-none text-brand-yellow">
-                                  {p.price}
-                                </span>
-                                <span className="ml-1.5 text-xs text-white/50">{p.unit}</span>
-                              </span>
-                              <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 text-white/70 transition-all group-hover:translate-x-0.5 group-hover:border-brand-yellow group-hover:bg-brand-yellow group-hover:text-brand-black">
-                                <ArrowRightIcon />
-                              </span>
-                            </span>
-                          </Link>
-                        ))}
-                        <Link
-                          href="/#saradnja"
-                          onClick={close}
-                          className="fade-up flex flex-col rounded-2xl bg-brand-yellow p-5 text-brand-black transition-colors hover:bg-white"
-                          style={{ ["--d" as string]: "0.2s" }}
-                        >
-                          <span className="font-display text-[28px] leading-none">
-                            Ne znaš koji?
-                          </span>
-                          <span className="mt-2 text-sm font-semibold text-brand-black/75">
-                            Odgovori na dva pitanja i pokazaću ti paket koji ti odgovara.
-                          </span>
-                          <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold">
-                            Pomozi mi izabrati
-                            <ArrowRightIcon />
-                          </span>
-                        </Link>
-                      </div>
-                      <Link
-                        href="/cjenovnik"
-                        onClick={close}
-                        className="mt-2 flex items-center justify-between rounded-2xl px-5 py-3.5 text-sm font-semibold text-white/60 transition-colors hover:bg-white/[0.06] hover:text-white"
-                      >
-                        Cijeli cjenovnik: konsultacije, personalni trening, članstvo i edukacija
-                        <ArrowRightIcon />
-                      </Link>
-                    </div>
-                  </div>
-                )}
+                    {l.label}
+                  </Link>
+                ))}
+                <span
+                  ref={indicator}
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute bottom-[-1px] left-0 h-[3px] bg-brand-yellow opacity-0 transition-[transform,width,opacity] duration-500 ${ease}`}
+                />
               </div>
-              {links.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={close}
-                  data-active={l.href === pathname}
-                  onMouseEnter={(e) => place(e.currentTarget)}
-                  onFocus={(e) => place(e.currentTarget)}
-                  className={`relative block rounded-full px-4 py-2.5 text-[15px] font-semibold transition-colors ${
-                    l.href === pathname ? "text-white" : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </nav>
+            </nav>
 
-          <div className="flex items-center gap-2 justify-self-end">
-            <a
-              href={chat.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={chat.label}
-              className={`hidden size-12 place-items-center rounded-full ring-1 transition-colors sm:grid ${
-                wa
-                  ? "bg-[#25D366]/10 text-[#25D366] ring-[#25D366]/30 hover:bg-[#25D366] hover:text-brand-black"
-                  : "bg-white/5 text-white ring-white/15 hover:bg-white hover:text-brand-black"
-              }`}
-            >
-              <ChatIcon chat={chat} className="size-5" />
-            </a>
-            <Link
-              href="/#saradnja"
-              onClick={close}
-              className="group inline-flex h-11 items-center gap-2 rounded-full bg-brand-yellow pr-1.5 pl-4 text-[15px] font-bold text-brand-black transition-colors hover:bg-white lg:h-12 lg:pl-5"
-            >
-              Pokreni se
-              <span className="grid size-8 place-items-center rounded-full bg-brand-black text-brand-yellow transition-transform duration-300 group-hover:translate-x-0.5 lg:size-9">
-                <ArrowRightIcon className="size-4" />
-              </span>
-            </Link>
-            <button
-              type="button"
-              aria-label="Otvori meni"
-              aria-expanded={sheet}
-              aria-controls="mobilni-meni"
-              onClick={() => setSheet(true)}
-              className="grid size-11 place-items-center rounded-full bg-white/10 lg:hidden"
-            >
-              <span className="flex w-5 flex-col gap-1.5">
-                <span className="h-0.5 w-5 bg-white" />
-                <span className="h-0.5 w-3 bg-white" />
-              </span>
-            </button>
+            <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+              <Link
+                href="/cjenovnik"
+                onClick={close}
+                className={`hidden px-3 text-[13px] font-bold tracking-[0.16em] uppercase transition-colors duration-300 xl:inline-flex ${pathname === "/cjenovnik" ? "text-white" : "text-white/70 hover:text-white"}`}
+              >
+                Cjenovnik
+              </Link>
+              <a
+                href={chat.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={chat.label}
+                className="hidden size-11 place-items-center text-white/70 transition-[color,transform] duration-300 hover:-translate-y-0.5 hover:text-brand-yellow sm:grid"
+              >
+                <ChatIcon chat={chat} className="size-5" />
+              </a>
+              <Link
+                href="/#saradnja"
+                onClick={close}
+                className="group relative inline-flex h-11 items-center gap-2.5 overflow-hidden bg-white px-4 text-[12px] font-bold tracking-[0.16em] whitespace-nowrap text-brand-black uppercase sm:px-5 sm:text-[13px] lg:h-12 lg:px-6"
+              >
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-0 origin-left scale-x-0 bg-brand-yellow transition-transform duration-500 ${ease} group-hover:scale-x-100`}
+                />
+                <span className="relative">Pokreni se</span>
+                <ArrowRightIcon
+                  className={`relative size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
+                />
+              </Link>
+              <button
+                type="button"
+                aria-label="Otvori meni"
+                aria-expanded={sheet}
+                aria-controls="mobilni-meni"
+                onClick={() => setSheet(true)}
+                className="grid size-11 place-items-center border border-white/15 text-white transition-colors hover:border-white/40 lg:hidden"
+              >
+                <span className="flex w-5 flex-col gap-1.5">
+                  <span className="h-0.5 w-5 bg-white" />
+                  <span className="h-0.5 w-3 bg-white" />
+                </span>
+              </button>
+            </div>
           </div>
         </div>
+
+        {armed && current && (
+          <div
+            ref={drop}
+            id="meni-paketi"
+            onMouseEnter={enter}
+            onMouseLeave={leave}
+            aria-hidden={!panel}
+            inert={!panel}
+            className={`absolute inset-x-0 top-full hidden px-5 pt-3 lg:block ${panel ? "visible" : "invisible"}`}
+          >
+            <div
+              className={`mx-auto w-[min(64rem,100%)] origin-top overflow-hidden rounded-3xl border border-white/10 bg-brand-surface shadow-[0_40px_90px_-30px_rgba(0,0,0,0.95)] transition-[opacity,transform] duration-500 ${ease} motion-reduce:transition-none ${
+                panel
+                  ? "translate-y-0 scale-100 opacity-100"
+                  : "-translate-y-2 scale-[0.985] opacity-0"
+              }`}
+            >
+              <div className="grid grid-cols-[22rem_minmax(0,1fr)]">
+                <ul ref={rows} className="relative border-r border-white/10 p-2">
+                  <span
+                    ref={marker}
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-x-2 top-0 rounded-2xl bg-white/[0.07] transition-[transform,height] duration-500 ${ease}`}
+                  >
+                    <span className="absolute inset-y-4 left-0 w-1 rounded-full bg-brand-yellow" />
+                  </span>
+                  {packages.map((p) => {
+                    const on = p.slug === current.slug;
+                    return (
+                      <li key={p.slug} data-slug={p.slug} className="relative">
+                        <Link
+                          href={`/paketi/${p.slug}`}
+                          onClick={close}
+                          onMouseEnter={() => setActive(p.slug)}
+                          onFocus={() => setActive(p.slug)}
+                          className="flex items-center gap-4 rounded-2xl px-4 py-4"
+                        >
+                          <span className="min-w-0 flex-1">
+                            <span
+                              className={`block text-[11px] font-bold tracking-[0.14em] uppercase transition-colors duration-300 ${on ? "text-brand-yellow" : "text-white/40"}`}
+                            >
+                              {p.tag}
+                            </span>
+                            <span
+                              className={`mt-1 block font-display text-[26px] leading-none transition-[color,transform] duration-500 ${ease} ${on ? "translate-x-1 text-white" : "text-white/80"}`}
+                            >
+                              {p.name}
+                            </span>
+                          </span>
+                          <span className="font-display text-2xl text-brand-yellow">{p.price}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <div className="relative min-h-[22rem] overflow-hidden">
+                  {packages.map((p) => {
+                    const ph = photos[p.slug];
+                    if (!ph) return null;
+                    const on = p.slug === current.slug;
+                    return (
+                      <Image
+                        key={p.slug}
+                        src={ph.src}
+                        alt=""
+                        fill
+                        sizes="42rem"
+                        className={`object-cover grayscale transition-[opacity,transform] duration-700 ${ease} ${ph.pos} ${
+                          on ? "scale-100 opacity-100" : "scale-105 opacity-0"
+                        }`}
+                      />
+                    );
+                  })}
+                  <span className="absolute inset-0 bg-gradient-to-r from-brand-surface via-brand-surface/80 to-brand-surface/10" />
+                  <div
+                    key={current.slug}
+                    className="fade-up relative flex h-full max-w-lg flex-col p-8"
+                    style={{ ["--d" as string]: "0s" }}
+                  >
+                    <p className="text-xs font-bold tracking-[0.16em] text-brand-yellow uppercase">
+                      {current.tag}
+                    </p>
+                    <p className="mt-3 font-display text-6xl leading-[0.88] text-white">
+                      {current.name}
+                    </p>
+                    <p className="mt-3 text-[15px] text-white/65">{current.audience}</p>
+                    <ul className="mt-5 space-y-2">
+                      {current.features.map((f) => (
+                        <li key={f} className="flex gap-2.5 text-[14px] text-white/80">
+                          <span className="mt-0.5 grid size-[18px] shrink-0 place-items-center rounded-full bg-brand-yellow text-brand-black">
+                            <TickIcon className="size-2.5" />
+                          </span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto flex items-center gap-3 pt-7">
+                      <Link
+                        href={`/prijava/${current.slug}`}
+                        onClick={close}
+                        className="group inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-brand-yellow px-5 text-[14px] font-bold whitespace-nowrap text-brand-black transition-colors duration-300 hover:bg-white"
+                      >
+                        Prijavi se
+                        <ArrowRightIcon
+                          className={`size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
+                        />
+                      </Link>
+                      <Link
+                        href={`/paketi/${current.slug}`}
+                        onClick={close}
+                        className="inline-flex h-11 shrink-0 items-center rounded-full border border-white/20 px-5 text-[14px] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-brand-black"
+                      >
+                        Detalji paketa
+                      </Link>
+                      <span className="ml-auto font-display text-4xl whitespace-nowrap text-white">
+                        {current.price}
+                        <span className="ml-1.5 font-body text-xs text-white/50">
+                          {current.unit}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-t border-white/10 px-6 py-3.5 text-[14px] font-semibold">
+                <Link
+                  href="/cjenovnik"
+                  onClick={close}
+                  className="group inline-flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white"
+                >
+                  Cijeli cjenovnik: konsultacije, lični trening, seminari
+                  <ArrowRightIcon
+                    className={`size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
+                  />
+                </Link>
+                <Link
+                  href="/#saradnja"
+                  onClick={close}
+                  className="group inline-flex items-center gap-2 text-brand-yellow transition-colors duration-300 hover:text-white"
+                >
+                  Ne znaš koji? Pomoći ću ti izabrati
+                  <ArrowRightIcon
+                    className={`size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
+                  />
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="absolute inset-x-0 bottom-0 h-px overflow-hidden">
-          <div ref={bar} className="h-full origin-left scale-x-0 bg-brand-yellow" />
+          <div ref={bar} className="h-full origin-left scale-x-0 bg-brand-yellow/70" />
         </div>
       </header>
 
@@ -352,13 +511,19 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
           <div className="sheet-up absolute inset-x-0 bottom-0 max-h-[88svh] overflow-y-auto rounded-t-[28px] bg-brand-surface px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20" />
             <ul className="grid grid-cols-2 gap-x-4">
-              {mobileLinks.map((l) => (
-                <li key={l.href}>
+              {mobileLinks.map((l, i) => (
+                <li
+                  key={l.href}
+                  className="fade-up"
+                  style={{ ["--d" as string]: `${0.04 + i * 0.03}s` }}
+                >
                   <Link
                     href={l.href}
                     onClick={close}
-                    className={`block py-2 font-display text-[30px] leading-tight ${
-                      l.href === pathname ? "text-brand-yellow" : "text-white"
+                    className={`block py-2 font-display text-[30px] leading-tight transition-colors ${
+                      l.href === pathname
+                        ? "text-brand-yellow"
+                        : "text-white active:text-brand-yellow"
                     }`}
                   >
                     {l.label}
@@ -366,14 +531,16 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 </li>
               ))}
             </ul>
-            <p className="mt-5 text-sm font-semibold text-white/50">Paketi</p>
+            <p className="mt-5 text-xs font-bold tracking-[0.16em] text-white/45 uppercase">
+              Paketi
+            </p>
             <ul className="mt-2 divide-y divide-white/10 rounded-2xl bg-brand-black/60">
               {packages.map((p) => (
                 <li key={p.slug}>
                   <Link
                     href={`/paketi/${p.slug}`}
                     onClick={close}
-                    className="flex min-h-14 items-center gap-3 px-4"
+                    className="flex min-h-14 items-center gap-3 px-4 transition-colors active:bg-white/5"
                   >
                     <span className="font-semibold">{p.name}</span>
                     <span className="ml-auto font-display text-2xl text-brand-yellow">
@@ -389,8 +556,10 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 href={chat.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex min-h-14 items-center justify-center gap-2 rounded-full border font-semibold ${
-                  wa ? "border-[#25D366]/40 text-[#25D366]" : "border-white/20 text-white"
+                className={`inline-flex min-h-14 items-center justify-center gap-2 border font-semibold ${
+                  chat.kind === "whatsapp"
+                    ? "border-[#25D366]/40 text-[#25D366]"
+                    : "border-white/20 text-white"
                 }`}
               >
                 <ChatIcon chat={chat} />
@@ -399,7 +568,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
               <Link
                 href="/#saradnja"
                 onClick={close}
-                className="inline-flex min-h-14 items-center justify-center rounded-full bg-brand-yellow font-bold text-brand-black"
+                className="inline-flex min-h-14 items-center justify-center bg-brand-yellow text-[13px] font-bold tracking-[0.16em] text-brand-black uppercase"
               >
                 Pokreni se
               </Link>
