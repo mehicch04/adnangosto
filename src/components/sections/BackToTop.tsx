@@ -20,7 +20,7 @@ export function BackToTop() {
   return (
     <button
       type="button"
-      aria-label="Nazad na vrh stranice"
+      aria-label="Natrag na vrh stranice"
       tabIndex={show ? 0 : -1}
       aria-hidden={!show}
       onClick={() => window.scrollTo({ top: 0 })}

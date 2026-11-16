@@ -9,7 +9,7 @@ const esc = (s: string) =>
 const nl = (s: string) => esc(s).replace(/\n/g, "<br>");
 
 function shell(body: string) {
-  return `<!doctype html><html lang="bs"><body style="margin:0;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#0a0a0a"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3f3f1;padding:24px 12px"><tr><td align="center"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:8px;overflow:hidden"><tr><td style="background:#0a0a0a;padding:20px 28px"><span style="font-size:20px;font-weight:bold;letter-spacing:2px;color:#edb12d">GOSTO ADNAN</span></td></tr><tr><td style="padding:28px">${body}</td></tr></table></td></tr></table></body></html>`;
+  return `<!doctype html><html lang="hr"><body style="margin:0;background:#f3f3f1;font-family:Arial,Helvetica,sans-serif;color:#0a0a0a"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3f3f1;padding:24px 12px"><tr><td align="center"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:8px;overflow:hidden"><tr><td style="background:#0a0a0a;padding:20px 28px"><span style="font-size:20px;font-weight:bold;letter-spacing:2px;color:#edb12d">GOSTO ADNAN</span></td></tr><tr><td style="padding:28px">${body}</td></tr></table></td></tr></table></body></html>`;
 }
 
 export function adminEmail(opts: {
@@ -64,7 +64,7 @@ export function confirmationEmail(opts: { pkg: CoachingPackage; firstName: strin
     `Nakon toga dobiješ početni plan. ${opts.pkg.checkIn}.`,
   ];
   const html = shell(
-    `<h1 style="margin:0 0 12px;font-size:24px">Prijava je stigla, ${esc(opts.firstName)}</h1><p style="margin:0 0 16px;font-size:15px;line-height:1.6">Hvala ti na povjerenju. Tvoja prijava za paket <strong>${esc(opts.pkg.name)}</strong> je zaprimljena.</p><p style="margin:0 0 8px;font-size:12px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#8a6a10">Šta slijedi</p><ol style="margin:0 0 20px;padding-left:20px;font-size:15px;line-height:1.7">${steps
+    `<h1 style="margin:0 0 12px;font-size:24px">Prijava je stigla, ${esc(opts.firstName)}</h1><p style="margin:0 0 16px;font-size:15px;line-height:1.6">Hvala ti na povjerenju. Tvoja prijava za paket <strong>${esc(opts.pkg.name)}</strong> je zaprimljena.</p><p style="margin:0 0 8px;font-size:12px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#8a6a10">Što slijedi</p><ol style="margin:0 0 20px;padding-left:20px;font-size:15px;line-height:1.7">${steps
       .map((s) => `<li>${esc(s)}</li>`)
       .join(
         "",
@@ -75,7 +75,7 @@ export function confirmationEmail(opts: { pkg: CoachingPackage; firstName: strin
     "",
     `Tvoja prijava za paket ${opts.pkg.name} je zaprimljena.`,
     "",
-    "Šta slijedi:",
+    "Što slijedi:",
     ...steps.map((s, i) => `${i + 1}. ${s}`),
     "",
     "Vikendom ne radim, pa odgovor na prijavu poslanu u petak ili subotu stiže od ponedjeljka.",

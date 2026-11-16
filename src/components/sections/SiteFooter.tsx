@@ -46,8 +46,8 @@ export async function SiteFooter() {
               className="h-14 w-auto"
             />
             <p className="mt-6 max-w-xs text-brand-muted">
-              IFBB Pro i trener takmičara. Coaching, priprema za takmičenja i edukacija za trenere,
-              uživo i online.
+              IFBB Pro i trener natjecatelja. Coaching, priprema za natjecanja i edukacija za
+              trenere, uživo i online.
             </p>
             <a
               href={site.instagram}
@@ -75,7 +75,7 @@ export async function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Saradnja">
+          <nav aria-label="Suradnja">
             <h2 className="font-display text-3xl leading-none tracking-wide text-brand-yellow">
               Paketi
             </h2>
@@ -119,7 +119,7 @@ export async function SiteFooter() {
               <li>Online coaching bez obzira na lokaciju</li>
             </ul>
             <Link
-              href="/#saradnja"
+              href="/#suradnja"
               className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white"
             >
               Prijavi se

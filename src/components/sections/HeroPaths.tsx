@@ -16,7 +16,7 @@ export function HeroPaths() {
         {heroPaths.map((p) => (
           <li key={p.id}>
             <a
-              href="#saradnja"
+              href="#suradnja"
               onClick={() => window.dispatchEvent(new CustomEvent(GOAL_EVENT, { detail: p.id }))}
               className="group flex min-h-12 items-center gap-2 text-[15px] font-semibold text-white/85 transition-colors hover:text-brand-yellow sm:inline-flex sm:min-h-9 sm:gap-1.5"
             >

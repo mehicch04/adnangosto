@@ -183,7 +183,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
   const validateCurrent = (): boolean => {
     if (step.kind === "photos") {
       if (processing > 0) {
-        setPhotoError("Sačekaj da se slike obrade.");
+        setPhotoError("Pričekaj da se slike obrade.");
         return false;
       }
       if (photos.length < PHOTO_MIN) {
@@ -225,7 +225,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
       (f) => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name),
     );
     if (!files.length) {
-      setPhotoError("Izaberi fotografije u JPG ili PNG formatu.");
+      setPhotoError("Odaberi fotografije u JPG ili PNG formatu.");
       return;
     }
     const room = PHOTO_MAX - photos.length;
@@ -325,7 +325,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
     } catch {
       setStatus({
         kind: "error",
-        message: "Slanje nije uspjelo. Provjeri internet vezu i pokušaj ponovo.",
+        message: "Slanje nije uspjelo. Provjeri internet vezu i Pokušaj ponovno.",
       });
     }
   };
@@ -465,7 +465,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
                 strokeLinejoin="round"
               />
             </svg>
-            Odgovore i slike vidi samo Adnan. Napredak se čuva na ovom uređaju dok ne pošalješ
+            Odgovore i slike vidi samo Adnan. Napredak se sprema na ovom uređaju dok ne pošalješ
             prijavu.
           </p>
         </div>
@@ -497,7 +497,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
         {restored && stepIndex < steps.length - 1 && (
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-md border border-brand-yellow/40 bg-brand-yellow/10 px-4 py-3 text-sm lg:mt-0 lg:mb-6">
             <p className="text-white/85">
-              Odgovori od prošlog puta su sačuvani. Slike treba dodati ponovo.
+              Odgovori od prošlog puta su spremljeni. Slike treba ponovno dodati.
             </p>
             <button
               type="button"
@@ -602,7 +602,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className="sr-only sm:not-sr-only">Nazad</span>
+                  <span className="sr-only sm:not-sr-only">Natrag</span>
                 </button>
               )}
               <button
@@ -644,7 +644,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
                 )}
               </button>
               <p className="ml-auto hidden text-sm text-white/45 sm:block">
-                {isLast ? "Prijava te ni na šta ne obavezuje." : "Napredak se čuva automatski."}
+                {isLast ? "Prijava te ni na što ne obvezuje." : "Napredak se sprema automatski."}
               </p>
             </div>
           </div>
@@ -958,7 +958,7 @@ function ReviewStep({
         </span>
         <span className="text-[15px] leading-relaxed text-white/85">
           Pristajem da Adnan Gosto obrađuje moje podatke iz ove prijave, uključujući fotografije i
-          podatke o zdravlju, isključivo radi procjene i pripreme saradnje, kako je opisano u{" "}
+          podatke o zdravlju, isključivo radi procjene i pripreme suradnje, kako je opisano u{" "}
           <Link
             href="/politika-privatnosti"
             target="_blank"
@@ -971,7 +971,7 @@ function ReviewStep({
       </label>
       {consentError && (
         <p id="consent-err" role="alert" className="mt-2 text-sm font-semibold text-[#ff8a7a]">
-          Za slanje prijave potrebna je tvoja saglasnost.
+          Za slanje prijave potrebna je tvoja privola.
         </p>
       )}
     </div>
@@ -1047,7 +1047,7 @@ function Success({
           href="/"
           className="inline-flex min-h-12 items-center rounded-md bg-brand-yellow px-6 font-semibold text-brand-black transition-colors hover:bg-[#f5c24a]"
         >
-          Nazad na početnu
+          Natrag na početnu
         </Link>
         <a
           href={instagram}

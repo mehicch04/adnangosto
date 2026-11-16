@@ -12,6 +12,7 @@ export async function SiteHeader() {
     audience: p.audience,
     features: p.cardFeatures,
     price: formatPrice(p.price),
+    anchor: formatPrice(p.anchorPrice),
     unit: p.priceUnit,
   }));
 

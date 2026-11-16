@@ -3,7 +3,7 @@ import { faq } from "@/content/site";
 import { contactLink } from "@/lib/contact";
 
 export function Faq() {
-  const chat = contactLink("Zdravo Adnane, imam pitanje prije prijave.");
+  const chat = contactLink("Bok Adnane, imam pitanje prije prijave.");
   return (
     <section
       id="pitanja"
@@ -38,7 +38,7 @@ export function Faq() {
           <div className="mt-10 flex flex-col gap-4 rounded-lg bg-brand-black p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div>
               <p className="font-display text-3xl leading-none">Nisi našao odgovor?</p>
-              <p className="mt-2 text-white/65">Piši mi direktno, odgovaram radnim danima.</p>
+              <p className="mt-2 text-white/65">Piši mi izravno, odgovaram radnim danima.</p>
             </div>
             <a
               href={chat.href}

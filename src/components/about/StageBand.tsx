@@ -14,7 +14,7 @@ export function StageBand() {
       <div className="absolute inset-0 -z-10 bg-brand-black/70" />
       <div className="mx-auto max-w-7xl px-5 py-24 lg:py-36">
         <p className="max-w-3xl font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
-          Najuspješniji takmičar BiH četiri godine zaredom,{" "}
+          Najuspješniji natjecatelj BiH četiri godine zaredom,{" "}
           <span className="text-brand-yellow">od 2012. do 2015.</span>
         </p>
         <dl className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/10 lg:grid-cols-4">

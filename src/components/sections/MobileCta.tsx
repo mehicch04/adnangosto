@@ -35,7 +35,7 @@ export function MobileCta() {
         )
       : null;
     if (hero && heroIo) heroIo.observe(hero);
-    const a = observe("saradnja", "inPackages");
+    const a = observe("suradnja", "inPackages");
     const b = observe("kontakt", "atEnd");
     return () => {
       heroIo?.disconnect();
@@ -52,7 +52,7 @@ export function MobileCta() {
       }`}
     >
       <Link
-        href="/#saradnja"
+        href="/#suradnja"
         tabIndex={show ? 0 : -1}
         className="flex min-h-12 items-center justify-center rounded-sm bg-brand-yellow text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase"
       >

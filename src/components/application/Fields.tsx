@@ -16,8 +16,9 @@ const control =
 function weekWord(n: number) {
   const a = n % 10;
   const b = n % 100;
-  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return "sedmice";
-  return "sedmica";
+  if (a === 1 && b !== 11) return "tjedan";
+  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return "tjedna";
+  return "tjedana";
 }
 
 function Label({ field, htmlFor }: { field: Field; htmlFor?: string }) {
@@ -30,7 +31,7 @@ function Label({ field, htmlFor }: { field: Field; htmlFor?: string }) {
       {field.label}
       {!field.required && (
         <span className="text-xs font-semibold tracking-wide text-white/45 uppercase">
-          Neobavezno
+          Neobvezno
         </span>
       )}
     </Tag>
@@ -189,7 +190,7 @@ export function FieldInput({ field, value, error, onChange, onBlur }: Props) {
           list={`${id}-list`}
           onChange={(e) => onChange(e.target.value)}
           className={`${control} ${border} min-h-12`}
-          placeholder="Počni kucati ili izaberi"
+          placeholder="Počni tipkati ili odaberi"
         />
         <datalist id={`${id}-list`}>
           {countries.map((c) => (
@@ -225,12 +226,12 @@ export function FieldInput({ field, value, error, onChange, onBlur }: Props) {
             weeks >= 12 ? "bg-brand-yellow/15 text-brand-yellow" : "bg-[#ff8a7a]/15 text-[#ffb3a8]"
           }`}
         >
-          Do takmičenja: {weeks} {weekWord(weeks)}
+          Do natjecanja: {weeks} {weekWord(weeks)}
         </p>
       )}
       {weeks !== null && weeks >= 0 && weeks < 12 && !error && (
         <p className="mt-2 text-sm text-white/60">
-          Pripreme kraće od 3 mjeseca prihvatam samo pod posebnim uslovima, uz dogovor. Prijavu
+          Pripreme kraće od 3 mjeseca prihvaćam samo pod posebnim uvjetima, uz dogovor. Prijavu
           svejedno pošalji.
         </p>
       )}

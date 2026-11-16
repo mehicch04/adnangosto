@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { PRICE_ANCHOR_LABEL } from "@/content/packages";
 import type { ContactLink } from "@/lib/contact";
 
 export type MenuPackage = {
@@ -14,6 +15,7 @@ export type MenuPackage = {
   audience: string;
   features: string[];
   price: string;
+  anchor: string;
   unit: string;
 };
 
@@ -25,7 +27,7 @@ const links = [
 ];
 
 const mobileLinks = [
-  { label: "Paketi", href: "/#saradnja" },
+  { label: "Paketi", href: "/#suradnja" },
   { label: "Transformacije", href: "/#transformacije" },
   { label: "Rezultati", href: "/#rezultati" },
   { label: "O meni", href: "/o-meni" },
@@ -35,9 +37,9 @@ const mobileLinks = [
 
 const photos: Record<string, { src: string; pos: string }> = {
   "online-coaching": { src: "/images/om-ledja.jpg", pos: "object-[50%_20%]" },
-  "paket-12-sedmica": { src: "/images/transformacije/tr-01.jpg", pos: "object-[50%_30%]" },
+  "paket-12-tjedana": { src: "/images/transformacije/tr-01.jpg", pos: "object-[50%_30%]" },
   "coaching-i-edukacija": { src: "/images/om-konstrukcija.jpg", pos: "object-[50%_40%]" },
-  "takmicarske-pripreme": { src: "/images/takmicari/t1.jpg", pos: "object-[50%_20%]" },
+  "natjecateljske-pripreme": { src: "/images/takmicari/t1.jpg", pos: "object-[50%_20%]" },
 };
 
 const ease = "ease-[cubic-bezier(0.22,1,0.36,1)]";
@@ -308,7 +310,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 <ChatIcon chat={chat} className="size-5" />
               </a>
               <Link
-                href="/#saradnja"
+                href="/#suradnja"
                 onClick={close}
                 className="group relative inline-flex h-11 items-center gap-2.5 overflow-hidden bg-white px-4 text-[12px] font-bold tracking-[0.16em] whitespace-nowrap text-brand-black uppercase sm:px-5 sm:text-[13px] lg:h-12 lg:px-6"
               >
@@ -453,10 +455,15 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                       >
                         Detalji paketa
                       </Link>
-                      <span className="ml-auto font-display text-4xl whitespace-nowrap text-white">
-                        {current.price}
-                        <span className="ml-1.5 font-body text-xs text-white/50">
-                          {current.unit}
+                      <span className="ml-auto text-right">
+                        <span className="block font-display text-4xl whitespace-nowrap text-white">
+                          {current.price}
+                          <span className="ml-1.5 font-body text-xs text-white/50">
+                            {current.unit}
+                          </span>
+                        </span>
+                        <span className="block text-[11px] whitespace-nowrap text-white/40">
+                          {PRICE_ANCHOR_LABEL}: {current.anchor}
                         </span>
                       </span>
                     </div>
@@ -469,13 +476,13 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                   onClick={close}
                   className="group inline-flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white"
                 >
-                  Cijeli cjenovnik: konsultacije, lični trening, seminari
+                  Cijeli cjenovnik: konzultacije, osobni trening, seminari
                   <ArrowRightIcon
                     className={`size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
                   />
                 </Link>
                 <Link
-                  href="/#saradnja"
+                  href="/#suradnja"
                   onClick={close}
                   className="group inline-flex items-center gap-2 text-brand-yellow transition-colors duration-300 hover:text-white"
                 >
@@ -566,7 +573,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                 {chat.label}
               </a>
               <Link
-                href="/#saradnja"
+                href="/#suradnja"
                 onClick={close}
                 className="inline-flex min-h-14 items-center justify-center bg-brand-yellow text-[13px] font-bold tracking-[0.16em] text-brand-black uppercase"
               >

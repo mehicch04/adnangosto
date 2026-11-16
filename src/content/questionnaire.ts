@@ -32,8 +32,8 @@ export type Step = {
 };
 
 export const countries = [
-  "Bosna i Hercegovina",
   "Hrvatska",
+  "Bosna i Hercegovina",
   "Srbija",
   "Crna Gora",
   "Slovenija",
@@ -46,10 +46,10 @@ export const countries = [
 ];
 
 export const photoRules = [
-  "Cijelo tijelo na slici, od glave do pete. Selfiji i djelimično slikano tijelo se ne priznaju.",
+  "Cijelo tijelo na slici, od glave do pete. Selfiji i djelomično snimljeno tijelo ne priznaju se.",
   "Dobro svjetlo. Izvor svjetla ne smije biti iza tebe.",
-  "Bez sjenki po tijelu i bez jakog svjetla koje direktno udara u tijelo.",
-  "Svaki put slikaj na istom mjestu, da se napredak može uporediti.",
+  "Bez sjena po tijelu i bez jakog svjetla koje izravno udara u tijelo.",
+  "Svaki put se slikaj na istom mjestu, kako bi se napredak mogao usporediti.",
 ];
 
 export const PHOTO_MIN = 1;
@@ -84,7 +84,7 @@ const contact: Step = {
       type: "tel",
       autoComplete: "tel",
       inputMode: "tel",
-      placeholder: "+387 6x xxx xxx",
+      placeholder: "+385 9x xxx xxxx",
       maxLength: 30,
       half: true,
     },
@@ -121,12 +121,12 @@ const body = (goalsExtra: Field[] = []): Step => ({
       min: 30,
       max: 250,
       suffix: "kg",
-      help: "Izmjeri se ujutro, nakon toaleta, prije jela i pića.",
+      help: "Izvaži se ujutro, nakon toaleta, prije jela i pića.",
       half: true,
     },
     {
       id: "trainingDays",
-      label: "Broj treninga sedmično s kojim želiš krenuti",
+      label: "Broj treninga tjedno s kojim želiš krenuti",
       type: "radio",
       required: true,
       options: ["2", "3", "4", "5", "6"],
@@ -141,7 +141,7 @@ const body = (goalsExtra: Field[] = []): Step => ({
       rows: 4,
       maxLength: 2000,
       placeholder:
-        "Npr. skinuti 10 kg do ljeta, izgraditi mišićnu masu, više energije tokom dana...",
+        "Npr. skinuti 10 kg do ljeta, izgraditi mišićnu masu, više energije tijekom dana...",
     },
   ],
 });
@@ -159,7 +159,7 @@ const training: Step = {
       required: true,
       rows: 4,
       maxLength: 2000,
-      help: "Podjela po mišićnim skupinama, koliko puta sedmično, kako treniraš.",
+      help: "Podjela po mišićnim skupinama, koliko puta tjedno, kako treniraš.",
     },
     {
       id: "nutrition",
@@ -168,7 +168,7 @@ const training: Step = {
       required: true,
       rows: 4,
       maxLength: 2000,
-      help: "Šta jedeš tokom dana, navike i sve specifičnosti, npr. intolerancije na određene namirnice.",
+      help: "Što jedeš tijekom dana, navike i sve specifičnosti, npr. intolerancije na određene namirnice.",
     },
     {
       id: "supplements",
@@ -193,7 +193,7 @@ const aas: Field[] = [
   },
   {
     id: "aasDetails",
-    label: "Šta tačno, koliko dugo i u kojim količinama?",
+    label: "Što točno, koliko dugo i u kojim količinama?",
     type: "textarea",
     required: true,
     rows: 3,
@@ -213,7 +213,7 @@ const health = (withAas: boolean): Step => ({
       type: "textarea",
       rows: 3,
       maxLength: 1500,
-      help: "Sve što trebam znati: povrede, dijagnoze, terapija. Ako nema ništa, ostavi prazno.",
+      help: "Sve što trebam znati: ozljede, dijagnoze, terapija. Ako nema ništa, ostavi prazno.",
     },
     {
       id: "routine",
@@ -248,7 +248,7 @@ const review: Step = {
 const twelveWeeks: Field[] = [
   {
     id: "focus",
-    label: "Šta prvenstveno želiš poboljšati?",
+    label: "Što prvenstveno želiš poboljšati?",
     type: "chips",
     required: true,
     options: [
@@ -256,7 +256,7 @@ const twelveWeeks: Field[] = [
       "Izgraditi mišiće",
       "Ojačati",
       "Biti vitalniji i pokretniji",
-      "Kardiovaskularni sistem",
+      "Kardiovaskularni sustav",
     ],
   },
   {
@@ -265,7 +265,7 @@ const twelveWeeks: Field[] = [
     type: "textarea",
     rows: 3,
     maxLength: 1500,
-    placeholder: "Npr. izlasci vikendom, slatko poslije ručka, kafa s mlijekom...",
+    placeholder: "Npr. izlasci vikendom, slatko nakon ručka, kava s mlijekom...",
     help: "Plan slažem oko njih, zato slobodno napiši sve.",
   },
 ];
@@ -281,7 +281,7 @@ const education: Step = {
       type: "radio",
       required: true,
       options: ["Na meni", "Na mom klijentu"],
-      help: "Ako radimo na klijentu, u narednim koracima upiši podatke o njemu.",
+      help: "Ako radimo na klijentu, u sljedećim koracima upiši podatke o njemu.",
     },
     {
       id: "segment",
@@ -295,33 +295,33 @@ const education: Step = {
 
 const competition: Step = {
   id: "takmicenje",
-  title: "Takmičenje",
-  short: "Takmičenje",
-  intro: "Pripremu slažem prema datumu i tačnom broju sedmica koje imamo na raspolaganju.",
+  title: "Natjecanje",
+  short: "Natjecanje",
+  intro: "Pripremu slažem prema datumu i točnom broju tjedana koje imamo na raspolaganju.",
   fields: [
     {
       id: "competition",
-      label: "Takmičenje",
+      label: "Natjecanje",
       type: "text",
       required: true,
       maxLength: 160,
-      placeholder: "Naziv takmičenja i kategorija",
+      placeholder: "Naziv natjecanja i kategorija",
     },
     {
       id: "competitionDate",
-      label: "Datum takmičenja",
+      label: "Datum natjecanja",
       type: "date",
       required: true,
     },
     {
       id: "experience",
-      label: "Dosadašnje iskustvo s takmičarskim bodybuildingom",
+      label: "Dosadašnje iskustvo s natjecateljskim bodybuildingom",
       type: "textarea",
       required: true,
       rows: 4,
       maxLength: 2000,
       placeholder:
-        "Na kojim takmičenjima si nastupao, plasmani, kategorije... ili da ti je ovo prvi put",
+        "Na kojim natjecanjima si nastupao, plasmani, kategorije... ili da ti je ovo prvi put",
     },
     {
       id: "posing",
@@ -335,9 +335,9 @@ const competition: Step = {
 
 export const questionnaires: Record<PackageSlug, Step[]> = {
   "online-coaching": [contact, body(), training, health(true), photos, review],
-  "paket-12-sedmica": [contact, body(twelveWeeks), training, health(false), photos, review],
+  "paket-12-tjedana": [contact, body(twelveWeeks), training, health(false), photos, review],
   "coaching-i-edukacija": [contact, education, body(), training, health(true), photos, review],
-  "takmicarske-pripreme": [contact, competition, body(), training, health(true), photos, review],
+  "natjecateljske-pripreme": [contact, competition, body(), training, health(true), photos, review],
 };
 
 export type Answers = Record<string, string | string[]>;
@@ -353,12 +353,12 @@ const phoneRe = /^[+\d\s()/.-]{6,30}$/;
 export function validateField(field: Field, raw: string | string[] | undefined): string | null {
   if (field.type === "chips") {
     const list = Array.isArray(raw) ? raw : [];
-    if (field.required && list.length === 0) return "Izaberi barem jednu opciju.";
+    if (field.required && list.length === 0) return "Odaberi barem jednu opciju.";
     if (list.some((v) => !field.options?.includes(v))) return "Neispravan odabir.";
     return null;
   }
   const value = typeof raw === "string" ? raw.trim() : "";
-  if (!value) return field.required ? "Ovo polje je obavezno." : null;
+  if (!value) return field.required ? "Ovo polje je obvezno." : null;
   if (field.maxLength && value.length > field.maxLength)
     return `Najviše ${field.maxLength} znakova.`;
   if (field.type === "email" && !emailRe.test(value)) return "Upiši ispravan e-mail.";
@@ -370,13 +370,13 @@ export function validateField(field: Field, raw: string | string[] | undefined):
     if (field.max !== undefined && n > field.max) return `Najviše ${field.max}.`;
   }
   if (field.type === "radio" && field.options && !field.options.includes(value))
-    return "Izaberi jednu od ponuđenih opcija.";
+    return "Odaberi jednu od ponuđenih opcija.";
   if (field.type === "date") {
     const d = new Date(value);
     if (Number.isNaN(d.getTime())) return "Upiši ispravan datum.";
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (d < today) return "Datum takmičenja ne može biti u prošlosti.";
+    if (d < today) return "Datum natjecanja ne može biti u prošlosti.";
   }
   return null;
 }

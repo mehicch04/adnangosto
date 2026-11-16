@@ -1,5 +1,5 @@
 export type PackageSlug =
-  "online-coaching" | "paket-12-sedmica" | "coaching-i-edukacija" | "takmicarske-pripreme";
+  "online-coaching" | "paket-12-tjedana" | "coaching-i-edukacija" | "natjecateljske-pripreme";
 
 export type PackageFaq = { q: string; a: string };
 
@@ -12,6 +12,7 @@ export type CoachingPackage = {
   tagline: string;
   audience: string;
   price: number;
+  anchorPrice: number;
   priceUnit: string;
   priceNote: string;
   checkIn: string;
@@ -38,116 +39,121 @@ export type PackageCompare = {
 
 export const packageCompare: Record<PackageSlug, PackageCompare> = {
   "online-coaching": {
-    tag: "Sedmično praćenje",
-    bestFor: "Imaš jasan cilj i želiš da neko prati svaki tvoj korak",
+    tag: "Tjedno praćenje",
+    bestFor: "Imaš jasan cilj i želiš da netko prati svaki tvoj korak",
     payment: "Mjesečno",
     tracking: "Check-in svakih 7 dana, dan biraš sam",
     duration: "Mjesec po mjesec, sve do cilja",
     edge: "Plan se mijenja čim tijelo krene drugačije",
   },
-  "paket-12-sedmica": {
+  "paket-12-tjedana": {
     tag: "Bez pritiska",
     bestFor: "Početnici i srednje iskusni koji žele rezultat bez odricanja od svega",
     payment: "Jednom unaprijed, za sva 3 mjeseca",
-    tracking: "Check-in svake 4 sedmice, ukupno 3, preko e-maila",
-    duration: "12 sedmica, pa produžiš ili pređeš na online coaching",
+    tracking: "Check-in svaka 4 tjedna, ukupno 3, putem e-maila",
+    duration: "12 tjedana, zatim produžiš ili prijeđeš na online coaching",
     edge: "Plan složen oko navika kojih se ne želiš odreći",
   },
   "coaching-i-edukacija": {
     tag: "Za trenere",
     bestFor: "Treneri i iskusniji vježbači koji žele razumjeti cijeli proces",
     payment: "Mjesečno, coaching i edukacija u istoj cijeni",
-    tracking: "Redovni check-in, svaki je ujedno i lekcija",
-    duration: "Cijeli proces, dok ne znaš raditi samostalno",
+    tracking: "Redoviti check-in, svaki je ujedno i lekcija",
+    duration: "Cijeli proces, dok ne naučiš raditi samostalno",
     edge: "Radimo na tebi ili na tvom klijentu, uz objašnjenje svake odluke",
   },
-  "takmicarske-pripreme": {
-    tag: "Za binu",
-    bestFor: "Takmičari, od prvog nastupa do pro karte",
+  "natjecateljske-pripreme": {
+    tag: "Za natjecatelje",
+    bestFor: "Natjecatelji, od prvog nastupa do pro karte",
     payment: "Mjesečno",
-    tracking: "Plan se vodi sedmicu po sedmicu, sve do završnice",
-    duration: "Do dana takmičenja, priprema traje najmanje 3 mjeseca",
-    edge: "Završnica do bine i pomoć oko pozinga po dogovoru",
+    tracking: "Plan se vodi tjedan po tjedan, sve do završnice",
+    duration: "Do dana natjecanja, priprema traje najmanje 3 mjeseca",
+    edge: "Završnica pred nastup i pomoć oko pozinga po dogovoru",
   },
 };
 
 export const ADNAN_EMAIL = "adnan.adoni.gosto@gmail.com";
+
+export const PRICE_ANCHOR_LABEL = "Cijena na dan 15. 9. 2025.";
+
+export const PRICE_VAT_NOTE = "Sve cijene su s PDV-om.";
 
 export const packages: CoachingPackage[] = [
   {
     slug: "online-coaching",
     name: "Online coaching",
     shortName: "Online coaching",
-    tagline: "Klasični online coaching uz sedmični check-in i stalno prilagođavanje plana.",
-    audience: "Za one koji žele redovno praćenje i plan koji se mijenja zajedno s njima.",
+    tagline: "Klasični online coaching uz tjedni check-in i stalno prilagođavanje plana.",
+    audience: "Za one koji žele redovito praćenje i plan koji se mijenja zajedno s njima.",
     price: 180,
+    anchorPrice: 180,
     priceUnit: "mjesečno",
     priceNote: "Plaća se mjesečno",
     checkIn: "Check-in svakih 7 dana",
     billing: "mjesečno",
     cardFeatures: [
-      "Početni plan treninga i prehrane po upitniku",
+      "Početni plan treninga i prehrane prema upitniku",
       "Check-in i izmjene svakih 7 dana",
       "Dostupan za pitanja između check-inova",
     ],
     intro: [
-      "Klasičan oblik online coachinga. Svake sedmice šalješ check-in, ja pratim napredak i prilagođavam sve parametre tvojim potrebama i mogućnostima.",
-      "Sve kreće od upitnika koji mi daje precizan uvid u tvoje stanje, mogućnosti i ciljeve. Prema njemu slažem početni plan, a onda ga doradim sa svakim check-inom.",
+      "Klasičan oblik online coachinga. Svaki tjedan šalješ check-in, ja pratim napredak i prilagođavam sve parametre tvojim potrebama i mogućnostima.",
+      "Sve kreće od upitnika koji mi daje precizan uvid u tvoje stanje, mogućnosti i ciljeve. Prema njemu slažem početni plan, a zatim ga doradim sa svakim check-inom.",
     ],
     forWho: [
-      "Želiš da neko prati svaki tvoj korak i reaguje na vrijeme",
-      "Imaš jasan cilj i spreman si raditi sedmicu po sedmicu",
+      "Želiš da netko prati svaki tvoj korak i reagira na vrijeme",
+      "Imaš jasan cilj i spreman si raditi tjedan po tjedan",
       "Želiš plan koji se mijenja kako se mijenja tvoje tijelo",
     ],
     includes: [
       {
         title: "Upitnik i početni plan",
-        text: "Detaljan upitnik o tvom stanju, rutini i ciljevima, pa plan treninga i prehrane složen prema njemu.",
+        text: "Detaljan upitnik o tvom stanju, rutini i ciljevima, a zatim plan treninga i prehrane složen prema njemu.",
       },
       {
         title: "Check-in svakih 7 dana",
-        text: "Šalješ slike i podatke, a ja na osnovu njih postavljam sve parametre za narednu sedmicu.",
+        text: "Šalješ slike i podatke, a ja na temelju njih postavljam sve parametre za sljedeći tjedan.",
       },
       {
         title: "Stalna prilagodba",
-        text: "Trening, prehrana i suplementacija se mijenjaju kad tijelo krene drugačije od plana.",
+        text: "Trening, prehrana i suplementacija mijenjaju se kad tijelo krene drugačije od plana.",
       },
       {
         title: "Pitanja između check-inova",
-        text: "Radnim danima sam na raspolaganju za sva pitanja vezana za sam proces.",
+        text: "Radnim danima sam na raspolaganju za sva pitanja vezana uz sam proces.",
       },
     ],
     steps: [
       {
-        title: "Popuniš upitnik",
-        text: "Odgovoriš na pitanja i pošalješ slike. Tako odmah vidim kompletnu situaciju.",
+        title: "Ispuniš upitnik",
+        text: "Odgovoriš na pitanja i pošalješ slike. Tako odmah vidim cijelu situaciju.",
       },
       {
         title: "Dobiješ početni plan",
         text: "Trening i prehrana složeni prema tvojoj rutini, mogućnostima i cilju.",
       },
       {
-        title: "Check-in svake sedmice",
-        text: "Dan biraš sam. Nije bitno da li je ponedjeljak ili četvrtak, bitno je da si redovan.",
+        title: "Check-in svaki tjedan",
+        text: "Dan biraš sam. Nije važno je li ponedjeljak ili četvrtak, važno je da si redovit.",
       },
       {
         title: "Izmjene i napredak",
-        text: "Nakon svakog check-ina dobiješ upute za narednu sedmicu, sve do cilja.",
+        text: "Nakon svakog check-ina dobiješ upute za sljedeći tjedan, sve do cilja.",
       },
     ],
     notes: [
       "Vikendom ne radim. Izmjene radim od ponedjeljka, redom kako su check-inovi stizali od subote.",
-      "Ako check-in pošalješ u ponedjeljak ujutro, može se desiti da odgovor stigne dan kasnije. Trenutni plan i dalje daje rezultate.",
-      "Tvoj zadatak je da budeš redovan. Razmak od 7 do 10 dana između check-inova je potpuno u redu.",
+      "Ako check-in pošalješ u ponedjeljak ujutro, može se dogoditi da odgovor stigne dan kasnije. Trenutni plan i dalje daje rezultate.",
+      "Tvoj je zadatak biti redovit. Razmak od 7 do 10 dana između check-inova potpuno je u redu.",
     ],
     faq: [
       {
         q: "Koji dan šaljem check-in?",
-        a: "Nema određenog dana. Šalješ ga kad ti odgovara, samo da razmak bude otprilike 7 dana. I 7 do 10 dana je u redu.",
+        a: "Nema određenog dana. Šalješ ga kad ti odgovara, samo neka razmak bude otprilike 7 dana. I 7 do 10 dana je u redu.",
       },
       {
-        q: "Šta ako zakasnim s check-inom par dana?",
-        a: "Ništa strašno. Nije bitno da li je check-in poslan isti dan kao prošle sedmice ili 2 do 3 dana kasnije. Bitno je da si redovan.",
+        q: "Što ako zakasnim s check-inom par dana?",
+        a: "Ništa strašno. Nije važno je li check-in poslan isti dan kao prošli tjedan ili 2 do 3 dana kasnije. Važno je da si redovit.",
       },
       {
         q: "Odgovaraš li vikendom?",
@@ -157,31 +163,32 @@ export const packages: CoachingPackage[] = [
     image: "/images/om-ledja.jpg",
   },
   {
-    slug: "paket-12-sedmica",
-    name: "Paket 12 sedmica",
-    shortName: "12 sedmica",
+    slug: "paket-12-tjedana",
+    name: "Paket 12 tjedana",
+    shortName: "12 tjedana",
     badge: "Za početnike",
     tagline: "Napredak bez pritiska. Plan koji se uklapa u tvoj život, a ne obrnuto.",
     audience: "Za početnike i srednje iskusne koji žele rezultat bez spartanskog pristupa.",
-    price: 480,
-    priceUnit: "za 12 sedmica",
+    price: 380,
+    anchorPrice: 380,
+    priceUnit: "za 12 tjedana",
     priceNote: "Plaća se jednom unaprijed, za sva 3 mjeseca",
-    checkIn: "Check-in svake 4 sedmice",
+    checkIn: "Check-in svaka 4 tjedna",
     billing: "jednokratno",
     cardFeatures: [
-      "Početni plan treninga i prehrane po upitniku",
-      "3 check-ina, svake 4 sedmice, preko e-maila",
+      "Početni plan treninga i prehrane prema upitniku",
+      "3 check-ina, svaka 4 tjedna, putem e-maila",
       "Bez odricanja od svega i bez spartanskog režima",
     ],
     intro: [
-      "Početak je isti kao kod online coachinga. Popuniš upitnik, a ja prema tvojoj situaciji složim polazni plan.",
-      "Check-in ide svake 4 sedmice, što znači 3 check-ina tokom jednog bloka od 12 sedmica. Sve ide preko e-maila. Poslije 12 sedmica možeš produžiti na isti način ili preći na online coaching.",
+      "Početak je isti kao kod online coachinga. Ispuniš upitnik, a ja prema tvojoj situaciji složim polazni plan.",
+      "Check-in je svaka 4 tjedna, što znači 3 check-ina tijekom jednog bloka od 12 tjedana. Sve ide putem e-maila. Nakon 12 tjedana možeš produžiti na isti način ili prijeći na online coaching.",
     ],
     forWho: [
       "Želiš napredak, ali ne želiš pratiti program iz dana u dan",
       "Ne želiš se odreći društvenog života i svega što voliš",
-      "Imaš višak kilograma, manjak kilograma ili samo želiš izgraditi mišić bez žurbe",
-      "Želiš manje treninga sedmično, a da i dalje vidiš rezultat",
+      "Imaš višak kilograma, manjak kilograma ili samo želiš izgraditi mišiće bez žurbe",
+      "Želiš manje treninga tjedno, a da i dalje vidiš rezultat",
     ],
     includes: [
       {
@@ -189,56 +196,56 @@ export const packages: CoachingPackage[] = [
         text: "Plan treninga i prehrane složen prema tvom stanju, rutini i navikama kojih se ne želiš odreći.",
       },
       {
-        title: "3 check-ina u 12 sedmica",
-        text: "Svake 4 sedmice šalješ check-in, a ja prilagodim plan za naredni period.",
+        title: "3 check-ina u 12 tjedana",
+        text: "Svaka 4 tjedna šalješ check-in, a ja prilagodim plan za sljedeće razdoblje.",
       },
       {
         title: "Tempo koji sam biraš",
-        text: "Sistem radi onoliko koliko se posvetiš. Može donijeti male pomake ili iznadprosječnu transformaciju.",
+        text: "Sustav radi onoliko koliko mu se posvetiš. Može donijeti male pomake ili iznadprosječnu transformaciju.",
       },
       {
         title: "Nastavak po želji",
-        text: "Nakon 12 sedmica produžiš isti paket ili pređeš na online coaching sa sedmičnim check-inom.",
+        text: "Nakon 12 tjedana produžiš isti paket ili prijeđeš na online coaching s tjednim check-inom.",
       },
     ],
     steps: [
       {
-        title: "Popuniš upitnik",
-        text: "Navedeš i navike kojih se ne želiš odreći i šta tačno očekuješ od ovih 12 sedmica.",
+        title: "Ispuniš upitnik",
+        text: "Navedeš i navike kojih se ne želiš odreći te što točno očekuješ od ovih 12 tjedana.",
       },
       {
         title: "Dobiješ polazni plan",
-        text: "Plan je složen tako da se uklopi u tvoj posao, obaveze i slobodno vrijeme.",
+        text: "Plan je složen tako da se uklopi u tvoj posao, obveze i slobodno vrijeme.",
       },
       {
-        title: "Check-in svake 4 sedmice",
-        text: "Ukupno 3 check-ina preko e-maila. Između njih radiš po planu svojim tempom.",
+        title: "Check-in svaka 4 tjedna",
+        text: "Ukupno 3 check-ina putem e-maila. Između njih radiš po planu svojim tempom.",
       },
       {
         title: "Produžiš ili nastaviš dalje",
-        text: "Poslije 12 sedmica biraš novi blok ili prelazak na online coaching.",
+        text: "Nakon 12 tjedana biraš novi blok ili prelazak na online coaching.",
       },
     ],
     why: {
-      title: "Zašto check-in samo svake 4 sedmice?",
+      title: "Zašto check-in samo svaka 4 tjedna?",
       paragraphs: [
-        "Petnaest godina rada s ljudima pokazalo je da više od polovine rekreativaca želi napredak i rezultat, ali ne želi strogo praćenje programa iz dana u dan, stalne restrikcije i propuštanje društvenog života.",
-        "Ljudi godinama dolaze u teretanu i izgledaju isto. Da su svakih mjesec ili dva imali i najmanji napredak, za dvije godine bi imali drugo tijelo. Ovaj paket je kompromis između cijene i utroška vremena, za isti cilj.",
-        "Program je onoliko učinkovit koliko ga ti napraviš učinkovitim. Može se napraviti i vrhunski rezultat, ali je prije svega osmišljen za one koji ne postavljaju ljestvicu visoko.",
+        "Petnaest godina rada s ljudima pokazalo je da više od polovice rekreativaca želi napredak i rezultat, ali ne želi strogo praćenje programa iz dana u dan, stalna ograničenja i propuštanje društvenog života.",
+        "Ljudi godinama dolaze u teretanu i izgledaju isto. Da su svakih mjesec ili dva imali i najmanji napredak, za dvije godine imali bi drugo tijelo. Ovaj paket je kompromis između cijene i utrošenog vremena, za isti cilj.",
+        "Program je onoliko učinkovit koliko ga ti učiniš učinkovitim. Može se postići i vrhunski rezultat, ali je prije svega osmišljen za one koji ne postavljaju ljestvicu visoko.",
       ],
     },
     notes: [
       "Cijena pokriva sva 3 mjeseca i plaća se jednom, unaprijed.",
-      "Komunikacija i check-in idu isključivo preko e-maila.",
+      "Komunikacija i check-in idu isključivo putem e-maila.",
     ],
     faq: [
       {
         q: "Je li ovaj paket samo za početnike?",
-        a: "Napravljen je za početnike i srednje iskusne, ali i za sve koji žele napredak bez velikog pritiska. Isti sistem može donijeti i iznadprosječnu transformaciju, zavisno od toga koliko se posvetiš.",
+        a: "Napravljen je za početnike i srednje iskusne, ali i za sve koji žele napredak bez velikog pritiska. Isti sustav može donijeti i iznadprosječnu transformaciju, ovisno o tome koliko mu se posvetiš.",
       },
       {
-        q: "Šta nakon 12 sedmica?",
-        a: "Možeš produžiti saradnju na isti način ili preći na online coaching sa check-inom svakih 7 dana.",
+        q: "Što nakon 12 tjedana?",
+        a: "Možeš produžiti suradnju na isti način ili prijeći na online coaching s check-inom svakih 7 dana.",
       },
       {
         q: "Moram li se odreći izlazaka i hrane koju volim?",
@@ -254,6 +261,7 @@ export const packages: CoachingPackage[] = [
     tagline: "Učiš kroz praksu, na stvarnoj transformaciji, korak po korak.",
     audience: "Za trenere i iskusnije vježbače koji žele razumjeti cijeli proces.",
     price: 350,
+    anchorPrice: 350,
     priceUnit: "mjesečno",
     priceNote: "Coaching i edukacija u istoj cijeni",
     checkIn: "Proces vodimo zajedno",
@@ -264,8 +272,8 @@ export const packages: CoachingPackage[] = [
       "Svaka odluka objašnjena do detalja",
     ],
     intro: [
-      "Ovaj oblik saradnje je za one koji žele naučiti kako proces zaista radi, ili unaprijediti svoje znanje u radu s klijentima.",
-      "Teorija bez prakse ne vrijedi mnogo. Zato zajedno prolazimo kroz tvoju transformaciju, ili zajedno vodimo jednog od tvojih klijenata, na kojem ti detaljno objašnjavam cijeli proces.",
+      "Ovaj oblik suradnje je za one koji žele naučiti kako proces zaista funkcionira ili unaprijediti svoje znanje u radu s klijentima.",
+      "Teorija bez prakse ne vrijedi mnogo. Zato zajedno prolazimo kroz tvoju transformaciju ili zajedno vodimo jednog od tvojih klijenata, na kojem ti detaljno objašnjavam cijeli proces.",
     ],
     forWho: [
       "Trener si i želiš bolje rezultate sa svojim klijentima",
@@ -275,25 +283,25 @@ export const packages: CoachingPackage[] = [
     includes: [
       {
         title: "Coaching kroz cijeli proces",
-        text: "Transformacija tebe ili tvog klijenta, s planom treninga i prehrane i redovnim izmjenama.",
+        text: "Transformacija tebe ili tvog klijenta, s planom treninga i prehrane i redovitim izmjenama.",
       },
       {
         title: "Objašnjenje svakog koraka",
-        text: "Za svaku izmjenu znaš zašto se radi, kako se donosi odluka i šta se očekuje.",
+        text: "Za svaku izmjenu znaš zašto se radi, kako se donosi odluka i što se očekuje.",
       },
       {
         title: "Rješavanje stagnacije",
-        text: "Kroz stvarne situacije pokazujem kako se prepozna i riješi zastoj u napretku.",
+        text: "Kroz stvarne situacije pokazujem kako se prepoznaje i rješava zastoj u napretku.",
       },
       {
         title: "Pitanja kad god zatrebaju",
-        text: "Na raspolaganju sam i za sva dodatna pitanja vezana za trening i prehranu.",
+        text: "Na raspolaganju sam i za sva dodatna pitanja vezana uz trening i prehranu.",
       },
     ],
     steps: [
       {
         title: "Biraš na kome radimo",
-        text: "Na tebi ili na tvom klijentu. U upitniku navedeš i šta te više zanima, trening ili prehrana.",
+        text: "Na tebi ili na tvom klijentu. U upitniku navedeš i što te više zanima, trening ili prehrana.",
       },
       {
         title: "Postavljamo početni plan",
@@ -311,8 +319,8 @@ export const packages: CoachingPackage[] = [
     why: {
       title: "Znanje iz prakse, ne iz knjige",
       paragraphs: [
-        "Radio sam s nekim od najboljih trenera na svijetu i nakon svakog procesa moj pristup se mijenjao. Ne zato što sam kopirao tuđe, nego zato što mi se mijenjao način razmišljanja i rješavanja problema.",
-        "Od 2024. sam i predavač na fitnes učilištu u Zagrebu. Isto iskustvo prenosim i ovdje, samo na tvom konkretnom primjeru.",
+        "Radio sam s nekima od najboljih trenera na svijetu i nakon svakog procesa moj se pristup mijenjao. Ne zato što sam kopirao tuđe, nego zato što mi se mijenjao način razmišljanja i rješavanja problema.",
+        "Od 2024. predajem i na Fitnes učilištu u Zagrebu. Isto iskustvo prenosim i ovdje, samo na tvom konkretnom primjeru.",
       ],
     },
     notes: ["Cijena uključuje coaching, odnosno proces transformacije, i edukaciju."],
@@ -322,37 +330,38 @@ export const packages: CoachingPackage[] = [
         a: "Možeš. Zajedno vodimo jednog od tvojih klijenata i na njemu ti objašnjavam cijeli proces rada.",
       },
       {
-        q: "Šta ako me više zanima prehrana nego trening?",
-        a: "U upitniku označiš segment koji ti je bitniji i fokus edukacije stavljamo na njega.",
+        q: "Što ako me više zanima prehrana nego trening?",
+        a: "U upitniku označiš segment koji ti je važniji i fokus edukacije stavljamo na njega.",
       },
     ],
     image: "/images/om-portret.jpg",
   },
   {
-    slug: "takmicarske-pripreme",
-    name: "Takmičarske pripreme",
-    shortName: "Takmičarske pripreme",
+    slug: "natjecateljske-pripreme",
+    name: "Natjecateljske pripreme",
+    shortName: "Natjecateljske pripreme",
     tagline:
-      "Priprema za binu od trenera čiji su takmičari osvojili sve u amaterskom bodybuildingu.",
-    audience: "Za takmičare, od prvog nastupa do pro karte.",
+      "Priprema za natjecanje od trenera čiji su natjecatelji osvojili sve u amaterskom bodybuildingu.",
+    audience: "Za natjecatelje, od prvog nastupa do pro karte.",
     price: 220,
+    anchorPrice: 220,
     priceUnit: "mjesečno",
     priceNote: "Plaća se mjesečno",
-    checkIn: "Plan do dana takmičenja",
+    checkIn: "Plan do dana natjecanja",
     billing: "mjesečno",
     cardFeatures: [
-      "Priprema za konkretno takmičenje i datum",
-      "Trening, prehrana i završnica do bine",
+      "Priprema za konkretno natjecanje i datum",
+      "Trening, prehrana i završnica pred nastup",
       "Pomoć oko pozinga po dogovoru",
     ],
     intro: [
-      "Kao trener, sa svojim takmičarima osvojio sam sve što se u amaterskom bodybuildingu moglo osvojiti, od državnih prvenstava do svjetskog prvenstva, Arnold Classica i pro karata.",
-      "Pripremu slažemo prema datumu takmičenja i tačnom broju sedmica koje imamo na raspolaganju.",
+      "Kao trener, sa svojim natjecateljima osvojio sam sve što se u amaterskom bodybuildingu moglo osvojiti, od državnih prvenstava do svjetskog prvenstva, Arnold Classica i pro karata.",
+      "Pripremu slažemo prema datumu natjecanja i točnom broju tjedana koje imamo na raspolaganju.",
     ],
     forWho: [
-      "Spremaš se za prvo takmičenje i želiš ga odraditi kako treba",
-      "Već nastupaš i želiš podići formu na viši nivo",
-      "Ciljaš internacionalna takmičenja i pro kartu",
+      "Spremaš se za prvo natjecanje i želiš ga odraditi kako treba",
+      "Već nastupaš i želiš podići formu na višu razinu",
+      "Ciljaš međunarodna natjecanja i pro kartu",
     ],
     includes: [
       {
@@ -361,21 +370,21 @@ export const packages: CoachingPackage[] = [
       },
       {
         title: "Završnica do detalja",
-        text: "Zadnje sedmice i dani pred binu, gdje se priprema dobija ili gubi.",
+        text: "Zadnji tjedni i dani pred nastup, gdje se priprema dobiva ili gubi.",
       },
       {
         title: "Pozing po dogovoru",
         text: "Ako ti treba pomoć oko pozinga, navedeš to u upitniku pa se dogovorimo.",
       },
       {
-        title: "Iskustvo s velikih bina",
-        text: "Arnold Classic, svjetsko i evropsko prvenstvo, četiri pro karte s takmičarima.",
+        title: "Iskustvo s velikih pozornica",
+        text: "Arnold Classic, svjetsko i europsko prvenstvo, četiri pro karte s natjecateljima.",
       },
     ],
     steps: [
       {
-        title: "Navedeš datum takmičenja",
-        text: "U upitniku upišeš takmičenje, datum i dosadašnje iskustvo na bini.",
+        title: "Navedeš datum natjecanja",
+        text: "U upitniku upišeš natjecanje, datum i dosadašnje iskustvo na pozornici.",
       },
       {
         title: "Procjena forme",
@@ -383,29 +392,29 @@ export const packages: CoachingPackage[] = [
       },
       {
         title: "Priprema po fazama",
-        text: "Plan se vodi sedmicu po sedmicu, sve do završnice.",
+        text: "Plan se vodi tjedan po tjedan, sve do završnice.",
       },
       {
-        title: "Dan takmičenja",
-        text: "Na binu izlaziš s planom za svaki detalj, a ne s nagađanjem.",
+        title: "Dan natjecanja",
+        text: "Na pozornicu izlaziš s planom za svaki detalj, a ne s nagađanjem.",
       },
     ],
     notes: [
-      "Pripreme kraće od 3 mjeseca prihvatam samo pod posebnim uslovima, uz dogovor.",
-      "Ako dosad nismo sarađivali, svaki termin za trening ili pozing uživo naplaćuje se dodatno.",
+      "Pripreme kraće od 3 mjeseca prihvaćam samo pod posebnim uvjetima, uz dogovor.",
+      "Ako dosad nismo surađivali, svaki termin za trening ili pozing uživo naplaćuje se dodatno.",
     ],
     faq: [
       {
         q: "Koliko ranije trebam početi s pripremom?",
-        a: "Najmanje 3 mjeseca prije takmičenja. Kraće pripreme prihvatam samo pod posebnim uslovima, uz dogovor.",
+        a: "Najmanje 3 mjeseca prije natjecanja. Kraće pripreme prihvaćam samo pod posebnim uvjetima, uz dogovor.",
       },
       {
         q: "Je li pozing uključen?",
-        a: "Pomoć oko pozinga dogovaramo posebno. Ako dosad nismo sarađivali, termini za trening i pozing uživo se dodatno naplaćuju.",
+        a: "Pomoć oko pozinga dogovaramo posebno. Ako dosad nismo surađivali, termini za trening i pozing uživo dodatno se naplaćuju.",
       },
       {
         q: "Nikad nisam nastupao. Mogu li se prijaviti?",
-        a: "Možeš. Pripremao sam takmičare od prvog nastupa do pro karte. Na početku procijenimo gdje si i koliko vremena realno treba.",
+        a: "Možeš. Pripremao sam natjecatelje od prvog nastupa do pro karte. Na početku procijenimo gdje si i koliko vremena realno treba.",
       },
     ],
     image: "/images/om-konstrukcija.jpg",
@@ -419,6 +428,8 @@ export function getPackage(slug: string) {
 export const legacySlugs: Record<string, PackageSlug> = {
   "klasicni-coaching": "online-coaching",
   "edukacija-za-trenere": "coaching-i-edukacija",
+  "paket-12-sedmica": "paket-12-tjedana",
+  "takmicarske-pripreme": "natjecateljske-pripreme",
 };
 
 export function formatPrice(value: number) {
@@ -430,6 +441,7 @@ export type PriceItem = {
   detail?: string;
   price: string;
   unit?: string;
+  anchor?: string;
   href?: string;
 };
 
@@ -439,11 +451,12 @@ export function onlinePriceGroup(list: CoachingPackage[]): PriceGroup {
   return {
     id: "online",
     title: "Online coaching",
-    text: "Paketi s upitnikom i prijavom preko stranice.",
+    text: "Paketi s upitnikom i prijavom putem stranice.",
     items: list.map((p) => ({
       name: p.name,
       detail: `${p.checkIn}. ${p.priceNote}.`,
       price: formatPrice(p.price),
+      anchor: formatPrice(p.anchorPrice),
       unit: p.priceUnit,
       href: `/paketi/${p.slug}`,
     })),
@@ -462,18 +475,18 @@ export const extraPriceGroups: PriceGroup[] = [
   },
   {
     id: "trening",
-    title: "Lični trening",
+    title: "Osobni trening",
     text: "Treninzi uživo, pojedinačno ili kao mjesečni paket.",
     items: [
-      { name: "Lični trening", detail: "Jedan termin", price: "50 do 80 €" },
-      { name: "Lični treninzi, mjesečno", price: "350 do 550 €" },
+      { name: "Osobni trening", detail: "Jedan termin", price: "50 do 80 €" },
+      { name: "Osobni treninzi, mjesečno", price: "350 do 550 €" },
       { name: "Paket Advance", detail: "Coaching i treninzi uživo", price: "200 do 400 €" },
     ],
   },
   {
     id: "clanstvo",
     title: "Članstvo",
-    text: "Dugoročna saradnja po povoljnijoj cijeni.",
+    text: "Dugoročna suradnja po povoljnijoj cijeni.",
     items: [
       { name: "Polugodišnje članstvo", price: "800 do 1.000 €" },
       { name: "Godišnje članstvo", price: "1.650 do 2.000 €" },
@@ -484,7 +497,7 @@ export const extraPriceGroups: PriceGroup[] = [
     title: "Edukacija i predavanja",
     text: "Za trenere, klubove i sve koji žele znati više.",
     items: [
-      { name: "Sportske poduke i predavanja", detail: "Jedan čas", price: "30 do 40 €" },
+      { name: "Sportske poduke i predavanja", detail: "Jedan sat", price: "30 do 40 €" },
       { name: "Seminar", detail: "Po osobi", price: "300 do 400 €" },
     ],
   },

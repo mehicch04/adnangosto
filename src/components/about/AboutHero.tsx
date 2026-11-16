@@ -17,8 +17,8 @@ export function AboutHero() {
             </span>
           </h1>
           <p className="mt-8 max-w-lg animate-rise text-lg text-white/80 [animation-delay:440ms] lg:text-xl">
-            Trener, takmičar i čovjek koji je od hobija napravio posao. Petnaest godina u teretani,
-            na bini i uz takmičare koje sam doveo do pro karata.
+            Trener, natjecatelj i čovjek koji je od hobija napravio posao. Petnaest godina u
+            teretani, na pozornici i uz natjecatelje koje sam doveo do pro karata.
           </p>
           <dl className="mt-12 grid max-w-xl animate-rise grid-cols-2 gap-px overflow-hidden rounded-xl bg-brand-line [animation-delay:560ms] sm:grid-cols-4">
             {profileFacts.map((f) => (

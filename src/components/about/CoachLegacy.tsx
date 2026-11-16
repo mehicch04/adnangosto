@@ -10,8 +10,8 @@ export function CoachLegacy() {
             Učio od <span className="text-brand-yellow">najboljih</span>
           </h2>
           <p className="mt-6 max-w-md text-lg text-brand-muted">
-            Saradnja s vrhunskim trenerima donijela je iskustvo koje danas prenosim na svoje
-            takmičare.
+            Suradnja s vrhunskim trenerima donijela je iskustvo koje danas prenosim na svoje
+            natjecatelje.
           </p>
           <ul className="mt-10 divide-y divide-brand-line border-y border-brand-line">
             {mentors.map((m) => (
@@ -33,7 +33,7 @@ export function CoachLegacy() {
             Coach
           </span>
           <h2 className="relative font-display text-5xl leading-[0.9] lg:text-6xl">
-            Moji takmičari
+            Moji natjecatelji
           </h2>
           <dl className="relative mt-8 grid grid-cols-4 gap-4 border-y border-brand-black/20 py-6">
             {coachingHighlights.map((h) => (
@@ -55,7 +55,7 @@ export function CoachLegacy() {
             href="/#rezultati"
             className="relative mt-10 inline-flex min-h-14 items-center rounded-md bg-brand-black px-7 text-lg font-semibold text-white transition-colors hover:text-brand-yellow"
           >
-            Rezultati takmičara
+            Rezultati natjecatelja
           </Link>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { CarouselIcon, InstagramIcon, ReelIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 import { getInstagramPosts, type InstagramPost } from "@/lib/instagram";
 
-const dateFormat = new Intl.DateTimeFormat("bs-BA", { day: "numeric", month: "short" });
+const dateFormat = new Intl.DateTimeFormat("hr-HR", { day: "numeric", month: "short" });
 
 function KindBadge({ kind }: { kind: InstagramPost["kind"] }) {
   if (kind === "IMAGE") return null;

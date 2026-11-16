@@ -10,7 +10,7 @@ import { StickyCta } from "@/components/packages/StickyCta";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
 import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { formatPrice, packages } from "@/content/packages";
+import { PRICE_ANCHOR_LABEL, PRICE_VAT_NOTE, formatPrice, packages } from "@/content/packages";
 import { getPackage, getPackages } from "@/lib/content/packages";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -41,7 +41,7 @@ export default async function PackagePage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const apply = `/prijava/${pkg.slug}`;
   const others = (await getPackages()).filter((p) => p.slug !== pkg.slug);
-  const chat = contactLink(`Zdravo Adnane, imam pitanje u vezi paketa ${pkg.name}.`);
+  const chat = contactLink(`Bok Adnane, imam pitanje vezano uz paket ${pkg.name}.`);
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -63,7 +63,7 @@ export default async function PackagePage({ params }: Props) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Početna", item: siteUrl },
-        { "@type": "ListItem", position: 2, name: "Paketi", item: `${siteUrl}/#saradnja` },
+        { "@type": "ListItem", position: 2, name: "Paketi", item: `${siteUrl}/#suradnja` },
         { "@type": "ListItem", position: 3, name: pkg.name, item: `${siteUrl}/paketi/${pkg.slug}` },
       ],
     },
@@ -99,7 +99,7 @@ export default async function PackagePage({ params }: Props) {
                   </li>
                   <li aria-hidden="true">/</li>
                   <li>
-                    <Link href="/#saradnja" className="hover:text-white">
+                    <Link href="/#suradnja" className="hover:text-white">
                       Paketi
                     </Link>
                   </li>
@@ -143,6 +143,9 @@ export default async function PackagePage({ params }: Props) {
                     </span>
                     <span className="font-semibold text-white/65">{pkg.priceUnit}</span>
                   </p>
+                  <p className="mt-2 text-[13px] text-white/50">
+                    {PRICE_ANCHOR_LABEL}: {formatPrice(pkg.anchorPrice)}. {PRICE_VAT_NOTE}
+                  </p>
                   <dl className="mt-6 divide-y divide-brand-line border-y border-brand-line text-[15px]">
                     <div className="flex justify-between gap-4 py-3">
                       <dt className="text-white/55">Praćenje</dt>
@@ -166,7 +169,7 @@ export default async function PackagePage({ params }: Props) {
                     <ArrowRightIcon className="size-5 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <p className="mt-4 text-center text-sm text-white/55">
-                    Upitnik traje oko 10 minuta. Prijava te ni na šta ne obavezuje.
+                    Upitnik traje oko 10 minuta. Prijava te ni na što ne obvezuje.
                   </p>
                   <a
                     href={chat.href}
@@ -206,7 +209,7 @@ export default async function PackagePage({ params }: Props) {
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div>
               <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl">
-                Šta <span className="text-brand-yellow">dobijaš</span>
+                Što <span className="text-brand-yellow">dobivaš</span>
               </h2>
               {pkg.intro.map((p) => (
                 <p key={p.slice(0, 30)} className="mt-6 max-w-md text-lg text-white/70">
@@ -234,7 +237,7 @@ export default async function PackagePage({ params }: Props) {
         <section className="bg-brand-paper px-5 py-20 text-brand-black lg:py-28">
           <div className="mx-auto max-w-7xl">
             <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl">
-              Kako izgleda saradnja
+              Kako izgleda suradnja
             </h2>
             <ol className="relative mt-14 grid gap-10 md:grid-cols-4 md:gap-6">
               <span
@@ -328,7 +331,7 @@ export default async function PackagePage({ params }: Props) {
           </div>
         </section>
 
-        {pkg.slug === "takmicarske-pripreme" ? (
+        {pkg.slug === "natjecateljske-pripreme" ? (
           <ClientResults />
         ) : (
           <Transformations ctaHref={apply} ctaLabel="Prijavi se" />
@@ -357,7 +360,7 @@ export default async function PackagePage({ params }: Props) {
                 Spreman za prvi korak?
               </h2>
               <p className="mt-5 max-w-lg text-lg font-semibold">
-                {pkg.name}, {formatPrice(pkg.price)} {pkg.priceUnit}. Popuni upitnik i javljam ti se
+                {pkg.name}, {formatPrice(pkg.price)} {pkg.priceUnit}. Ispuni upitnik i javljam ti se
                 na mail.
               </p>
               <Link

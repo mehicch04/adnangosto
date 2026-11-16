@@ -33,8 +33,15 @@ const nextConfig: NextConfig = {
         destination: "/prijava/coaching-i-edukacija",
         permanent: true,
       },
-      { source: "/paketi", destination: "/#saradnja", permanent: false },
-      { source: "/prijava", destination: "/#saradnja", permanent: false },
+      ...[
+        ["paket-12-sedmica", "paket-12-tjedana"],
+        ["takmicarske-pripreme", "natjecateljske-pripreme"],
+      ].flatMap(([from, to]) => [
+        { source: `/paketi/${from}`, destination: `/paketi/${to}`, permanent: true },
+        { source: `/prijava/${from}`, destination: `/prijava/${to}`, permanent: true },
+      ]),
+      { source: "/paketi", destination: "/#suradnja", permanent: false },
+      { source: "/prijava", destination: "/#suradnja", permanent: false },
     ];
   },
 };

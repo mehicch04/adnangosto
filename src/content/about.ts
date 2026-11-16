@@ -9,29 +9,29 @@ export type Result = {
 
 export const profileFacts = [
   { value: "2011", label: "online coaching" },
-  { value: "2012", label: "prvi nastup na bini" },
+  { value: "2012", label: "prvi nastup na pozornici" },
   { value: "2021", label: "IFBB Pro Card" },
   { value: "2024", label: "predavač u Zagrebu" },
 ];
 
 export const story = [
-  "Zovem se Adnan Gosto i dolazim iz Mostara. U sportu sam od svoje osme godine, a u teretanu sam prvi put ušao 2008. Znanje sam usvajao brzo i bio sam administrator na više regionalnih fitness foruma, hrvatskim, srpskim i bosanskim.",
-  "Već 2011. su mi se počeli javljati prvi ljudi i tražiti pomoć oko treninga i prehrane. To sam ubrzo pretvorio u posao i od tada radim online coaching.",
-  "Brze promjene na tijelu probudile su volju, inat i disciplinu. Taj način života mi je s vremenom promijenio pogled na sve, od rada do odnosa prema ljudima. Naučio me upornosti i stalnoj gladi za napretkom.",
-  "Godine 2012. sam prvi put stao na binu i od samog starta postao apsolutni prvak države, više godina zaredom, pa i balkanski prvak. Onda sam krenuo na internacionalnu scenu. Takmičio sam se kao profesionalac u dvije federacije i bio sam prvi i jedini profesionalni takmičar iz BiH u open kategoriji.",
-  "Krajem 2015. preselio sam se u Zagreb, bliže ljudima i trenerima čije znanje i iskustvo daleko nadilaze ono što je dostupno na Balkanu. Radio sam s četvoricom najboljih trenera na svijetu, a znanje sam prenosio dalje kroz seminare i predavanja. Od 2024. sam i predavač na fitness učilištu u Zagrebu.",
-  "S takmičarima sam osvojio sve što se u amaterskom bodybuildingu moglo osvojiti, ali me rad s rekreativcima najviše odredio. Većini ljudi teretana nije prioritet, i baš zato sam napravio sistem koji radi za svakoga, onoliko koliko se želi posvetiti.",
+  "Zovem se Adnan Gosto i dolazim iz Mostara. U sportu sam od svoje osme godine, a u teretanu sam prvi put ušao 2008. Znanje sam brzo usvajao i bio sam administrator na više regionalnih fitness foruma, hrvatskim, srpskim i bosanskim.",
+  "Već 2011. počeli su mi se javljati prvi ljudi i tražiti pomoć oko treninga i prehrane. To sam ubrzo pretvorio u posao i od tada radim online coaching.",
+  "Brze promjene na tijelu probudile su volju, inat i disciplinu. Taj način života s vremenom mi je promijenio pogled na sve, od rada do odnosa prema ljudima. Naučio me upornosti i stalnoj gladi za napretkom.",
+  "Godine 2012. prvi sam put stao na pozornicu i od samog početka postao apsolutni prvak države, više godina zaredom, a zatim i balkanski prvak. Onda sam krenuo na međunarodnu scenu. Natjecao sam se kao profesionalac u dvije federacije i bio sam prvi i jedini profesionalni natjecatelj iz BiH u open kategoriji.",
+  "Krajem 2015. preselio sam se u Zagreb, bliže ljudima i trenerima čije znanje i iskustvo daleko nadilaze ono što je dostupno na Balkanu. Radio sam s četvoricom najboljih trenera na svijetu, a znanje sam prenosio dalje kroz seminare i predavanja. Od 2024. predajem i na Fitnes učilištu u Zagrebu.",
+  "S natjecateljima sam osvojio sve što se u amaterskom bodybuildingu moglo osvojiti, ali me rad s rekreativcima najviše odredio. Većini ljudi teretana nije prioritet i baš zato sam napravio sustav koji radi za svakoga, onoliko koliko se želi posvetiti.",
 ];
 
 export const quote = {
-  text: "Znanje je danas dostupno svima. Iskustvo je nešto na šta potrošiš godine, ili ti ga prenese neko ko je godinama ispred tebe.",
+  text: "Znanje je danas dostupno svima. Iskustvo je nešto na što potrošiš godine ili ti ga prenese netko tko je godinama ispred tebe.",
   author: "Adnan Gosto",
 };
 
 export const careerStats = [
   { value: "19", label: "zlatnih medalja" },
   { value: "3", label: "srebrne" },
-  { value: "2", label: "bronzane" },
+  { value: "2", label: "brončane" },
   { value: "4×", label: "zaredom apsolutni prvak BiH" },
 ];
 
@@ -57,7 +57,7 @@ export const resultsByYear: { year: string; highlight?: string; results: Result[
       {
         place: "Pro",
         event: "Romania Muscle Fest Pro",
-        location: "Bukurešt, Rumunija",
+        location: "Bukurešt, Rumunjska",
         note: "Debi u IFBB Pro ligi",
       },
     ],
@@ -95,7 +95,7 @@ export const resultsByYear: { year: string; highlight?: string; results: Result[
         place: 5,
         event: "Mr. Olympia Amateur Spain",
         category: "do 90 kg",
-        location: "Malaga, Španija",
+        location: "Málaga, Španjolska",
       },
     ],
   },
@@ -149,19 +149,20 @@ export const mentors = [
   { name: "Patrick Tuor", origin: "Velikan bodybuilding scene" },
   { name: "Ahmad Askar", origin: "Kuvajt" },
   { name: "Mauro Sassi", origin: "Italija" },
+  { name: "Ben Pakulski", origin: "Kanada" },
 ];
 
 export const coachingHighlights = [
   { value: "77+", label: "zlata" },
   { value: "56", label: "srebra" },
-  { value: "26", label: "bronzi" },
+  { value: "26", label: "bronci" },
   { value: "4", label: "Elite Pro karte" },
 ];
 
 export const coachingTitles = [
-  "4 pro karte s takmičarima",
+  "4 pro karte s natjecateljima",
   "Pobjeda na svjetskom prvenstvu",
-  "Pobjeda na evropskom prvenstvu",
+  "Pobjeda na europskom prvenstvu",
   "Apsolutni pobjednik Arnold Classic Barcelona",
 ];
 
@@ -174,7 +175,7 @@ export const gallery = [
   },
   {
     src: "/images/om-narandzasta.jpg",
-    alt: "Adnan Gosto ispred narandžastog zida",
+    alt: "Adnan Gosto ispred narančastog zida",
     w: 1800,
     h: 1632,
   },

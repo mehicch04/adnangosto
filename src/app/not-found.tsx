@@ -18,7 +18,7 @@ export default function NotFound() {
           href="/"
           className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-brand-yellow px-7 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white"
         >
-          Nazad na početnu
+          Natrag na početnu
         </Link>
       </div>
     </main>

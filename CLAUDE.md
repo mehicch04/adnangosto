@@ -54,7 +54,7 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Mobitel prvi: svaki ekran se prvo radi za ~375px, pa tek onda veće
 - PageSpeed 100/100/100/100 na dan predaje: `next/image` za sve slike, bez teških biblioteka
 - Nema WordPressa, page buildera ni kupljenih šablona
-- Tekst na sajtu je na bosanskom
+- Tekst na sajtu je na hrvatskom (tjedan, natjecatelj, suradnja, što, tko, privola). Adnan je to potvrdio. Admin panel je za sada ostao na bosanskom
 - U tekstovima za klijenta bez dugih crtica i fraza koje zvuče kao AI
 
 ## Pravila koda
@@ -77,23 +77,25 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Migracije: `supabase/migrations`, 0003 dodaje `archived_at` na prijave i polja paketa (cijena, oznaka, stavke, `featured`) sa početnim podacima
 - Ostali sadržaj početne: `src/content/site.ts`, O meni: `src/content/about.ts`
 - Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
-- Potpis dizajna: žuto GOSTO iza Adnana u heroju. Slojevi: `hero-adnan-wide.jpg` (proširena pozadina), slova, pa `hero-adnan-wide-cut.webp` (izrez iste veličine, mora ostati poravnat s pozadinom). Na mobitelu `om-majica.jpg` i `hero-adnan-cut.webp`
+- Potpis dizajna: žuta riječ iza Adnana u heroju (`hero.word` u `site.ts`, sada ADONI, prije GOSTO). Slojevi: `hero-adnan-wide.jpg` (proširena pozadina), slova, pa `hero-adnan-wide-cut.webp` (izrez iste veličine, mora ostati poravnat s pozadinom). Na mobitelu `om-majica.jpg` i `hero-adnan-cut.webp`
 - Meni: `SiteHeader.tsx` (server, pripremi pakete) i `HeaderNav.tsx`: logo na žutoj kosoj plohi, linkovi s kliznom žutom linijom, padajući "Paketi i cijene" (lista lijevo, slika i detalji paketa desno, slike u `photos`), meni odozdo na mobitelu
 
 ## Otvorena pitanja s klijentom
 
-- Paket 12 sedmica: u opisu piše 480 €, u cjenovniku 380 €. Na sajtu je 480 € (`src/content/packages.ts`)
-- Jesu li cijene s PDV-om, i smiju li rasponi (npr. 30 do 50 €) stajati u cjenovniku firme
-- Jezik: hrvatski (tjedan, natjecatelj) ili bosanski (sedmica, takmičar). Sada je bosanski
-- Ukupan broj medalja takmičara (77+, 56, 26, 4 su sa starog sajta) i ime četvrtog trenera (na sajtu su tri)
-- Naziv fitness učilišta u Zagrebu i naziv firme za Politiku privatnosti; rokovi čuvanja podataka (6 mjeseci / 2 godine) su prijedlog
-- Web shop: link i kod za popust idu u `site.shop` u `src/content/site.ts`; dok je `url` prazan, blok se ne prikazuje
+- Cijene su s PDV-om (potvrđeno). Paket 12 tjedana je 380 € (potvrđeno)
+- Sidrenje cijena: uz svaku cijenu stoji i "Cijena na dan 15. 9. 2025." (`PRICE_ANCHOR_LABEL` i `anchorPrice` u `packages.ts`, `anchor` za stavke cjenovnika). Adnan treba potvrditi godinu i jesu li cijene tog dana bile iste
+- Rasponi u cjenovniku (npr. 30 do 50 €): Adnan ih pregleda i šalje dopunu cjenovnika
+- Ukupan broj medalja natjecatelja (77+, 56, 26, 4 su sa starog sajta) još nije potvrđen
+- Četvrti trener je Ben Pakulski, učilište je Fitnes učilište u Zagrebu (fitnes-uciliste.hr), oboje potvrđeno
+- Naziv firme za Politiku privatnosti; rokovi čuvanja podataka (6 mjeseci / 2 godine) su prijedlog
+- Opći uvjeti poslovanja: Adnan šalje tekst (povrat novca, rok isporuke programa). Treba stranica i kvačica u upitniku
+- Web shop: još nije gotov, Adnan šalje naziv i link. Link i kod za popust idu u `site.shop` u `src/content/site.ts`; dok je `url` prazan, blok se ne prikazuje
 - Transformacije takmičara: nove slike dodati u `transformationPhotos` s `category: "takmicari"`, kartice se pojave same
 - Original loga (SVG/PDF) i pojednostavljena "GA" verzija za favicon
-- Fotografije u punoj rezoluciji (ne preko WhatsAppa)
+- Fotografije u punoj rezoluciji: Adnan ih donosi na stiku ili šalje po nekome
 - Pristup domeni adnangosto.com (za Resend DNS i prebacivanje)
 - Potvrda činjenica o karijeri (IFBB Pro 2021/2022, amaterska karijera 2012 do 2016) i tačan Instagram profil
-- Transformacije s brojkama i dozvolom za objavu, logotipi aktuelnih sponzora
+- Transformacije su već objavljivane na FB i Instagramu, objava je dozvoljena. Kvaliteta slika je slaba jer ih šalju klijenti
 - Potvrda odgovora u čestim pitanjima (`faq` u `src/content/site.ts`)
 - Ton prema posjetiocu: "ti" (potvrdio Adnan)
 - Mail za prijave: adnan.adoni.gosto@gmail.com (`APPLICATIONS_TO_EMAIL`)

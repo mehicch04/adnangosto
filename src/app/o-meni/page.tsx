@@ -18,7 +18,7 @@ import { InstagramFeed } from "@/components/sections/InstagramFeed";
 export const metadata: Metadata = {
   title: "O meni",
   description:
-    "Adnan Gosto, IFBB Pro i trener takmičara. Četiri puta zaredom apsolutni prvak BiH, pobjednik Fit Parade Budimpešta i osvajač IFBB Pro Card.",
+    "Adnan Gosto, IFBB Pro i trener natjecatelja. Četiri puta zaredom apsolutni prvak BiH, pobjednik Fit Parade Budimpešta i osvajač IFBB Pro Card.",
 };
 
 export default function AboutPage() {

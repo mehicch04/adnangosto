@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/PageShell";
 import { ArrowRightIcon } from "@/components/ui/icons";
-import { ADNAN_EMAIL } from "@/content/packages";
+import { ADNAN_EMAIL, PRICE_ANCHOR_LABEL } from "@/content/packages";
 import { getPriceList } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
   title: "Cjenovnik",
   description:
-    "Cijene online coachinga, paketa od 12 sedmica, takmičarskih priprema, edukacije, konzultacija i ličnih treninga.",
+    "Cijene online coachinga, paketa od 12 tjedana, natjecateljskih priprema, edukacije, konzultacija i osobnih treninga.",
   alternates: { canonical: "/cjenovnik" },
 };
 
@@ -30,8 +30,8 @@ export default async function PricingPage() {
             Cjenovnik
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
-            Online paketi se biraju preko prijave na stranici. Za konzultacije, treninge uživo i
-            seminare javi mi se direktno pa dogovaramo termin.
+            Online paketi biraju se putem prijave na stranici. Za konzultacije, treninge uživo i
+            seminare javi mi se izravno pa dogovaramo termin.
           </p>
         </div>
       </section>
@@ -103,6 +103,9 @@ export default async function PricingPage() {
                                 {item.unit}
                               </span>
                             )}
+                            <span className="mt-1 block text-[11px] whitespace-nowrap text-white/40">
+                              {PRICE_ANCHOR_LABEL}: {item.anchor ?? item.price}
+                            </span>
                           </span>
                           {item.href && (
                             <ArrowRightIcon className="size-5 text-brand-yellow transition-transform group-hover:translate-x-1" />
@@ -135,12 +138,12 @@ export default async function PricingPage() {
           <div className="grid gap-4 rounded-lg border border-brand-line bg-brand-surface p-6 sm:p-8 lg:grid-cols-3 lg:gap-10">
             <div>
               <h2 className="font-display text-3xl leading-none text-brand-yellow">Valuta</h2>
-              <p className="mt-3 text-white/70">Sve cijene su izražene u eurima.</p>
+              <p className="mt-3 text-white/70">Sve cijene su izražene u eurima i uključuju PDV.</p>
             </div>
             <div>
               <h2 className="font-display text-3xl leading-none text-brand-yellow">Plaćanje</h2>
               <p className="mt-3 text-white/70">
-                Način uplate dogovaramo nakon prijave, prije početka saradnje.
+                Način uplate dogovaramo nakon prijave, prije početka suradnje.
               </p>
             </div>
             <div>
@@ -148,7 +151,7 @@ export default async function PricingPage() {
                 Rasponi cijena
               </h2>
               <p className="mt-3 text-white/70">
-                Gdje je naveden raspon, tačna cijena zavisi od trajanja, lokacije i dogovora.
+                Gdje je naveden raspon, točna cijena ovisi o trajanju, lokaciji i dogovoru.
               </p>
             </div>
           </div>

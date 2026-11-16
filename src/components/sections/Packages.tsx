@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PackagesGrid } from "@/components/sections/PackagesGrid";
-import { formatPrice, packageCompare } from "@/content/packages";
+import { PRICE_VAT_NOTE, formatPrice, packageCompare } from "@/content/packages";
 import { getPackages } from "@/lib/content/packages";
 
 export async function Packages() {
@@ -12,6 +12,7 @@ export async function Packages() {
     featured: p.featured,
     audience: p.audience,
     price: formatPrice(p.price),
+    anchor: formatPrice(p.anchorPrice),
     priceUnit: p.priceUnit,
     priceNote: p.priceNote,
     features: p.cardFeatures,
@@ -20,8 +21,8 @@ export async function Packages() {
 
   return (
     <section
-      id="saradnja"
-      aria-labelledby="saradnja-naslov"
+      id="suradnja"
+      aria-labelledby="suradnja-naslov"
       className="scroll-mt-20 bg-brand-paper px-5 py-24 text-brand-black lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
@@ -41,13 +42,13 @@ export async function Packages() {
                 />
               </svg>
             </span>
-            Prijava je besplatna i ne obavezuje te ni na šta.
+            Prijava je besplatna i ne obvezuje te ni na što. {PRICE_VAT_NOTE}
           </p>
           <Link
             href="/cjenovnik"
             className="inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-black"
           >
-            Kompletan cjenovnik: konzultacije, lični trening, seminari
+            Kompletan cjenovnik: konzultacije, osobni trening, seminari
           </Link>
         </div>
       </div>

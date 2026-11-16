@@ -4,12 +4,12 @@ import { TransformationsGrid } from "@/components/sections/TransformationsGrid";
 import { TransformationsTabs } from "@/components/sections/TransformationsTabs";
 
 const steps = [
-  { label: "Prije", text: "Lijeva fotografija je stanje na početku saradnje." },
+  { label: "Prije", text: "Lijeva fotografija je stanje na početku suradnje." },
   { label: "Poslije", text: "Desna fotografija je forma nakon programa." },
 ];
 
 export function Transformations({
-  ctaHref = "/#saradnja",
+  ctaHref = "/#suradnja",
   ctaLabel = "Pogledaj pakete",
 }: {
   ctaHref?: string;
@@ -46,8 +46,8 @@ export function Transformations({
           </div>
           <div>
             <p className="max-w-md text-lg text-brand-ink-muted">
-              Obični ljudi s poslom, obavezama i punim rasporedom. Krenuli su s viškom kilograma ili
-              bez napretka godinama, a sistem se uklopio u njihov život.
+              Obični ljudi s poslom, obvezama i punim rasporedom. Krenuli su s viškom kilograma ili
+              bez napretka godinama, a sustav se uklopio u njihov život.
             </p>
             <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
               {steps.map((s, i) => (

@@ -5,7 +5,7 @@ import { contactLink } from "@/lib/contact";
 import { ArrowRightIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 
 export function FinalCta() {
-  const chat = contactLink("Zdravo Adnane, zanima me saradnja.");
+  const chat = contactLink("Bok Adnane, zanima me suradnja.");
   const wa = chat.kind === "whatsapp";
 
   return (
@@ -21,11 +21,11 @@ export function FinalCta() {
             prvi korak?
           </h2>
           <p className="mt-6 max-w-md text-lg font-medium text-brand-black/75">
-            Izaberi paket, popuni upitnik i javljam ti se na mail s dogovorom oko početka.
+            Odaberi paket, ispuni upitnik i javljam ti se na mail s dogovorom oko početka.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
-              href="/#saradnja"
+              href="/#suradnja"
               className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-brand-black py-2 pr-2 pl-7 text-lg font-bold text-white transition-colors hover:bg-[#262626]"
             >
               Pogledaj pakete

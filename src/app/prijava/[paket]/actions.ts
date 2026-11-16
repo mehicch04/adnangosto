@@ -33,7 +33,7 @@ export async function requestPhotoUploads(slug: string, count: number): Promise<
     return { mode: "error", message: "Neispravan broj slika." };
   if (!isSupabaseConfigured()) {
     if (!demoMode())
-      return { mode: "error", message: "Prijave trenutno nisu dostupne. Pokušaj ponovo kasnije." };
+      return { mode: "error", message: "Prijave trenutno nisu dostupne. Pokušaj ponovno kasnije." };
     return { mode: "mock" };
   }
   const supabase = createAdminClient();
@@ -46,7 +46,7 @@ export async function requestPhotoUploads(slug: string, count: number): Promise<
       .createSignedUploadUrl(path);
     if (error || !data) {
       console.error("signed upload", error);
-      return { mode: "error", message: "Slanje slika trenutno nije moguće. Pokušaj ponovo." };
+      return { mode: "error", message: "Slanje slika trenutno nije moguće. Pokušaj ponovno." };
     }
     uploads.push({ path, url: data.signedUrl });
   }
@@ -79,7 +79,7 @@ function stringify(v: string | string[] | undefined) {
 export async function submitApplication(raw: SubmitInput): Promise<SubmitResult> {
   const parsed = submissionSchema.safeParse(raw);
   if (!parsed.success)
-    return { ok: false, message: "Prijava nije ispravno poslana. Pokušaj ponovo." };
+    return { ok: false, message: "Prijava nije ispravno poslana. Pokušaj ponovno." };
   const input = parsed.data;
   const pkg = await getPackage(input.slug);
   if (!pkg) return { ok: false, message: "Nepoznat paket." };
@@ -101,7 +101,7 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
   if (!input.consent)
     return {
       ok: false,
-      message: "Za slanje prijave potrebna je tvoja saglasnost.",
+      message: "Za slanje prijave potrebna je tvoja privola.",
       step: "pregled",
     };
 
@@ -113,7 +113,7 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
   if (live) {
     const folder = photos[0]?.split("/").slice(0, 2).join("/");
     if (!photos.every((p) => pathRe.test(p) && p.startsWith(`${folder}/`)))
-      return { ok: false, message: "Slike nisu ispravno poslane. Pokušaj ponovo.", step: "slike" };
+      return { ok: false, message: "Slike nisu ispravno poslane. Pokušaj ponovno.", step: "slike" };
   }
 
   const rows: AnswerRow[] = [];
@@ -136,7 +136,7 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
 
   if (!live) {
     if (!demoMode())
-      return { ok: false, message: "Prijave trenutno nisu dostupne. Pokušaj ponovo kasnije." };
+      return { ok: false, message: "Prijave trenutno nisu dostupne. Pokušaj ponovno kasnije." };
     console.info(
       "[prijava, razvoj]",
       pkg.name,
@@ -214,7 +214,7 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
     return {
       ok: false,
       message:
-        "Prijava trenutno nije poslana. Pokušaj ponovo za par minuta ili mi piši na Instagram.",
+        "Prijava trenutno nije poslana. Pokušaj ponovno za par minuta ili mi piši na Instagram.",
     };
 
   return { ok: true };

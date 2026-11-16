@@ -98,7 +98,7 @@ export function Testimonials({ items = fallbackTestimonials }: { items?: Testimo
           </h2>
         </div>
         <p className="max-w-sm text-lg text-white/65">
-          Takmičari, rekreativci i treneri o tome kako izgleda saradnja iz prve ruke.
+          Natjecatelji, rekreativci i treneri o tome kako izgleda suradnja iz prve ruke.
         </p>
       </div>
 

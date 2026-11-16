@@ -73,8 +73,8 @@ function FormVisual() {
       <div className="space-y-2.5">
         {[
           ["Cilj", "Skinuti masnoće, zadržati snagu"],
-          ["Treninga sedmično", "4"],
-          ["Posao i obaveze", "Smjene, treniram uveče"],
+          ["Treninga tjedno", "4"],
+          ["Posao i obveze", "Smjene, treniram navečer"],
         ].map(([l, v], i) => (
           <div
             key={l}
@@ -179,7 +179,7 @@ function CheckinVisual() {
         </span>
         <span className="flex gap-1 rounded-full bg-black/40 p-1 text-xs font-semibold">
           <span className="rounded-full bg-brand-yellow px-2.5 py-1 text-brand-black">7 dana</span>
-          <span className="px-2.5 py-1 text-white/60">4 sedmice</span>
+          <span className="px-2.5 py-1 text-white/60">4 tjedna</span>
         </span>
       </div>
       <svg viewBox="-6 0 312 84" className="w-full" aria-hidden="true">
@@ -236,10 +236,10 @@ export function Process() {
           </h2>
           <div className="max-w-sm lg:pb-3">
             <p className="text-lg text-white/60">
-              Bez dopisivanja i objašnjavanja ispočetka. Četiri koraka i znaš tačno gdje si.
+              Bez dopisivanja i objašnjavanja ispočetka. Četiri koraka i znaš točno gdje si.
             </p>
             <a
-              href="#saradnja"
+              href="#suradnja"
               className="mt-4 inline-flex min-h-11 items-center gap-2 font-bold text-brand-yellow transition-colors hover:text-white"
             >
               Kreni s prvim korakom

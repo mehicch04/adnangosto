@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { GOAL_EVENT } from "@/components/sections/HeroPaths";
 import { ArrowRightIcon, TickIcon } from "@/components/ui/icons";
-import type { PackageCompare, PackageSlug } from "@/content/packages";
+import { PRICE_ANCHOR_LABEL, type PackageCompare, type PackageSlug } from "@/content/packages";
 
 export type PackageCard = {
   slug: PackageSlug;
@@ -13,6 +13,7 @@ export type PackageCard = {
   featured?: boolean;
   audience: string;
   price: string;
+  anchor: string;
   priceUnit: string;
   priceNote: string;
   features: string[];
@@ -23,20 +24,21 @@ type Goal = "forma" | "bina" | "znanje";
 
 const goals: { id: Goal; label: string; prefer: PackageSlug }[] = [
   { id: "forma", label: "Forma i zdravlje", prefer: "online-coaching" },
-  { id: "bina", label: "Takmičenje", prefer: "takmicarske-pripreme" },
+  { id: "bina", label: "Natjecanje", prefer: "natjecateljske-pripreme" },
   { id: "znanje", label: "Edukacija", prefer: "coaching-i-edukacija" },
 ];
 
 const goalOf: Record<PackageSlug, Goal> = {
   "online-coaching": "forma",
-  "paket-12-sedmica": "forma",
+  "paket-12-tjedana": "forma",
   "coaching-i-edukacija": "znanje",
-  "takmicarske-pripreme": "bina",
+  "natjecateljske-pripreme": "bina",
 };
 
 const rows: { label: string; get: (p: PackageCard) => string }[] = [
   { label: "Najbolje za", get: (p) => p.compare.bestFor },
   { label: "Cijena", get: (p) => `${p.price} ${p.priceUnit}` },
+  { label: PRICE_ANCHOR_LABEL, get: (p) => p.anchor },
   { label: "Plaćanje", get: (p) => p.compare.payment },
   { label: "Praćenje", get: (p) => p.compare.tracking },
   { label: "Trajanje", get: (p) => p.compare.duration },
@@ -217,17 +219,17 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
   };
 
   const helper =
-    goal === "forma" && has("online-coaching") && has("paket-12-sedmica")
-      ? picked === "paket-12-sedmica"
+    goal === "forma" && has("online-coaching") && has("paket-12-tjedana")
+      ? picked === "paket-12-tjedana"
         ? {
-            text: "Želiš da te pratim svake sedmice?",
+            text: "Želiš da te pratim svaki tjedan?",
             label: "Online coaching",
             slug: "online-coaching" as const,
           }
         : {
             text: "Tek počinješ i želiš manje pritiska?",
-            label: "Paket 12 sedmica",
-            slug: "paket-12-sedmica" as const,
+            label: "Paket 12 tjedana",
+            slug: "paket-12-tjedana" as const,
           }
       : null;
 
@@ -240,15 +242,15 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
             Paketi i cijene
           </p>
           <h2
-            id="saradnja-naslov"
+            id="suradnja-naslov"
             className="mt-4 font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]"
           >
-            Izaberi kako radimo
+            Odaberi kako radimo
           </h2>
         </div>
         <div>
           <p id="pk-cilj" className="mb-3 text-sm font-semibold text-brand-ink-muted">
-            Šta ti treba?
+            Što ti treba?
           </p>
           <div
             ref={control}
@@ -369,7 +371,7 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
                 <p
                   className={`mt-1 text-[13px] transition-colors duration-500 ${on ? "text-white/45" : "text-brand-ink-muted/80"}`}
                 >
-                  {p.priceNote}
+                  {p.priceNote}. {PRICE_ANCHOR_LABEL}: {p.anchor}
                 </p>
                 <Link
                   href={`/prijava/${p.slug}`}
@@ -426,15 +428,15 @@ export function PackagesGrid({ packages }: { packages: PackageCard[] }) {
         className={`mt-10 overflow-hidden rounded-2xl border border-brand-paper-line bg-white transition-[opacity,transform] delay-300 duration-700 ${ease} group-data-[in=false]/pk:translate-y-10 group-data-[in=false]/pk:opacity-0 lg:mt-14`}
       >
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-1 border-b border-brand-paper-line px-5 py-5 sm:px-6">
-          <h3 className="font-display text-3xl leading-none">Uporedi pakete</h3>
+          <h3 className="font-display text-3xl leading-none">Usporedi pakete</h3>
           <p className="text-[13px] text-brand-ink-muted">
-            <span className="sm:hidden">Povuci tabelu za sve pakete</span>
+            <span className="sm:hidden">Povuci tablicu za sve pakete</span>
             <span className="hidden sm:inline">Klikni na naziv paketa da ga istakneš</span>
           </p>
         </div>
         <div className="relative [scrollbar-width:thin] overflow-x-auto">
           <table className="w-full min-w-[54rem] table-fixed border-collapse text-left text-[14px]">
-            <caption className="sr-only">Poređenje paketa</caption>
+            <caption className="sr-only">Usporedba paketa</caption>
             <colgroup>
               <col className="w-36 sm:w-44" />
             </colgroup>

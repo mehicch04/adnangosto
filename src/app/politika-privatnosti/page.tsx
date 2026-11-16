@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/politika-privatnosti" },
 };
 
-const updated = "8. novembra 2026.";
+const updated = "16. studenoga 2026.";
 
 const sections: { id: string; title: string; body: React.ReactNode }[] = [
   {
     id: "ko",
-    title: "Ko obrađuje tvoje podatke",
+    title: "Tko obrađuje tvoje podatke",
     body: (
       <p>
         Voditelj obrade podataka je Adnan Gosto. Za sva pitanja o tvojim podacima piši na{" "}
@@ -26,19 +26,19 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Koje podatke prikupljam",
     body: (
       <>
-        <p>Kad popuniš prijavu za neki od paketa, šalješ:</p>
+        <p>Kad ispuniš prijavu za neki od paketa, šalješ:</p>
         <ul>
           <li>
             ime i prezime, e-mail, telefon i Instagram ako ih upišeš, državu iz koje ide uplata
           </li>
           <li>jutarnju kilažu, ciljeve, trenutni plan treninga, prehranu i suplementaciju</li>
-          <li>dnevnu rutinu i, kod takmičara, podatke o takmičenju i iskustvu</li>
+          <li>dnevnu rutinu i, kod natjecatelja, podatke o natjecanju i iskustvu</li>
           <li>zdravstveno stanje i podatak o korištenju AAS-a, ako ga navedeš</li>
           <li>fotografije tijela koje sam dodaš</li>
         </ul>
         <p>
           Podaci o zdravlju i fotografije tijela spadaju u posebno osjetljive podatke. Zato ih
-          obrađujem samo uz tvoju izričitu saglasnost, koju daješ označavanjem kvačice prije slanja
+          obrađujem samo uz tvoju izričitu privolu, koju daješ označavanjem kvačice prije slanja
           prijave.
         </p>
       </>
@@ -50,21 +50,21 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     body: (
       <>
         <p>
-          Podatke koristim isključivo da procijenim tvoje stanje, javim ti se s dogovorom o saradnji
-          i složim plan treninga i prehrane. Ne koristim ih za reklame, ne prodajem ih i ne dijelim
-          ih s trećim osobama radi marketinga.
+          Podatke koristim isključivo kako bih procijenio tvoje stanje, javio ti se s dogovorom o
+          suradnji i složio plan treninga i prehrane. Ne koristim ih za reklame, ne prodajem ih i ne
+          dijelim ih s trećim osobama radi marketinga.
         </p>
         <p>
-          Pravni osnov je tvoja saglasnost (član 6. stav 1. tačka a i član 9. stav 2. tačka a Opće
-          uredbe o zaštiti podataka, GDPR) i radnje koje poduzimam na tvoj zahtjev prije sklapanja
-          saradnje (član 6. stav 1. tačka b).
+          Pravna osnova je tvoja privola (članak 6. stavak 1. točka (a) i članak 9. stavak 2. točka
+          (a) Opće uredbe o zaštiti podataka, GDPR) i radnje koje poduzimam na tvoj zahtjev prije
+          sklapanja suradnje (članak 6. stavak 1. točka (b)).
         </p>
       </>
     ),
   },
   {
     id: "pristup",
-    title: "Ko ima pristup",
+    title: "Tko ima pristup",
     body: (
       <>
         <p>
@@ -72,15 +72,17 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
           javne i ne mogu se otvoriti bez pristupa panelu ili privremenog linka koji važi ograničeno
           vrijeme.
         </p>
-        <p>Za rad stranice koristim provjerene pružaoce usluga:</p>
+        <p>Za rad stranice koristim provjerene pružatelje usluga:</p>
         <ul>
-          <li>Supabase, za bazu podataka i čuvanje fotografija, na serverima u Evropskoj uniji</li>
+          <li>
+            Supabase, za bazu podataka i čuvanje fotografija, na poslužiteljima u Europskoj uniji
+          </li>
           <li>Vercel, za hosting stranice</li>
           <li>Resend, za slanje e-mailova o prijavi</li>
         </ul>
         <p>
-          Ako neki od njih podatke obrađuje izvan Evropske unije, to se radi uz standardne ugovorne
-          klauzule koje odobrava Evropska komisija.
+          Ako neki od njih podatke obrađuje izvan Europske unije, to se radi uz standardne ugovorne
+          klauzule koje odobrava Europska komisija.
         </p>
       </>
     ),
@@ -91,8 +93,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     body: (
       <>
         <p>
-          Ako saradnja ne počne, prijavu i fotografije brišem najkasnije 6 mjeseci nakon prijave.
-          Tokom saradnje podatke čuvam dok saradnja traje, a nakon toga najviše 2 godine, osim ako
+          Ako suradnja ne počne, prijavu i fotografije brišem najkasnije 6 mjeseci nakon prijave.
+          Tijekom suradnje podatke čuvam dok suradnja traje, a nakon toga najviše 2 godine, osim ako
           zakon za neke podatke, poput računa, ne traži duže čuvanje.
         </p>
         <p>Brisanje možeš tražiti i ranije, u bilo kojem trenutku.</p>
@@ -107,16 +109,16 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
         <p>U svakom trenutku možeš tražiti:</p>
         <ul>
           <li>uvid u podatke koje imam o tebi</li>
-          <li>ispravku netačnih podataka</li>
+          <li>ispravak netočnih podataka</li>
           <li>brisanje podataka i fotografija</li>
           <li>ograničenje obrade ili kopiju podataka u uobičajenom formatu</li>
-          <li>povlačenje saglasnosti, bez uticaja na obradu prije povlačenja</li>
+          <li>povlačenje privole, bez utjecaja na obradu prije povlačenja</li>
         </ul>
         <p>
           Zahtjev pošalji na <a href={`mailto:${ADNAN_EMAIL}`}>{ADNAN_EMAIL}</a> i odgovaram u roku
           od 30 dana. Ako smatraš da su ti prava povrijeđena, možeš podnijeti prigovor nadležnom
           tijelu za zaštitu podataka, u Hrvatskoj je to Agencija za zaštitu osobnih podataka (AZOP),
-          a u Bosni i Hercegovini Agencija za zaštitu ličnih podataka.
+          a u Bosni i Hercegovini Agencija za zaštitu osobnih podataka.
         </p>
       </>
     ),
@@ -131,12 +133,12 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
           kolačići za prijavu u administratorski panel.
         </p>
         <p>
-          Dok popunjavaš upitnik, odgovori se privremeno čuvaju u pregledniku na tvom uređaju, da ne
+          Dok ispunjavaš upitnik, odgovori se privremeno čuvaju u pregledniku na tvom uređaju, da ne
           izgubiš napredak ako zatvoriš stranicu. Fotografije se ne čuvaju na uređaju. Ti podaci se
           brišu čim pošalješ prijavu, a sam ih možeš obrisati brisanjem podataka preglednika.
         </p>
         <p>
-          Objave s Instagrama prikazane na stranici učitavaju se preko servisa Behold, koji pri tome
+          Objave s Instagrama prikazane na stranici učitavaju se putem servisa Behold, koji pri tome
           može vidjeti tehničke podatke poput IP adrese.
         </p>
       </>
@@ -183,8 +185,8 @@ export default function PrivacyPage() {
           </div>
           <div className="max-w-2xl">
             <p className="text-xl leading-relaxed text-white/85">
-              Kroz prijavu mi šalješ lične podatke i fotografije. Ovdje je jednostavno objašnjeno
-              šta s njima radim, ko ih vidi i kako ih možeš obrisati.
+              Kroz prijavu mi šalješ osobne podatke i fotografije. Ovdje je jednostavno objašnjeno
+              što s njima radim, tko ih vidi i kako ih možeš obrisati.
             </p>
             {sections.map((s, i) => (
               <section

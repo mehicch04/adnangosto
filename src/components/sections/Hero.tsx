@@ -75,7 +75,7 @@ export function Hero() {
             className="hero-depth absolute inset-x-0 top-[100px] lg:top-[128px]"
           >
             <p className="text-center font-display text-[42vw] leading-[0.8] tracking-[-0.01em] text-brand-yellow select-none lg:pl-[16%] lg:text-[28vw]">
-              {"GOSTO".split("").map((ch, i) => (
+              {hero.word.split("").map((ch, i) => (
                 <span key={i} className="hero-letter" style={delay(0.2 + i * 0.06)}>
                   {ch}
                 </span>

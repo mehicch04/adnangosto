@@ -31,7 +31,7 @@ export function ShopPromo() {
               {discount} popusta preko ove stranice
             </h2>
             <p className="mt-5 max-w-md text-lg font-semibold">
-              Suplementi i oprema iz mog web shopa. Popust važi kad kupuješ preko ovog linka.
+              Suplementi i oprema iz mog web shopa. Popust vrijedi kad kupuješ putem ovog linka.
             </p>
           </div>
           <div className="flex flex-col items-start gap-4 lg:items-end">

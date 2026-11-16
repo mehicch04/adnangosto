@@ -38,10 +38,10 @@ export const metadata: Metadata = {
     template: "%s | Adnan Gosto",
   },
   description:
-    "Online coaching, priprema takmičara i edukacija za trenere. Prijavite se kroz kratak upitnik.",
+    "Online coaching, priprema natjecatelja i edukacija za trenere. Prijavi se kroz kratak upitnik.",
   openGraph: {
     type: "website",
-    locale: "bs_BA",
+    locale: "hr_HR",
     siteName: "Adnan Gosto",
   },
 };
@@ -55,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // Obje font varijable idu na <html> da budu dostupne svuda ispod.
     <html
-      lang="bs"
+      lang="hr"
       data-scroll-behavior="smooth"
       className={`${bebas.variable} ${barlow.variable} ${signature.variable}`}
     >

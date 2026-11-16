@@ -27,7 +27,7 @@ export function CareerResults() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <h2 className="font-display text-6xl leading-[0.9] sm:text-7xl lg:text-8xl">
-            Takmičarska
+            Natjecateljska
             <br />
             karijera
           </h2>

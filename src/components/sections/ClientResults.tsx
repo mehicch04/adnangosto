@@ -16,13 +16,13 @@ export function ClientResults() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-end">
           <div>
             <h2 className="font-display text-6xl leading-[0.88] sm:text-7xl lg:text-[7.5rem]">
-              Moji takmičari
+              Moji natjecatelji
               <br />
-              <span className="text-brand-yellow">na bini</span>
+              <span className="text-brand-yellow">na pozornici</span>
             </h2>
             <p className="mt-6 max-w-md text-lg text-brand-muted">
-              Sa svojim takmičarima osvojio sam sve što se u amaterskom bodybuildingu može osvojiti,
-              od državnih prvenstava do Arnold Classica.
+              Sa svojim natjecateljima osvojio sam sve što se u amaterskom bodybuildingu može
+              osvojiti, od državnih prvenstava do Arnold Classica.
             </p>
           </div>
           <dl className="grid grid-cols-4 border-t border-brand-line pt-6 lg:border-t-0 lg:pt-0">
@@ -101,20 +101,20 @@ export function ClientResults() {
               Ti?
             </span>
             <Link
-              href="/paketi/takmicarske-pripreme"
+              href="/paketi/natjecateljske-pripreme"
               className="group relative flex h-full flex-col justify-between p-8"
             >
               <span className="text-sm font-bold tracking-[0.14em] uppercase">
-                Sljedeće ime na listi
+                Sljedeće ime na popisu
               </span>
               <span>
                 <span className="block font-display text-6xl leading-[0.9] lg:text-7xl">
                   Želiš
                   <br />
-                  na binu?
+                  na pozornicu?
                 </span>
                 <span className="mt-4 block max-w-xs font-semibold">
-                  Prijavi se za pripremu i budi sljedeći takmičar na ovoj listi.
+                  Prijavi se za pripremu i budi sljedeći natjecatelj na ovom popisu.
                 </span>
                 <span className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-sm bg-brand-black px-6 text-[13px] font-bold tracking-[0.14em] text-white uppercase transition-colors group-hover:text-brand-yellow">
                   Prijavi se

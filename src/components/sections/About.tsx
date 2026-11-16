@@ -7,7 +7,7 @@ import { ArrowRightIcon } from "@/components/ui/icons";
 const stats = [
   { value: "2011", label: "online coaching" },
   { value: "4×", label: "zaredom apsolutni prvak BiH" },
-  { value: "77+", label: "zlata s takmičarima" },
+  { value: "77+", label: "zlata s natjecateljima" },
 ];
 
 export function About() {
@@ -34,7 +34,9 @@ export function About() {
                 <span className="block font-display text-6xl leading-none text-brand-yellow">
                   {careerStats[0].value}
                 </span>
-                <span className="text-sm font-semibold text-white/80">zlatnih medalja na bini</span>
+                <span className="text-sm font-semibold text-white/80">
+                  zlatnih medalja na pozornici
+                </span>
               </span>
               <span className="rounded-full border border-white/25 bg-black/40 px-3 py-1.5 text-sm font-semibold backdrop-blur-md">
                 IFBB Pro od 2021.
