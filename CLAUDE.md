@@ -83,8 +83,9 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 ## Otvorena pitanja s klijentom
 
 - Cijene su s PDV-om (potvrđeno). Paket 12 tjedana je 380 € (potvrđeno)
-- Sidrenje cijena: uz svaku cijenu stoji i "Cijena na dan 15. 9. 2025." (`PRICE_ANCHOR_LABEL` i `anchorPrice` u `packages.ts`, `anchor` za stavke cjenovnika). Adnan treba potvrditi godinu i jesu li cijene tog dana bile iste
-- Rasponi u cjenovniku (npr. 30 do 50 €): Adnan ih pregleda i šalje dopunu cjenovnika
+- Sidrenje cijena (potvrđeno, Adnanov dokument): uz svaku cijenu stoji "Cijena na dan 15. 9. 2026." (`PRICE_ANCHOR_LABEL`, `PRICE_ANCHOR_DATE`, `anchorPrice` u `packages.ts`, `anchor` za stavke cjenovnika). Sidrene: online coaching 150, 12 tjedana 350, natjecateljske 200, edukacija 350, ostale stavke iste kao sada
+- Strojno čitljiv cjenik: `/cjenik.xml` (današnji, uživo) i `/cjenik/YYYY-MM-DD.xml` (arhiva 30 dana). Kod u `src/lib/pricing/cjenik.ts`, snimci u tabeli `price_snapshots` (migracija 0005), Vercel cron `/api/cron/cjenik` svaki dan u 5 UTC, treba `CRON_SECRET` u Vercelu
+- Za XML treba naziv firme i OIB (sada piše "Adnan Gosto")
 - Ukupan broj medalja natjecatelja (77+, 56, 26, 4 su sa starog sajta) još nije potvrđen
 - Četvrti trener je Ben Pakulski, učilište je Fitnes učilište u Zagrebu (fitnes-uciliste.hr), oboje potvrđeno
 - Naziv firme za Politiku privatnosti; rokovi čuvanja podataka (6 mjeseci / 2 godine) su prijedlog

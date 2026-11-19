@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/layout/PageShell";
 import { ArrowRightIcon } from "@/components/ui/icons";
-import { ADNAN_EMAIL, PRICE_ANCHOR_LABEL } from "@/content/packages";
+import { ADNAN_EMAIL, PRICE_ANCHOR_LABEL, PRICE_RANGE_NOTE } from "@/content/packages";
+import { archiveDays } from "@/lib/pricing/cjenik";
 import { getPriceList } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
@@ -16,8 +17,10 @@ function mailto(subject: string) {
   return `mailto:${ADNAN_EMAIL}?subject=${encodeURIComponent(subject)}`;
 }
 
+export const revalidate = 3600;
+
 export default async function PricingPage() {
-  const priceList = await getPriceList();
+  const [priceList, days] = await Promise.all([getPriceList(), archiveDays()]);
   return (
     <PageShell>
       <section className="px-5 pt-32 pb-12 lg:pt-44 lg:pb-16">
@@ -150,10 +153,41 @@ export default async function PricingPage() {
               <h2 className="font-display text-3xl leading-none text-brand-yellow">
                 Rasponi cijena
               </h2>
-              <p className="mt-3 text-white/70">
-                Gdje je naveden raspon, točna cijena ovisi o trajanju, lokaciji i dogovoru.
-              </p>
+              <p className="mt-3 text-white/70">{PRICE_RANGE_NOTE}</p>
             </div>
+          </div>
+
+          <div className="mt-4 rounded-lg border border-brand-line p-6 sm:p-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="font-display text-3xl leading-none">Strojno čitljiv cjenik</h2>
+                <p className="mt-2 max-w-xl text-sm text-white/60">
+                  Cjenik u XML formatu ažurira se svaki dan do 8 sati. Cjenici prethodnih 30 dana
+                  ostaju dostupni.
+                </p>
+              </div>
+              <a
+                href="/cjenik.xml"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-yellow px-5 text-sm font-bold text-brand-black transition-colors hover:bg-white"
+              >
+                Današnji cjenik (XML)
+                <ArrowRightIcon className="size-4" />
+              </a>
+            </div>
+            {days.length > 0 && (
+              <ul className="mt-5 flex flex-wrap gap-2 text-[13px]">
+                {days.map((d) => (
+                  <li key={d}>
+                    <a
+                      href={`/cjenik/${d}.xml`}
+                      className="inline-flex h-8 items-center rounded-full border border-white/15 px-3 text-white/70 tabular-nums transition-colors hover:border-white/40 hover:text-white"
+                    >
+                      {d.split("-").reverse().join(". ")}.
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </div>

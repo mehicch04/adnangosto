@@ -74,7 +74,12 @@ export const packageCompare: Record<PackageSlug, PackageCompare> = {
 
 export const ADNAN_EMAIL = "adnan.adoni.gosto@gmail.com";
 
-export const PRICE_ANCHOR_LABEL = "Cijena na dan 15. 9. 2025.";
+export const PRICE_ANCHOR_DATE = "2026-09-15";
+
+export const PRICE_ANCHOR_LABEL = "Cijena na dan 15. 9. 2026.";
+
+export const PRICE_RANGE_NOTE =
+  "Određene stavke mogu se razlikovati u cijeni ovisno o duljini trajanja konzultacija, predavanja ili treninga te o broju treninga na tjednoj ili mjesečnoj razini.";
 
 export const PRICE_VAT_NOTE = "Sve cijene su s PDV-om.";
 
@@ -86,7 +91,7 @@ export const packages: CoachingPackage[] = [
     tagline: "Klasični online coaching uz tjedni check-in i stalno prilagođavanje plana.",
     audience: "Za one koji žele redovito praćenje i plan koji se mijenja zajedno s njima.",
     price: 180,
-    anchorPrice: 180,
+    anchorPrice: 150,
     priceUnit: "mjesečno",
     priceNote: "Plaća se mjesečno",
     checkIn: "Check-in svakih 7 dana",
@@ -170,7 +175,7 @@ export const packages: CoachingPackage[] = [
     tagline: "Napredak bez pritiska. Plan koji se uklapa u tvoj život, a ne obrnuto.",
     audience: "Za početnike i srednje iskusne koji žele rezultat bez spartanskog pristupa.",
     price: 380,
-    anchorPrice: 380,
+    anchorPrice: 350,
     priceUnit: "za 12 tjedana",
     priceNote: "Plaća se jednom unaprijed, za sva 3 mjeseca",
     checkIn: "Check-in svaka 4 tjedna",
@@ -344,7 +349,7 @@ export const packages: CoachingPackage[] = [
       "Priprema za natjecanje od trenera čiji su natjecatelji osvojili sve u amaterskom bodybuildingu.",
     audience: "Za natjecatelje, od prvog nastupa do pro karte.",
     price: 220,
-    anchorPrice: 220,
+    anchorPrice: 200,
     priceUnit: "mjesečno",
     priceNote: "Plaća se mjesečno",
     checkIn: "Plan do dana natjecanja",
