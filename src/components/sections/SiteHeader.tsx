@@ -16,5 +16,5 @@ export async function SiteHeader() {
     unit: p.priceUnit,
   }));
 
-  return <HeaderNav packages={menu} chat={contactLink()} />;
+  return <HeaderNav packages={menu} chat={await contactLink()} />;
 }

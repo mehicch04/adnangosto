@@ -1,7 +1,7 @@
 export type AdminNavItem = {
   href: string;
   label: string;
-  icon: "home" | "inbox" | "package" | "images" | "text" | "form" | "settings";
+  icon: "home" | "inbox" | "package" | "compare" | "badge" | "text" | "images" | "settings";
   ready: boolean;
   keywords: string;
 };
@@ -26,35 +26,42 @@ export const adminNav: AdminNavItem[] = [
     label: "Paketi i cijene",
     icon: "package",
     ready: true,
-    keywords: "paketi cijene cjenovnik",
+    keywords: "paketi cijene cjenik cjenovnik",
   },
   {
     href: "/admin/transformacije",
     label: "Transformacije",
-    icon: "images",
-    ready: false,
-    keywords: "slike prije poslije takmičari",
+    icon: "compare",
+    ready: true,
+    keywords: "slike prije poslije natjecatelji izjave iskustva",
+  },
+  {
+    href: "/admin/sponzori",
+    label: "Sponzori",
+    icon: "badge",
+    ready: true,
+    keywords: "sponzori suradnje logotipi partneri",
   },
   {
     href: "/admin/tekstovi",
     label: "Tekstovi",
     icon: "text",
-    ready: false,
-    keywords: "hero o meni pitanja kontakt",
+    ready: true,
+    keywords: "naslovna o meni pitanja whatsapp shop uvjeti",
   },
   {
-    href: "/admin/upitnik",
-    label: "Upitnik",
-    icon: "form",
-    ready: false,
-    keywords: "pitanja forma prijava",
+    href: "/admin/fotografije",
+    label: "Fotografije",
+    icon: "images",
+    ready: true,
+    keywords: "galerija slike fotografije",
   },
   {
     href: "/admin/podesavanja",
     label: "Podešavanja",
     icon: "settings",
     ready: true,
-    keywords: "lozinka nalog odjava",
+    keywords: "lozinka nalog odjava kopije",
   },
 ];
 

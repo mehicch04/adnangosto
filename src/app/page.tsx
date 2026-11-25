@@ -14,19 +14,22 @@ import { InstagramFeed } from "@/components/sections/InstagramFeed";
 import { MobileCta } from "@/components/sections/MobileCta";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { ShopPromo } from "@/components/sections/ShopPromo";
+import { Sponsors } from "@/components/sections/Sponsors";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
 import { getPackages } from "@/lib/content/packages";
+import { getTestimonials } from "@/lib/content/transformations";
 import { site } from "@/content/site";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: { absolute: "Početna | Adnan Gosto" },
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {
-  const packages = await getPackages();
+  const [packages, testimonials] = await Promise.all([getPackages(), getTestimonials()]);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,9 +66,10 @@ export default async function HomePage() {
         <Transformations />
         <Process />
         <Packages />
-        <Testimonials />
+        <Testimonials items={testimonials} />
         <ClientResults />
         <About />
+        <Sponsors />
         <ShopPromo />
         <Faq />
         <FinalCta />
@@ -73,7 +77,7 @@ export default async function HomePage() {
       </main>
       <SiteFooter />
       <BackToTop />
-      <ChatButton link={contactLink()} />
+      <ChatButton link={await contactLink()} />
       <MobileCta />
     </>
   );

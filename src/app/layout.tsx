@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     locale: "hr_HR",
     siteName: "Adnan Gosto",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 // Boja trake preglednika na mobitelu, da se stopi s crnom pozadinom.

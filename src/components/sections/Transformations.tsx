@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { transformationCategories, transformationPhotos } from "@/content/site";
+import { transformationCategories } from "@/content/site";
+import { getTransformations } from "@/lib/content/transformations";
 import { TransformationsGrid } from "@/components/sections/TransformationsGrid";
 import { TransformationsTabs } from "@/components/sections/TransformationsTabs";
 
@@ -8,16 +9,17 @@ const steps = [
   { label: "Poslije", text: "Desna fotografija je forma nakon programa." },
 ];
 
-export function Transformations({
+export async function Transformations({
   ctaHref = "/#suradnja",
   ctaLabel = "Pogledaj pakete",
 }: {
   ctaHref?: string;
   ctaLabel?: string;
 } = {}) {
-  if (transformationPhotos.length === 0) return null;
+  const items = await getTransformations();
+  if (items.length === 0) return null;
   const tabs = transformationCategories
-    .map((c) => ({ ...c, photos: transformationPhotos.filter((p) => p.category === c.id) }))
+    .map((c) => ({ ...c, photos: items.filter((p) => p.category === c.id) }))
     .filter((t) => t.photos.length > 0);
 
   return (
@@ -70,7 +72,7 @@ export function Transformations({
       {tabs.length > 1 ? (
         <TransformationsTabs tabs={tabs} />
       ) : (
-        <TransformationsGrid photos={transformationPhotos} />
+        <TransformationsGrid photos={items} />
       )}
 
       <div className="mx-auto max-w-7xl px-5">

@@ -9,6 +9,7 @@ export const submissionSchema = z.object({
   photos: z.array(z.string().max(120)).max(6),
   photoCount: z.number().int().min(0).max(6),
   consent: z.boolean(),
+  terms: z.boolean().optional(),
   website: z.string().max(200),
   startedAt: z.number(),
 });

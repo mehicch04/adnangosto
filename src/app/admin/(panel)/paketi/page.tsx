@@ -16,7 +16,7 @@ export const metadata = { title: "Paketi i cijene" };
 
 const tabs = [
   { id: "paketi", label: "Paketi", href: "/admin/paketi" },
-  { id: "cjenovnik", label: "Cjenovnik", href: "/admin/paketi?tab=cjenovnik" },
+  { id: "cjenik", label: "Cjenik", href: "/admin/paketi?tab=cjenik" },
 ];
 
 export default async function PackagesAdminPage({
@@ -25,7 +25,7 @@ export default async function PackagesAdminPage({
   searchParams: Promise<{ tab?: string }>;
 }) {
   const { tab } = await searchParams;
-  const active = tab === "cjenovnik" ? "cjenovnik" : "paketi";
+  const active = tab === "cjenik" ? "cjenik" : "paketi";
   const { supabase } = await requireAdmin();
   const [{ data }, { data: content }] = await Promise.all([
     supabase.from("packages").select(PACKAGE_COLUMNS).order("position"),
@@ -66,7 +66,7 @@ export default async function PackagesAdminPage({
     <>
       <PageHeader title="Paketi i cijene" description="Izmjene su na sajtu čim ih sačuvaš." />
       <nav
-        aria-label="Paketi i cjenovnik"
+        aria-label="Paketi i cjenik"
         className="mt-6 inline-flex rounded-xl border border-white/[0.08] bg-white/[0.03] p-1"
       >
         {tabs.map((t) => (

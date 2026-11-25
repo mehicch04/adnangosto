@@ -124,7 +124,7 @@ function PlanVisual() {
                 : "group-data-[in=true]:-translate-x-3 group-data-[in=true]:-rotate-3"
             }`}
           >
-            <span className="rounded bg-[#e5484d] px-1.5 py-0.5 text-[9px] font-bold text-white">
+            <span className="rounded bg-[#d13438] px-1.5 py-0.5 text-[9px] font-bold text-white">
               PDF
             </span>
             <p className="mt-2 font-display text-lg leading-none">{t}</p>

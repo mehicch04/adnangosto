@@ -13,7 +13,7 @@ Jedna duga stranica koja se skrola, plus upitnik za prijavu i admin panel.
 - Stranica svakog paketa: `/paketi/[slug]`, cjenovnik `/cjenovnik`, `/politika-privatnosti`
 - Upitnik u koracima po paketu: `/prijava/[paket]` (slike idu direktno u privatni bucket `prijave`)
 - Po prijavi: upis u bazu + mail Adnanu ("<Naziv paketa>, prijava") + potvrda podnosiocu
-- Admin `/admin`: prijave sa statusom, paketi, pitanja, transformacije, sponzori, tekstovi
+- Admin `/admin`: prijave sa statusom, paketi i cijene, transformacije, sponzori, tekstovi, fotografije (galerija), podešavanja s kopijama
 
 ## NIJE u fazi 1 (ne gradi bez dogovora)
 
@@ -73,8 +73,14 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Pitanja u upitniku i validacija (ista na klijentu i serveru): `src/content/questionnaire.ts`
 - Slanje prijave: `src/app/prijava/[paket]/actions.ts` (Zod, Supabase, Resend). Bez Supabase ključeva radi samo u razvoju ili uz `APPLICATIONS_DEMO=1`
 - Mailovi: `src/lib/email/templates.ts`
-- Admin: `src/app/admin/(panel)`: `/admin` pregled (brojke, prijave po danima i paketima), `/admin/prijave` lista (pretraga, filteri, arhiva, status iz liste), detalj prijave (slike, bilješke se čuvaju same, arhiva, trajno brisanje sa slikama), `/admin/paketi`, `/admin/podesavanja`. Prijava: `src/app/admin/login`
-- Migracije: `supabase/migrations`, 0003 dodaje `archived_at` na prijave i polja paketa (cijena, oznaka, stavke, `featured`) sa početnim podacima
+- Admin: `src/app/admin/(panel)`: `/admin` pregled (brojke, prijave po danima i paketima), `/admin/prijave` lista (pretraga, filteri, arhiva, status iz liste), detalj prijave (slike, bilješke se čuvaju same, arhiva, trajno brisanje sa slikama), `/admin/paketi`, `/admin/transformacije`, `/admin/sponzori`, `/admin/tekstovi`, `/admin/fotografije`, `/admin/podesavanja`. Prijava: `src/app/admin/login`. Na mobitelu donja traka ima Više za ostale stranice
+- Transformacije: tabela `transformations` (slika, kategorija, ime, rezultat, priča, izjava, vidljivost, redoslijed). Sajt čita preko `src/lib/content/transformations.ts`, rezerva su slike iz `site.ts`. Iskustva klijenata se prave samo od izjava upisanih uz transformacije, bez izmišljenih tekstova; bez izjava sekcija se ne prikazuje
+- Sponzori: tabela `sponsors`, sekcija `Sponsors.tsx` se pojavi tek kad je bar jedan vidljiv
+- Tekstovi: `site_content` ključ `tekstovi` (JSON): naslovna, O meni, česta pitanja, WhatsApp broj, web shop, opći uvjeti. Shema i početne vrijednosti u `src/content/texts.ts`, čitanje `getTexts()`. Kad su opći uvjeti upisani, pojavi se `/opci-uvjeti`, link u podnožju i druga kvačica u prijavi
+- Fotografije: `site_content` ključ `galerija`, galerija na `/o-meni`
+- Slike iz panela idu u bucket `media` (`transformacije/`, `sponzori/`, `galerija/`), putanje pretvara `imageSrc` u `src/lib/media.ts`
+- Kopije: cron `/api/cron/odrzavanje` svaku noć pravi JSON kopiju svih tabela u privatni bucket `kopije` (7 dana) i briše prijave bez suradnje starije od 6 mjeseci, kako piše u Politici privatnosti. Kopije se preuzimaju u Podešavanjima
+- Migracije: `supabase/migrations`, 0003 dodaje `archived_at` na prijave i polja paketa (cijena, oznaka, stavke, `featured`) sa početnim podacima, 0006 transformacije s kategorijom i slikom (11 postojećih upisano), ograničenja bucketa `media`, bucket `kopije`
 - Ostali sadržaj početne: `src/content/site.ts`, O meni: `src/content/about.ts`
 - Sekcije: `src/components/sections/`, dugme i ikonice: `src/components/ui/`
 - Potpis dizajna: žuta riječ iza Adnana u heroju (`hero.word` u `site.ts`, sada ADONI, prije GOSTO). Slojevi: `hero-adnan-wide.jpg` (proširena pozadina), slova, pa `hero-adnan-wide-cut.webp` (izrez iste veličine, mora ostati poravnat s pozadinom). Na mobitelu `om-majica.jpg` i `hero-adnan-cut.webp`
@@ -83,15 +89,15 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 ## Otvorena pitanja s klijentom
 
 - Cijene su s PDV-om (potvrđeno). Paket 12 tjedana je 380 € (potvrđeno)
-- Sidrenje cijena (potvrđeno, Adnanov dokument): uz svaku cijenu stoji "Cijena na dan 15. 9. 2026." (`PRICE_ANCHOR_LABEL`, `PRICE_ANCHOR_DATE`, `anchorPrice` u `packages.ts`, `anchor` za stavke cjenovnika). Sidrene: online coaching 150, 12 tjedana 350, natjecateljske 200, edukacija 350, ostale stavke iste kao sada
+- Sidrenje cijena (potvrđeno, Adnanov dokument): uz svaku cijenu stoji "Cijena na dan 10. 9. 2026." (`PRICE_ANCHOR_LABEL`, `PRICE_ANCHOR_DATE`, `anchorPrice` u `packages.ts`, `anchor` za stavke cjenika). Sidrene: online coaching 150, 12 tjedana 350, natjecateljske 200, edukacija 350, ostale stavke iste kao sada
 - Strojno čitljiv cjenik: `/cjenik.xml` (današnji, uživo) i `/cjenik/YYYY-MM-DD.xml` (arhiva 30 dana). Kod u `src/lib/pricing/cjenik.ts`, snimci u tabeli `price_snapshots` (migracija 0005), Vercel cron `/api/cron/cjenik` svaki dan u 5 UTC, treba `CRON_SECRET` u Vercelu
 - Za XML treba naziv firme i OIB (sada piše "Adnan Gosto")
 - Ukupan broj medalja natjecatelja (77+, 56, 26, 4 su sa starog sajta) još nije potvrđen
 - Četvrti trener je Ben Pakulski, učilište je Fitnes učilište u Zagrebu (fitnes-uciliste.hr), oboje potvrđeno
 - Naziv firme za Politiku privatnosti; rokovi čuvanja podataka (6 mjeseci / 2 godine) su prijedlog
-- Opći uvjeti poslovanja: Adnan šalje tekst (povrat novca, rok isporuke programa). Treba stranica i kvačica u upitniku
-- Web shop: još nije gotov, Adnan šalje naziv i link. Link i kod za popust idu u `site.shop` u `src/content/site.ts`; dok je `url` prazan, blok se ne prikazuje
-- Transformacije takmičara: nove slike dodati u `transformationPhotos` s `category: "takmicari"`, kartice se pojave same
+- Opći uvjeti poslovanja: Adnan šalje tekst (povrat novca, rok isporuke programa). Upisuje se u panelu, Tekstovi, Opći uvjeti
+- Web shop: još nije gotov, Adnan šalje naziv i link. Link, kod i popust se upisuju u panelu, Tekstovi, Kontakt i shop; dok je link prazan, blok se ne prikazuje
+- Transformacije natjecatelja: Adnan ih dodaje u panelu s vrstom Natjecatelji, kartice se pojave same
 - Original loga (SVG/PDF) i pojednostavljena "GA" verzija za favicon
 - Fotografije u punoj rezoluciji: Adnan ih donosi na stiku ili šalje po nekome
 - Pristup domeni adnangosto.com (za Resend DNS i prebacivanje)
@@ -101,6 +107,8 @@ portal, zajednica, povezivanje s mobilnom aplikacijom. To je faza 2.
 - Ton prema posjetiocu: "ti" (potvrdio Adnan)
 - Mail za prijave: adnan.adoni.gosto@gmail.com (`APPLICATIONS_TO_EMAIL`)
 - Instagram feed: zadnje objave dolaze preko Behold.so (JSON feed), URL ide u `BEHOLD_FEED_URL`. Adnan jednom povezuje svoj profesionalni Instagram nalog u Beholdu; bez URL-a se prikazuju lokalne fotografije
-- Sponzora trenutno nema, sekcija je uklonjena
-- Iskustva klijenata (`fallbackTestimonials` u `src/content/site.ts`) su šablon: prije objave zamijeniti pravim izjavama, imenima, ulogama i fotografijama uz dozvolu klijenata
+- Sponzora trenutno nema, sekcija se pojavi kad Adnan doda prvog u panelu
+- Iskustva klijenata: izmišljene izjave su uklonjene. Adnan upisuje prave izjave uz transformacije, uz dozvolu klijenta
 - Fotografije takmičara (`public/images/takmicari`) su sa starog sajta bez imena: Adnan mora potvrditi ko je ko i poslati sliku za Jasmina Hodžića
+- Vercel Hobby je po uvjetima samo za nekomercijalnu upotrebu. Za Adnanov sajt treba odluka: Vercel Pro ili drugi hosting
+- Supabase Free nema automatske kopije, zato postoji vlastita dnevna kopija (cron odrzavanje). Za produkciju u Vercelu trebaju `CRON_SECRET` i `SUPABASE_SECRET_KEY`

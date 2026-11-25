@@ -74,9 +74,9 @@ export const packageCompare: Record<PackageSlug, PackageCompare> = {
 
 export const ADNAN_EMAIL = "adnan.adoni.gosto@gmail.com";
 
-export const PRICE_ANCHOR_DATE = "2026-09-15";
+export const PRICE_ANCHOR_DATE = "2026-09-10";
 
-export const PRICE_ANCHOR_LABEL = "Cijena na dan 15. 9. 2026.";
+export const PRICE_ANCHOR_LABEL = "Cijena na dan 10. 9. 2026.";
 
 export const PRICE_RANGE_NOTE =
   "Određene stavke mogu se razlikovati u cijeni ovisno o duljini trajanja konzultacija, predavanja ili treninga te o broju treninga na tjednoj ili mjesečnoj razini.";

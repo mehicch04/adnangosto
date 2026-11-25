@@ -7,10 +7,10 @@ import { archiveDays } from "@/lib/pricing/cjenik";
 import { getPriceList } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
-  title: "Cjenovnik",
+  title: "Cjenik",
   description:
     "Cijene online coachinga, paketa od 12 tjedana, natjecateljskih priprema, edukacije, konzultacija i osobnih treninga.",
-  alternates: { canonical: "/cjenovnik" },
+  alternates: { canonical: "/cjenik" },
 };
 
 function mailto(subject: string) {
@@ -30,7 +30,7 @@ export default async function PricingPage() {
             Sve usluge na jednom mjestu
           </p>
           <h1 className="mt-5 animate-rise font-display text-[clamp(4.5rem,14vw,10rem)] leading-[0.82]">
-            Cjenovnik
+            Cjenik
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
             Online paketi biraju se putem prijave na stranici. Za konzultacije, treninge uživo i
@@ -40,7 +40,7 @@ export default async function PricingPage() {
       </section>
 
       <nav
-        aria-label="Kategorije cjenovnika"
+        aria-label="Kategorije cjenika"
         className="sticky top-[72px] z-20 border-y border-brand-line bg-brand-black/95 lg:top-20"
       >
         <ul className="mx-auto flex max-w-7xl [scrollbar-width:none] gap-2 overflow-x-auto px-5 py-3">
@@ -106,7 +106,7 @@ export default async function PricingPage() {
                                 {item.unit}
                               </span>
                             )}
-                            <span className="mt-1 block text-[11px] whitespace-nowrap text-white/40">
+                            <span className="mt-1 block text-[11px] whitespace-nowrap text-white/60">
                               {PRICE_ANCHOR_LABEL}: {item.anchor ?? item.price}
                             </span>
                           </span>

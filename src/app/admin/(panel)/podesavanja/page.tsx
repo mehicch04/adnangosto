@@ -2,14 +2,21 @@ import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin/auth";
 import { Card, CardHeader, PageHeader, inputClass } from "@/components/admin/ui";
 import { PasswordForm, SessionsCard } from "@/app/admin/(panel)/podesavanja/SettingsForms";
+import { BackupsCard } from "@/app/admin/(panel)/podesavanja/BackupsCard";
+import { listBackups } from "@/lib/maintenance";
+import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 
 export const metadata: Metadata = { title: "Podešavanja" };
 
 export default async function SettingsPage() {
   const { email } = await requireAdmin();
+  const backups = isSupabaseConfigured() ? await listBackups(createAdminClient()) : [];
   return (
     <>
-      <PageHeader title="Podešavanja" description="Tvoj nalog i sigurnost panela." />
+      <PageHeader
+        title="Podešavanja"
+        description="Tvoj nalog, sigurnost panela i kopije podataka."
+      />
       <div className="mt-8 grid max-w-3xl gap-5">
         <Card>
           <CardHeader title="Nalog" description="Mail kojim se prijavljuješ u panel." />
@@ -22,6 +29,7 @@ export default async function SettingsPage() {
         </Card>
         <PasswordForm />
         <SessionsCard />
+        <BackupsCard initial={backups} />
       </div>
     </>
   );

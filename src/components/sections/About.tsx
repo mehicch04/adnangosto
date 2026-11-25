@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { about } from "@/content/site";
+import { getTexts } from "@/lib/content/texts";
 import { careerStats, quote } from "@/content/about";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
@@ -10,7 +10,8 @@ const stats = [
   { value: "77+", label: "zlata s natjecateljima" },
 ];
 
-export function About() {
+export async function About() {
+  const { about } = await getTexts();
   return (
     <section id="o-meni" className="relative scroll-mt-24 overflow-hidden px-5 py-24 lg:py-36">
       <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-24">
@@ -58,7 +59,7 @@ export function About() {
           <p className="mt-6 font-signature text-6xl leading-none text-brand-yellow">
             {quote.author}
           </p>
-          <p className="mt-8 max-w-xl text-lg text-white/65">{about.paragraphs[0]}</p>
+          <p className="mt-8 max-w-xl text-lg text-white/65">{about.text}</p>
           <dl className="mt-10 grid grid-cols-3 border-y border-white/10">
             {stats.map((s, i) => (
               <div key={s.label} className={`py-6 ${i ? "border-l border-white/10 pl-5" : "pr-5"}`}>

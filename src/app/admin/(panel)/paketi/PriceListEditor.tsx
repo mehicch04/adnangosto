@@ -118,13 +118,13 @@ export function PriceListEditor({
           description="Ova grupa se puni sama iz paketa. Cijene mijenjaš u kartici Paketi."
           action={
             <a
-              href="/cjenovnik"
+              href="/cjenik"
               target="_blank"
               rel="noopener"
               className="inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[13px] font-semibold text-white/60 hover:bg-white/[0.06] hover:text-white"
             >
               <ExternalIcon className="size-4" />
-              Cjenovnik
+              Cjenik
             </a>
           }
         />
@@ -296,13 +296,13 @@ export function PriceListEditor({
           Nova grupa
         </Button>
         <Button type="button" variant="ghost" size="sm" onClick={() => setRestore(true)}>
-          Vrati početni cjenovnik
+          Vrati početni cjenik
         </Button>
       </div>
 
       <ConfirmDialog
         open={restore}
-        title="Vratiti početni cjenovnik?"
+        title="Vratiti početni cjenik?"
         text="Sve grupe i stavke ispod online paketa vraćaju se na verziju s kojom je sajt napravljen."
         confirmLabel="Vrati"
         tone="primary"

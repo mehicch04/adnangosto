@@ -209,7 +209,7 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
       <Card className="mt-8">
         <CardHeader
           title="Redoslijed i vidljivost"
-          description="Ovim redom se paketi prikazuju na početnoj, u meniju i u cjenovniku. Prevuci karticu ili koristi strelice."
+          description="Ovim redom se paketi prikazuju na početnoj, u meniju i u cjeniku. Prevuci karticu ili koristi strelice."
           action={busy === "order" ? <Spinner className="size-4 text-white/50" /> : undefined}
         />
         <ol className="grid gap-3 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-4">
@@ -404,11 +404,7 @@ export function PackagesEditor({ initial }: { initial: EditorPackage[] }) {
                   />
                 </Field>
               </div>
-              <Field
-                label="Check-in"
-                htmlFor="checkIn"
-                hint="Ide u cjenovnik i na stranicu paketa."
-              >
+              <Field label="Check-in" htmlFor="checkIn" hint="Ide u cjenik i na stranicu paketa.">
                 <input
                   id="checkIn"
                   value={draft.checkIn}

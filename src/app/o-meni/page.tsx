@@ -13,15 +13,18 @@ import { BackToTop } from "@/components/sections/BackToTop";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { getTestimonials } from "@/lib/content/transformations";
 import { InstagramFeed } from "@/components/sections/InstagramFeed";
 
 export const metadata: Metadata = {
   title: "O meni",
   description:
     "Adnan Gosto, IFBB Pro i trener natjecatelja. Četiri puta zaredom apsolutni prvak BiH, pobjednik Fit Parade Budimpešta i osvajač IFBB Pro Card.",
+  alternates: { canonical: "/o-meni" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const testimonials = await getTestimonials();
   return (
     <>
       <SiteHeader />
@@ -33,13 +36,13 @@ export default function AboutPage() {
         <CareerResults />
         <CoachLegacy />
         <Gallery />
-        <Testimonials />
+        <Testimonials items={testimonials} />
         <FinalCta />
         <InstagramFeed />
       </main>
       <SiteFooter />
       <BackToTop />
-      <ChatButton link={contactLink()} />
+      <ChatButton link={await contactLink()} />
     </>
   );
 }

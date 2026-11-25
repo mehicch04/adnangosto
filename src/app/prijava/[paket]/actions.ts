@@ -2,6 +2,7 @@
 
 import { randomUUID } from "node:crypto";
 import { getPackage } from "@/lib/content/packages";
+import { getTexts } from "@/lib/content/texts";
 import {
   PHOTO_MAX,
   PHOTO_MIN,
@@ -63,6 +64,7 @@ export type SubmitInput = {
   photos: string[];
   photoCount: number;
   consent: boolean;
+  terms?: boolean;
   website: string;
   startedAt: number;
 };
@@ -104,6 +106,14 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
       message: "Za slanje prijave potrebna je tvoja privola.",
       step: "pregled",
     };
+  const { terms } = await getTexts();
+  const termsRequired = Boolean(terms.body.trim());
+  if (termsRequired && !input.terms)
+    return {
+      ok: false,
+      message: "Za slanje prijave potrebno je prihvatiti opće uvjete.",
+      step: "pregled",
+    };
 
   const live = isSupabaseConfigured();
   const photos = live ? input.photos : [];
@@ -129,6 +139,9 @@ export async function submitApplication(raw: SubmitInput): Promise<SubmitResult>
       });
     }
   }
+
+  if (termsRequired)
+    rows.push({ section: "Pregled", question: "Opći uvjeti poslovanja", answer: "Prihvaćeni" });
 
   const name = stringify(input.values.fullName);
   const email = stringify(input.values.email);

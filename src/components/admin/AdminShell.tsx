@@ -5,8 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
+  BadgeIcon,
+  CompareIcon,
   ExternalIcon,
-  FormIcon,
+  GridIcon,
   HomeIcon,
   ImagesIcon,
   InboxIcon,
@@ -15,6 +17,7 @@ import {
   SearchIcon,
   SettingsIcon,
   TextIcon,
+  XIcon,
 } from "@/components/admin/icons";
 import { CommandPalette, type Command } from "@/components/admin/CommandPalette";
 import { Toaster } from "@/components/admin/Toaster";
@@ -24,9 +27,10 @@ const icons: Record<AdminNavItem["icon"], (p: { className?: string }) => ReactNo
   home: HomeIcon,
   inbox: InboxIcon,
   package: PackageIcon,
-  images: ImagesIcon,
+  compare: CompareIcon,
+  badge: BadgeIcon,
   text: TextIcon,
-  form: FormIcon,
+  images: ImagesIcon,
   settings: SettingsIcon,
 };
 
@@ -54,6 +58,12 @@ export function AdminShell({
 }) {
   const pathname = usePathname();
   const [palette, setPalette] = useState(false);
+  const [more, setMore] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setMore(false);
+  }
   const signOutForm = useRef<HTMLFormElement>(null);
   const initial = (email[0] ?? "A").toUpperCase();
 
@@ -99,6 +109,10 @@ export function AdminShell({
   ];
 
   const mobileMain = adminNav.filter((n) => n.ready && n.icon !== "settings").slice(0, 3);
+  const mobileMore = adminNav.filter(
+    (n) => n.ready && n.icon !== "settings" && !mobileMain.includes(n),
+  );
+  const moreOn = mobileMore.some((n) => isActive(pathname, n.href));
   const settingsOn = isActive(pathname, "/admin/podesavanja");
 
   return (
@@ -280,11 +294,13 @@ export function AdminShell({
         ))}
         <button
           type="button"
-          onClick={() => setPalette(true)}
-          className="flex flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-semibold text-white/55"
+          onClick={() => setMore(true)}
+          aria-expanded={more}
+          aria-controls="panel-vise"
+          className={`flex flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-semibold ${moreOn ? "text-brand-yellow" : "text-white/55"}`}
         >
-          <SearchIcon className="size-[22px]" />
-          Traži
+          <GridIcon className="size-[22px]" />
+          Više
         </button>
         <Link
           href="/admin/podesavanja"
@@ -295,6 +311,84 @@ export function AdminShell({
           Nalog
         </Link>
       </nav>
+
+      {more && (
+        <div className="fixed inset-0 z-50 lg:hidden" role="presentation">
+          <button
+            type="button"
+            aria-label="Zatvori"
+            onClick={() => setMore(false)}
+            className="absolute inset-0 animate-[fade-in_0.2s_ease-out] bg-black/70 backdrop-blur-sm"
+          />
+          <div
+            id="panel-vise"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Više opcija"
+            onKeyDown={(e) => e.key === "Escape" && setMore(false)}
+            className="absolute inset-x-0 bottom-0 animate-[sheet-up_0.28s_cubic-bezier(0.22,1,0.36,1)] rounded-t-3xl border-t border-white/[0.08] bg-[#111] px-4 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]"
+          >
+            <span className="mx-auto block h-1 w-10 rounded-full bg-white/15" />
+            <div className="mt-3 flex items-center justify-between px-1">
+              <p className="text-[13px] font-semibold text-white/50">Panel</p>
+              <button
+                type="button"
+                autoFocus
+                onClick={() => setMore(false)}
+                aria-label="Zatvori"
+                className="grid size-9 place-items-center rounded-full text-white/60 hover:bg-white/[0.06]"
+              >
+                <XIcon className="size-5" />
+              </button>
+            </div>
+            <ul className="mt-2 grid grid-cols-2 gap-2">
+              {mobileMore.map((n) => {
+                const on = isActive(pathname, n.href);
+                return (
+                  <li key={n.href}>
+                    <Link
+                      href={n.href}
+                      aria-current={on ? "page" : undefined}
+                      className={`flex h-16 items-center gap-3 rounded-2xl border px-4 text-[15px] font-semibold transition-colors ${
+                        on
+                          ? "border-brand-yellow/40 bg-brand-yellow/10 text-brand-yellow"
+                          : "border-white/[0.07] bg-white/[0.03] text-white/85 active:bg-white/[0.07]"
+                      }`}
+                    >
+                      <NavIcon name={n.icon} className="size-[22px]" />
+                      {n.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMore(false);
+                    setPalette(true);
+                  }}
+                  className="flex h-16 w-full items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-4 text-[15px] font-semibold text-white/85 active:bg-white/[0.07]"
+                >
+                  <SearchIcon className="size-[22px]" />
+                  Traži
+                </button>
+              </li>
+              <li>
+                <a
+                  href="/"
+                  target="_blank"
+                  rel="noopener"
+                  className="flex h-16 items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.03] px-4 text-[15px] font-semibold text-white/85 active:bg-white/[0.07]"
+                >
+                  <ExternalIcon className="size-[22px]" />
+                  Otvori sajt
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
 
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
     </Toaster>

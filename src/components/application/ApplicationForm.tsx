@@ -34,6 +34,7 @@ type Props = {
   checkIn: string;
   backHref: string;
   instagram: string;
+  termsRequired?: boolean;
 };
 
 const STORAGE_PREFIX = "adnangosto:prijava:";
@@ -62,7 +63,15 @@ function display(v: string | string[] | undefined) {
   return v?.trim() ?? "";
 }
 
-export function ApplicationForm({ slug, packageName, price, checkIn, backHref, instagram }: Props) {
+export function ApplicationForm({
+  slug,
+  packageName,
+  price,
+  checkIn,
+  backHref,
+  instagram,
+  termsRequired = false,
+}: Props) {
   const steps = questionnaires[slug];
   const [stepIndex, setStepIndex] = useState(0);
   const [values, setValues] = useState<Answers>({});
@@ -73,6 +82,8 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
   const [dragOver, setDragOver] = useState(false);
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const [termsError, setTermsError] = useState(false);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [restored, setRestored] = useState(false);
   const [maxReached, setMaxReached] = useState(0);
@@ -261,9 +272,10 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
   };
 
   const submit = async () => {
-    if (!consent) {
-      setConsentError(true);
-      document.getElementById("consent")?.focus();
+    if (!consent || (termsRequired && !terms)) {
+      setConsentError(!consent);
+      setTermsError(termsRequired && !terms);
+      document.getElementById(!consent ? "consent" : "terms")?.focus();
       return;
     }
     setStatus({ kind: "uploading", progress: 0 });
@@ -301,6 +313,7 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
         photos: paths,
         photoCount: photos.length,
         consent,
+        terms,
         website: honeypot.current?.value ?? "",
         startedAt,
       });
@@ -559,6 +572,13 @@ export function ApplicationForm({ slug, packageName, price, checkIn, backHref, i
                   onConsent={(v) => {
                     setConsent(v);
                     if (v) setConsentError(false);
+                  }}
+                  termsRequired={termsRequired}
+                  terms={terms}
+                  termsError={termsError}
+                  onTerms={(v) => {
+                    setTerms(v);
+                    if (v) setTermsError(false);
                   }}
                   photoStepIndex={steps.findIndex((s) => s.kind === "photos")}
                 />
@@ -848,6 +868,10 @@ function ReviewStep({
   consent,
   consentError,
   onConsent,
+  termsRequired,
+  terms,
+  termsError,
+  onTerms,
   photoStepIndex,
 }: {
   sections: { step: Step; index: number; rows: { label: string; value: string }[] }[];
@@ -856,6 +880,10 @@ function ReviewStep({
   consent: boolean;
   consentError: boolean;
   onConsent: (v: boolean) => void;
+  termsRequired: boolean;
+  terms: boolean;
+  termsError: boolean;
+  onTerms: (v: boolean) => void;
   photoStepIndex: number;
 }) {
   return (
@@ -918,32 +946,86 @@ function ReviewStep({
         </section>
       </div>
 
+      <CheckRow
+        id="consent"
+        checked={consent}
+        error={consentError ? "Za slanje prijave potrebna je tvoja privola." : null}
+        onChange={onConsent}
+      >
+        Pristajem da Adnan Gosto obrađuje moje podatke iz ove prijave, uključujući fotografije i
+        podatke o zdravlju, isključivo radi procjene i pripreme suradnje, kako je opisano u{" "}
+        <Link
+          href="/politika-privatnosti"
+          target="_blank"
+          className="font-semibold text-brand-yellow underline underline-offset-4"
+        >
+          Politici privatnosti
+        </Link>
+        .
+      </CheckRow>
+      {termsRequired && (
+        <CheckRow
+          id="terms"
+          checked={terms}
+          error={termsError ? "Za slanje prijave potrebno je prihvatiti opće uvjete." : null}
+          onChange={onTerms}
+        >
+          Pročitao sam i prihvaćam{" "}
+          <Link
+            href="/opci-uvjeti"
+            target="_blank"
+            className="font-semibold text-brand-yellow underline underline-offset-4"
+          >
+            Opće uvjete poslovanja
+          </Link>
+          .
+        </CheckRow>
+      )}
+    </div>
+  );
+}
+
+function CheckRow({
+  id,
+  checked,
+  error,
+  onChange,
+  children,
+}: {
+  id: string;
+  checked: boolean;
+  error: string | null;
+  onChange: (v: boolean) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
       <label
-        htmlFor="consent"
-        className={`mt-6 flex cursor-pointer gap-4 rounded-md border p-4 transition-colors ${
-          consentError
+        htmlFor={id}
+        className={`mt-4 flex cursor-pointer gap-4 rounded-md border p-4 transition-colors first-of-type:mt-6 ${
+          error
             ? "border-[#ff8a7a]/70 bg-[#ff8a7a]/5"
-            : consent
+            : checked
               ? "border-brand-yellow/60 bg-brand-yellow/5"
               : "border-white/15 hover:border-white/30"
         }`}
       >
         <input
-          id="consent"
+          id={id}
           type="checkbox"
-          checked={consent}
-          onChange={(e) => onConsent(e.target.checked)}
-          aria-invalid={consentError || undefined}
-          aria-describedby={consentError ? "consent-err" : undefined}
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${id}-err` : undefined}
           className="peer sr-only"
         />
         <span
           aria-hidden="true"
           className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-sm border-2 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-brand-yellow peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-brand-surface ${
-            consent ? "border-brand-yellow bg-brand-yellow text-brand-black" : "border-white/40"
+            checked ? "border-brand-yellow bg-brand-yellow text-brand-black" : "border-white/40"
           }`}
         >
-          {consent && (
+          {checked && (
             <svg viewBox="0 0 16 16" className="size-4">
               <path
                 d="m3 8.5 3 3 7-7"
@@ -956,25 +1038,14 @@ function ReviewStep({
             </svg>
           )}
         </span>
-        <span className="text-[15px] leading-relaxed text-white/85">
-          Pristajem da Adnan Gosto obrađuje moje podatke iz ove prijave, uključujući fotografije i
-          podatke o zdravlju, isključivo radi procjene i pripreme suradnje, kako je opisano u{" "}
-          <Link
-            href="/politika-privatnosti"
-            target="_blank"
-            className="font-semibold text-brand-yellow underline underline-offset-4"
-          >
-            Politici privatnosti
-          </Link>
-          .
-        </span>
+        <span className="text-[15px] leading-relaxed text-white/85">{children}</span>
       </label>
-      {consentError && (
-        <p id="consent-err" role="alert" className="mt-2 text-sm font-semibold text-[#ff8a7a]">
-          Za slanje prijave potrebna je tvoja privola.
+      {error && (
+        <p id={`${id}-err`} role="alert" className="mt-2 text-sm font-semibold text-[#ff8a7a]">
+          {error}
         </p>
       )}
-    </div>
+    </>
   );
 }
 

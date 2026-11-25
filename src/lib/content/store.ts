@@ -2,7 +2,7 @@ import "server-only";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { createPublicClient } from "@/lib/supabase/public";
 
-export type ContentTag = "paketi" | "transformacije" | "tekstovi" | "pitanja" | "iskustva";
+export type ContentTag = "paketi" | "transformacije" | "tekstovi" | "sponzori" | "fotografije";
 
 type Db = NonNullable<ReturnType<typeof createPublicClient>>;
 

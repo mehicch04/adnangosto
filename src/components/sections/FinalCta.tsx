@@ -4,8 +4,8 @@ import { site } from "@/content/site";
 import { contactLink } from "@/lib/contact";
 import { ArrowRightIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 
-export function FinalCta() {
-  const chat = contactLink("Bok Adnane, zanima me suradnja.");
+export async function FinalCta() {
+  const chat = await contactLink("Bok Adnane, zanima me suradnja.");
   const wa = chat.kind === "whatsapp";
 
   return (

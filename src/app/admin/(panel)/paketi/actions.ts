@@ -162,7 +162,7 @@ export async function setPackageFeatured(slug: string, featured: boolean): Promi
 
 export async function savePriceList(groups: unknown): Promise<ActionResult> {
   const parsed = priceGroupsSchema.safeParse(groups);
-  if (!parsed.success) return fail("Provjeri cjenovnik: svaka stavka treba naziv i cijenu.");
+  if (!parsed.success) return fail("Provjeri cjenik: svaka stavka treba naziv i cijenu.");
   const clean = parsed.data.map((g) => ({
     ...g,
     items: g.items.map((i) => ({
@@ -176,7 +176,7 @@ export async function savePriceList(groups: unknown): Promise<ActionResult> {
   const { error } = await supabase
     .from("site_content")
     .upsert({ key: PRICE_LIST_KEY, value: JSON.stringify(clean) }, { onConflict: "key" });
-  if (error) return fail("Cjenovnik nije sačuvan. Pokušaj ponovo.");
+  if (error) return fail("Cjenik nije sačuvan. Pokušaj ponovo.");
   refreshContent("paketi");
-  return { ok: true, message: "Cjenovnik je sačuvan i već je na sajtu." };
+  return { ok: true, message: "Cjenik je sačuvan i već je na sajtu." };
 }

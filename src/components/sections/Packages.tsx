@@ -45,10 +45,10 @@ export async function Packages() {
             Prijava je besplatna i ne obvezuje te ni na što. {PRICE_VAT_NOTE}
           </p>
           <Link
-            href="/cjenovnik"
+            href="/cjenik"
             className="inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold underline decoration-brand-yellow decoration-2 underline-offset-4 hover:decoration-brand-black"
           >
-            Kompletan cjenovnik: konzultacije, osobni trening, seminari
+            Kompletan cjenik: konzultacije, osobni trening, seminari
           </Link>
         </div>
       </div>

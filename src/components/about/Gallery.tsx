@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { gallery } from "@/content/about";
+import { getGallery } from "@/lib/content/gallery";
 
 const spans = [
   "lg:col-span-2 lg:row-span-2",
@@ -11,7 +11,9 @@ const spans = [
   "lg:row-span-2",
 ];
 
-export function Gallery() {
+export async function Gallery() {
+  const gallery = await getGallery();
+  if (gallery.length === 0) return null;
   return (
     <section className="border-t border-brand-line px-5 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl">
@@ -22,7 +24,7 @@ export function Gallery() {
         <ul className="mt-12 grid auto-rows-[220px] grid-cols-2 gap-3 lg:auto-rows-[260px] lg:grid-cols-4 lg:gap-4">
           {gallery.map((g, i) => (
             <li
-              key={g.src}
+              key={`${i}-${g.src}`}
               className={`group relative overflow-hidden rounded-xl bg-brand-surface ${spans[i] ?? ""} ${
                 i === 0 ? "col-span-2 row-span-2" : ""
               }`}

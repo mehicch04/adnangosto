@@ -4,7 +4,7 @@ import { BackToTop } from "@/components/sections/BackToTop";
 import { ChatButton } from "@/components/sections/ChatButton";
 import { contactLink } from "@/lib/contact";
 
-export function PageShell({ children }: { children: React.ReactNode }) {
+export async function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <a
@@ -17,7 +17,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
       <main id="sadrzaj">{children}</main>
       <SiteFooter />
       <BackToTop />
-      <ChatButton link={contactLink()} />
+      <ChatButton link={await contactLink()} />
     </>
   );
 }

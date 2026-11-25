@@ -31,7 +31,7 @@ const mobileLinks = [
   { label: "Transformacije", href: "/#transformacije" },
   { label: "Rezultati", href: "/#rezultati" },
   { label: "O meni", href: "/o-meni" },
-  { label: "Cjenovnik", href: "/cjenovnik" },
+  { label: "Cjenik", href: "/cjenik" },
   { label: "Pitanja", href: "/#pitanja" },
 ];
 
@@ -192,7 +192,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
     m.style.transform = `translateY(${row.offsetTop}px)`;
   }, [active, armed]);
 
-  const packagesActive = pathname.startsWith("/paketi") || pathname === "/cjenovnik";
+  const packagesActive = pathname.startsWith("/paketi") || pathname === "/cjenik";
   const linkClass = (on: boolean) =>
     `relative inline-flex items-center text-[13px] font-bold tracking-[0.16em] uppercase transition-colors duration-300 ${
       on ? "text-white" : "text-white/70 hover:text-white"
@@ -294,11 +294,11 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
 
             <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
               <Link
-                href="/cjenovnik"
+                href="/cjenik"
                 onClick={close}
-                className={`hidden px-3 text-[13px] font-bold tracking-[0.16em] uppercase transition-colors duration-300 xl:inline-flex ${pathname === "/cjenovnik" ? "text-white" : "text-white/70 hover:text-white"}`}
+                className={`hidden px-3 text-[13px] font-bold tracking-[0.16em] uppercase transition-colors duration-300 xl:inline-flex ${pathname === "/cjenik" ? "text-white" : "text-white/70 hover:text-white"}`}
               >
-                Cjenovnik
+                Cjenik
               </Link>
               <a
                 href={chat.href}
@@ -379,7 +379,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                         >
                           <span className="min-w-0 flex-1">
                             <span
-                              className={`block text-[11px] font-bold tracking-[0.14em] uppercase transition-colors duration-300 ${on ? "text-brand-yellow" : "text-white/40"}`}
+                              className={`block text-[11px] font-bold tracking-[0.14em] uppercase transition-colors duration-300 ${on ? "text-brand-yellow" : "text-white/55"}`}
                             >
                               {p.tag}
                             </span>
@@ -462,7 +462,7 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
                             {current.unit}
                           </span>
                         </span>
-                        <span className="block text-[11px] whitespace-nowrap text-white/40">
+                        <span className="block text-[11px] whitespace-nowrap text-white/60">
                           {PRICE_ANCHOR_LABEL}: {current.anchor}
                         </span>
                       </span>
@@ -472,11 +472,11 @@ export function HeaderNav({ packages, chat }: { packages: MenuPackage[]; chat: C
               </div>
               <div className="flex items-center justify-between border-t border-white/10 px-6 py-3.5 text-[14px] font-semibold">
                 <Link
-                  href="/cjenovnik"
+                  href="/cjenik"
                   onClick={close}
                   className="group inline-flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white"
                 >
-                  Cijeli cjenovnik: konzultacije, osobni trening, seminari
+                  Cijeli cjenik: konzultacije, osobni trening, seminari
                   <ArrowRightIcon
                     className={`size-4 transition-transform duration-500 ${ease} group-hover:translate-x-1`}
                   />

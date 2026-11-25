@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { TransformationsGrid } from "@/components/sections/TransformationsGrid";
-import type { TransformationPhoto } from "@/content/site";
+import {
+  TransformationsGrid,
+  type TransformationCard,
+} from "@/components/sections/TransformationsGrid";
 
 export function TransformationsTabs({
   tabs,
 }: {
-  tabs: { id: string; label: string; photos: TransformationPhoto[] }[];
+  tabs: { id: string; label: string; photos: TransformationCard[] }[];
 }) {
   const [active, setActive] = useState(tabs[0]?.id);
   const current = tabs.find((t) => t.id === active) ?? tabs[0];

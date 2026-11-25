@@ -1,9 +1,10 @@
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { CopyCode } from "@/components/sections/CopyCode";
-import { site } from "@/content/site";
+import { getTexts } from "@/lib/content/texts";
 
-export function ShopPromo() {
-  const { url, code, discount } = site.shop;
+export async function ShopPromo() {
+  const { shop } = await getTexts();
+  const { url, code, discount } = shop;
   if (!url) return null;
   return (
     <section aria-labelledby="shop-naslov" className="px-5 pb-24 lg:pb-32">
@@ -28,10 +29,12 @@ export function ShopPromo() {
           <div>
             <p className="text-sm font-bold tracking-[0.2em] uppercase">Web shop</p>
             <h2 id="shop-naslov" className="mt-3 font-display text-6xl leading-[0.88] sm:text-7xl">
-              {discount} popusta preko ove stranice
+              {discount ? `${discount} popusta preko ove stranice` : "Moj web shop"}
             </h2>
             <p className="mt-5 max-w-md text-lg font-semibold">
-              Suplementi i oprema iz mog web shopa. Popust vrijedi kad kupuješ putem ovog linka.
+              {discount
+                ? "Suplementi i oprema iz mog web shopa. Popust vrijedi kad kupuješ putem ovog linka."
+                : "Suplementi i oprema koje i sam koristim, na jednom mjestu."}
             </p>
           </div>
           <div className="flex flex-col items-start gap-4 lg:items-end">

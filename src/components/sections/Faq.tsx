@@ -1,9 +1,12 @@
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { faq } from "@/content/site";
+import { getTexts } from "@/lib/content/texts";
 import { contactLink } from "@/lib/contact";
 
-export function Faq() {
-  const chat = contactLink("Bok Adnane, imam pitanje prije prijave.");
+export async function Faq() {
+  const [{ faq }, chat] = await Promise.all([
+    getTexts(),
+    contactLink("Bok Adnane, imam pitanje prije prijave."),
+  ]);
   return (
     <section
       id="pitanja"

@@ -41,7 +41,7 @@ export default async function PackagePage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const apply = `/prijava/${pkg.slug}`;
   const others = (await getPackages()).filter((p) => p.slug !== pkg.slug);
-  const chat = contactLink(`Bok Adnane, imam pitanje vezano uz paket ${pkg.name}.`);
+  const chat = await contactLink(`Bok Adnane, imam pitanje vezano uz paket ${pkg.name}.`);
   const jsonLd = [
     {
       "@context": "https://schema.org",

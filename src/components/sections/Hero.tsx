@@ -1,7 +1,8 @@
 import { getImageProps } from "next/image";
 import { preload } from "react-dom";
 import type { CSSProperties } from "react";
-import { hero, heroProof } from "@/content/site";
+import { hero } from "@/content/site";
+import { getTexts } from "@/lib/content/texts";
 import { contactLink } from "@/lib/contact";
 import { ArrowRightIcon, InstagramIcon, TickIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { HeroPaths } from "@/components/sections/HeroPaths";
@@ -42,7 +43,7 @@ function layer(wide: string, tall: string, alt: string, quality: number, lead: b
   return { desktop, mobile, rest };
 }
 
-export function Hero() {
+export async function Hero() {
   const photo = layer(
     "/images/hero-adnan-wide.jpg",
     "/images/om-majica.jpg",
@@ -57,7 +58,7 @@ export function Hero() {
     90,
     false,
   );
-  const chat = contactLink();
+  const [{ hero: t }, chat] = await Promise.all([getTexts(), contactLink()]);
   const wa = chat.kind === "whatsapp";
 
   return (
@@ -99,10 +100,10 @@ export function Hero() {
         <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div className="max-w-xl">
             <h1 className="font-display text-[clamp(3.5rem,11vw,6.5rem)] leading-[0.86]">
-              <span className="block">{hero.title}</span>
-              <span className="block">{hero.titleAccent}</span>
+              <span className="block">{t.title}</span>
+              <span className="block">{t.titleAccent}</span>
             </h1>
-            <p className="mt-5 max-w-md text-[17px] text-white/75">{hero.subtitle}</p>
+            <p className="mt-5 max-w-md text-[17px] text-white/75">{t.subtitle}</p>
             <div className="fade-up mt-7 flex items-center gap-3" style={delay(0.63)}>
               <a
                 href={hero.primaryCta.href}
@@ -136,15 +137,15 @@ export function Hero() {
             className="fade-up hidden w-72 divide-y divide-white/10 rounded-2xl border border-white/10 bg-black/60 px-4 lg:block"
             style={delay(0.75)}
           >
-            {heroProof.map((t) => (
+            {t.proof.map((p) => (
               <li
-                key={t}
+                key={p}
                 className="flex items-center gap-3 py-3.5 text-[15px] font-semibold text-white/90"
               >
                 <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-yellow text-brand-black">
                   <TickIcon className="size-3.5" />
                 </span>
-                {t}
+                {p}
               </li>
             ))}
           </ul>

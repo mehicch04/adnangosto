@@ -238,3 +238,47 @@ export const FilterIcon = (p: P) => (
     <path d="M4 6h16M7 12h10M10 18h4" />
   </Base>
 );
+
+export const CompareIcon = (p: P) => (
+  <Base {...p}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M12 4v16" />
+    <path d="m6.5 14 2-3 2 3M14.5 10l2 3 2-3" />
+  </Base>
+);
+
+export const BadgeIcon = (p: P) => (
+  <Base {...p}>
+    <circle cx="12" cy="9" r="5.5" />
+    <path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7" />
+  </Base>
+);
+
+export const UploadIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M12 16V4m0 0-4.5 4.5M12 4l4.5 4.5" />
+    <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+  </Base>
+);
+
+export const PencilIcon = (p: P) => (
+  <Base {...p}>
+    <path d="m14.5 5.5 4 4M4 20l1-4.5L16 4.5a2 2 0 0 1 3 0l.5.5a2 2 0 0 1 0 3L8.5 19 4 20Z" />
+  </Base>
+);
+
+export const DownloadIcon = (p: P) => (
+  <Base {...p}>
+    <path d="M12 4v12m0 0-4.5-4.5M12 16l4.5-4.5" />
+    <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+  </Base>
+);
+
+export const GridIcon = (p: P) => (
+  <Base {...p}>
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+  </Base>
+);

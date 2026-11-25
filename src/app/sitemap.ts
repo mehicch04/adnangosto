@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getPackages } from "@/lib/content/packages";
+import { getTexts } from "@/lib/content/texts";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const packages = await getPackages();
+  const [packages, { terms }] = await Promise.all([getPackages(), getTexts()]);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const now = new Date();
   return [
@@ -13,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),
-    { url: `${siteUrl}/cjenovnik`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/cjenik`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/o-meni`, lastModified: now, changeFrequency: "yearly", priority: 0.8 },
     {
       url: `${siteUrl}/politika-privatnosti`,
@@ -21,5 +22,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...(terms.body.trim()
+      ? [
+          {
+            url: `${siteUrl}/opci-uvjeti`,
+            lastModified: now,
+            changeFrequency: "yearly" as const,
+            priority: 0.3,
+          },
+        ]
+      : []),
   ];
 }

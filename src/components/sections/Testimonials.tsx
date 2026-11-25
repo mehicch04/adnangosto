@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { fallbackTestimonials, type Testimonial } from "@/content/site";
+import type { Testimonial } from "@/lib/content/transformations";
 
 function initials(name: string) {
   return name
@@ -25,22 +24,12 @@ function Card({ t }: { t: Testimonial }) {
         </blockquote>
       </div>
       <figcaption className="mt-7 flex items-center gap-3.5 border-t border-brand-line pt-5">
-        {t.image ? (
-          <Image
-            src={t.image}
-            alt=""
-            width={48}
-            height={48}
-            className="size-12 rounded-full object-cover object-top"
-          />
-        ) : (
-          <span
-            aria-hidden="true"
-            className="grid size-12 shrink-0 place-items-center rounded-full bg-brand-yellow font-display text-xl text-brand-black"
-          >
-            {initials(t.name)}
-          </span>
-        )}
+        <span
+          aria-hidden="true"
+          className="grid size-12 shrink-0 place-items-center rounded-full bg-brand-yellow font-display text-xl text-brand-black"
+        >
+          {initials(t.name)}
+        </span>
         <span className="min-w-0">
           <span className="block font-semibold text-white">{t.name}</span>
           <span className="mt-0.5 block text-xs font-semibold tracking-[0.14em] text-brand-yellow uppercase">
@@ -64,7 +53,7 @@ function Row({ items, reverse }: { items: Testimonial[]; reverse?: boolean }) {
           }`}
         >
           {items.map((t) => (
-            <Card key={t.name} t={t} />
+            <Card key={t.id} t={t} />
           ))}
         </div>
       ))}
@@ -72,7 +61,7 @@ function Row({ items, reverse }: { items: Testimonial[]; reverse?: boolean }) {
   );
 }
 
-export function Testimonials({ items = fallbackTestimonials }: { items?: Testimonial[] }) {
+export function Testimonials({ items }: { items: Testimonial[] }) {
   if (items.length === 0) return null;
   const half = Math.ceil(items.length / 2);
   const rows = items.length > 4 ? [items.slice(0, half), items.slice(half)] : [items];
@@ -102,11 +91,19 @@ export function Testimonials({ items = fallbackTestimonials }: { items?: Testimo
         </p>
       </div>
 
-      <div className="testimonial-mask mt-14 flex flex-col gap-4">
-        {rows.map((r, i) => (
-          <Row key={i} items={r} reverse={i === 1} />
-        ))}
-      </div>
+      {items.length < 3 ? (
+        <div className="mx-auto mt-14 flex max-w-7xl flex-wrap gap-4 px-5">
+          {items.map((t) => (
+            <Card key={t.id} t={t} />
+          ))}
+        </div>
+      ) : (
+        <div className="testimonial-mask mt-14 flex flex-col gap-4">
+          {rows.map((r, i) => (
+            <Row key={i} items={r} reverse={i === 1} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -1,3 +1,7 @@
 {
-  "crons": [{ "path": "/api/cron/cjenik", "schedule": "0 5 * * *" }]
+  "regions": ["fra1"],
+  "crons": [
+    { "path": "/api/cron/odrzavanje", "schedule": "0 2 * * *" },
+    { "path": "/api/cron/cjenik", "schedule": "0 5 * * *" }
+  ]
 }

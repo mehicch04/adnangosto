@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/cjenovnik", destination: "/cjenik", permanent: true },
       {
         source: "/prijava/klasicni-coaching",
         destination: "/prijava/online-coaching",

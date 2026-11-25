@@ -6,6 +6,7 @@ import { ApplicationForm } from "@/components/application/ApplicationForm";
 import { formatPrice, packages } from "@/content/packages";
 import { getPackage } from "@/lib/content/packages";
 import { site } from "@/content/site";
+import { getTexts } from "@/lib/content/texts";
 
 type Props = { params: Promise<{ paket: string }> };
 
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ApplicationPage({ params }: Props) {
   const { paket } = await params;
-  const pkg = await getPackage(paket);
+  const [pkg, { terms }] = await Promise.all([getPackage(paket), getTexts()]);
   if (!pkg) notFound();
 
   return (
@@ -90,6 +91,7 @@ export default async function ApplicationPage({ params }: Props) {
           checkIn={pkg.checkIn}
           backHref={`/paketi/${pkg.slug}`}
           instagram={site.instagram}
+          termsRequired={Boolean(terms.body.trim())}
         />
       </main>
     </>

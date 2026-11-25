@@ -3,19 +3,20 @@ import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
 import { site } from "@/content/site";
 import { contactLink } from "@/lib/contact";
+import { getTexts } from "@/lib/content/texts";
 import { getPackages } from "@/lib/content/packages";
 
 const pages = [
   { label: "Početna", href: "/" },
   { label: "O meni", href: "/o-meni" },
-  { label: "Cjenovnik", href: "/cjenovnik" },
+  { label: "Cjenik", href: "/cjenik" },
   { label: "Rezultati", href: "/#rezultati" },
   { label: "Transformacije", href: "/#transformacije" },
   { label: "Česta pitanja", href: "/#pitanja" },
 ];
 
 export async function SiteFooter() {
-  const chat = contactLink();
+  const [chat, { terms }] = await Promise.all([contactLink(), getTexts()]);
   const packages = await getPackages();
   return (
     <footer className="relative isolate overflow-hidden border-t border-brand-line bg-brand-black">
@@ -135,6 +136,11 @@ export async function SiteFooter() {
             <Link href="/politika-privatnosti" className="transition-colors hover:text-white">
               Politika privatnosti
             </Link>
+            {terms.body.trim() && (
+              <Link href="/opci-uvjeti" className="transition-colors hover:text-white">
+                Opći uvjeti poslovanja
+              </Link>
+            )}
           </p>
           <a
             href="https://mehiccdev.com"
