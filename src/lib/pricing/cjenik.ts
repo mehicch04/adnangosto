@@ -1,5 +1,7 @@
 import "server-only";
+import { createHash } from "node:crypto";
 import { PRICE_ANCHOR_DATE, PRICE_RANGE_NOTE } from "@/content/packages";
+import { business } from "@/content/site";
 import { getPriceList } from "@/lib/content/packages";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 
@@ -132,5 +134,129 @@ export async function archiveDays() {
 export function xmlResponse(body: string) {
   return new Response(body, {
     headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "no-store" },
+  });
+}
+
+export type Publication = { number: number; publishedAt: string; items: CjenikItem[] };
+
+const zagrebParts = (iso: string) => {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/Zagreb",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    })
+      .formatToParts(new Date(iso))
+      .map((p) => [p.type, p.value]),
+  );
+  return parts as Record<"year" | "month" | "day" | "hour" | "minute", string>;
+};
+
+export function csvFileName(pub: Pick<Publication, "number" | "publishedAt">) {
+  const t = zagrebParts(pub.publishedAt);
+  const id = business.mbo || "ADONI";
+  return `${id}_ZA_SVA_PRODAJNA_MJESTA_USLUGE_${String(pub.number).padStart(6, "0")}_${t.year}${t.month}${t.day}_${t.hour}${t.minute}.csv`;
+}
+
+export function publishedLabel(iso: string) {
+  const t = zagrebParts(iso);
+  return `${Number(t.day)}. ${Number(t.month)}. ${t.year}. u ${t.hour}:${t.minute}`;
+}
+
+function money(value: string) {
+  const { from, to } = amounts(value);
+  const fmt = (n: string) => (n ? Number(n).toFixed(2).replace(".", ",") : "");
+  return from === to ? fmt(from) : `${fmt(from)} do ${fmt(to)}`;
+}
+
+const cell = (v: string) => (/[;"\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+
+export function toCsv(items: CjenikItem[]) {
+  const rows = items.map((i) =>
+    [
+      i.unit ? `${i.name} (${i.unit})` : [i.name, i.detail].filter(Boolean).join(", "),
+      money(i.price),
+      "",
+      money(i.anchor),
+    ]
+      .map(cell)
+      .join(";"),
+  );
+  return (
+    ["naziv;maloprodajna_cijena;posebni_oblik_prodaje;bazna_cijena", ...rows].join("\r\n") + "\r\n"
+  );
+}
+
+const fingerprint = (items: CjenikItem[]) =>
+  createHash("sha256").update(JSON.stringify(items)).digest("hex");
+
+type Row = { number: number; published_at: string; items: CjenikItem[] };
+const toPub = (r: Row): Publication => ({
+  number: Number(r.number),
+  publishedAt: r.published_at,
+  items: r.items,
+});
+
+export async function publishIfChanged(): Promise<Publication | null> {
+  const items = await currentItems();
+  if (!isSupabaseConfigured()) return { number: 1, publishedAt: new Date().toISOString(), items };
+  const db = createAdminClient();
+  const fp = fingerprint(items);
+  const { data: last } = await db
+    .from("price_publications")
+    .select("number, published_at, items, fingerprint")
+    .order("number", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (last && last.fingerprint === fp) return toPub(last as Row);
+  const { data, error } = await db
+    .from("price_publications")
+    .insert({ fingerprint: fp, items })
+    .select("number, published_at, items")
+    .single();
+  if (error) return last ? toPub(last as Row) : null;
+  return toPub(data as Row);
+}
+
+export async function publicationByNumber(number: number) {
+  if (!isSupabaseConfigured()) return null;
+  const { data } = await createAdminClient()
+    .from("price_publications")
+    .select("number, published_at, items")
+    .eq("number", number)
+    .maybeSingle();
+  return data ? toPub(data as Row) : null;
+}
+
+export async function recentPublications(): Promise<Publication[]> {
+  if (!isSupabaseConfigured()) return [];
+  const since = new Date(Date.now() - ARCHIVE_DAYS * 86_400_000).toISOString();
+  const { data: recent } = await createAdminClient()
+    .from("price_publications")
+    .select("number, published_at, items")
+    .gte("published_at", since)
+    .order("number", { ascending: false });
+  const list = ((recent ?? []) as Row[]).map(toPub);
+  const { data: last } = await createAdminClient()
+    .from("price_publications")
+    .select("number, published_at, items")
+    .order("number", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (last && !list.some((p) => p.number === Number(last.number))) list.unshift(toPub(last as Row));
+  return list;
+}
+
+export function csvResponse(body: string, fileName: string) {
+  return new Response(body, {
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": `inline; filename="${fileName}"`,
+      "Cache-Control": "no-store",
+    },
   });
 }

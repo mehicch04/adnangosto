@@ -1,11 +1,20 @@
 "use server";
 
+import { after } from "next/server";
 import { z } from "zod";
 import type { ActionResult } from "@/app/admin/actions";
 import { packages } from "@/content/packages";
 import { requireAdmin } from "@/lib/admin/auth";
 import { refreshContent } from "@/lib/content/store";
 import { PRICE_LIST_KEY, priceGroupsSchema } from "@/lib/content/packages";
+import { publishIfChanged } from "@/lib/pricing/cjenik";
+
+function refreshPrices() {
+  refreshContent("paketi");
+  after(async () => {
+    await publishIfChanged();
+  });
+}
 
 type Db = Awaited<ReturnType<typeof requireAdmin>>["supabase"];
 
@@ -93,7 +102,7 @@ export async function savePackage(input: PackageInput): Promise<ActionResult> {
     })
     .eq("slug", p.slug);
   if (error) return fail("Izmjene nisu sačuvane. Pokušaj ponovo.");
-  refreshContent("paketi");
+  refreshPrices();
   return { ok: true, message: `${p.name} je sačuvan i već je na sajtu.` };
 }
 
@@ -112,7 +121,7 @@ export async function savePackageOrder(order: string[]): Promise<ActionResult> {
     ),
   );
   if (results.some((r) => r.error)) return fail("Redoslijed nije sačuvan.");
-  refreshContent("paketi");
+  refreshPrices();
   return { ok: true, message: "Redoslijed je sačuvan." };
 }
 
@@ -133,7 +142,7 @@ export async function setPackageVisible(slug: string, visible: boolean): Promise
     .update({ is_active: visible, ...(visible ? {} : { featured: false }) })
     .eq("slug", slug);
   if (error) return fail("Promjena nije sačuvana.");
-  refreshContent("paketi");
+  refreshPrices();
   return {
     ok: true,
     message: visible ? "Paket je ponovo vidljiv na sajtu." : "Paket je sakriven sa sajta.",
@@ -153,7 +162,7 @@ export async function setPackageFeatured(slug: string, featured: boolean): Promi
     .update({ featured, ...(featured ? { is_active: true } : {}) })
     .eq("slug", slug);
   if (error) return fail("Promjena nije sačuvana.");
-  refreshContent("paketi");
+  refreshPrices();
   return {
     ok: true,
     message: featured ? "Paket je označen kao najpopularniji." : "Oznaka je skinuta.",
@@ -177,6 +186,6 @@ export async function savePriceList(groups: unknown): Promise<ActionResult> {
     .from("site_content")
     .upsert({ key: PRICE_LIST_KEY, value: JSON.stringify(clean) }, { onConflict: "key" });
   if (error) return fail("Cjenik nije sačuvan. Pokušaj ponovo.");
-  refreshContent("paketi");
+  refreshPrices();
   return { ok: true, message: "Cjenik je sačuvan i već je na sajtu." };
 }

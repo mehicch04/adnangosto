@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon } from "@/components/ui/icons";
-import { site } from "@/content/site";
+import { business, site } from "@/content/site";
 import { contactLink } from "@/lib/contact";
 import { getTexts } from "@/lib/content/texts";
 import { getPackages } from "@/lib/content/packages";
@@ -117,8 +117,23 @@ export async function SiteFooter() {
                   {chat.kind === "whatsapp" ? "WhatsApp poruka" : "Poruka na Instagramu"}
                 </a>
               </li>
-              <li>Online coaching bez obzira na lokaciju</li>
+              <li>
+                <a href={business.phoneHref} className="transition-colors hover:text-white">
+                  {business.phone}
+                </a>
+              </li>
             </ul>
+            <address className="mt-6 text-sm leading-relaxed text-brand-muted not-italic">
+              {business.name}
+              <br />
+              {business.street}, {business.city}
+              {business.mbo && (
+                <>
+                  <br />
+                  MBO {business.mbo}
+                </>
+              )}
+            </address>
             <Link
               href="/#suradnja"
               className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-brand-yellow px-6 text-[13px] font-bold tracking-[0.14em] text-brand-black uppercase transition-colors hover:bg-white"

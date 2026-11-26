@@ -14,6 +14,7 @@ const TABLES = [
   "sponsors",
   "site_content",
   "price_snapshots",
+  "price_publications",
 ] as const;
 
 const DAY = 86_400_000;

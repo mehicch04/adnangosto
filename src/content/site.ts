@@ -11,6 +11,16 @@ export const site = {
   },
 };
 
+export const business = {
+  name: "Adoni, obrt za trgovinu i usluge",
+  owner: "Adnan Gosto",
+  street: "Remetinečki Gaj 21d",
+  city: "10000 Zagreb",
+  phone: "092 339 7212",
+  phoneHref: "tel:+385923397212",
+  mbo: "",
+};
+
 export const hero = {
   word: "ADONI",
   title: "Tvoja forma.",

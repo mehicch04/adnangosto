@@ -3,7 +3,12 @@ import Link from "next/link";
 import { PageShell } from "@/components/layout/PageShell";
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { ADNAN_EMAIL, PRICE_ANCHOR_LABEL, PRICE_RANGE_NOTE } from "@/content/packages";
-import { archiveDays } from "@/lib/pricing/cjenik";
+import {
+  csvFileName,
+  publishIfChanged,
+  publishedLabel,
+  recentPublications,
+} from "@/lib/pricing/cjenik";
 import { getPriceList } from "@/lib/content/packages";
 
 export const metadata: Metadata = {
@@ -20,7 +25,10 @@ function mailto(subject: string) {
 export const revalidate = 3600;
 
 export default async function PricingPage() {
-  const [priceList, days] = await Promise.all([getPriceList(), archiveDays()]);
+  const [priceList, publications] = await Promise.all([
+    getPriceList(),
+    publishIfChanged().then(() => recentPublications()),
+  ]);
   return (
     <PageShell>
       <section className="px-5 pt-32 pb-12 lg:pt-44 lg:pb-16">
@@ -162,27 +170,32 @@ export default async function PricingPage() {
               <div>
                 <h2 className="font-display text-3xl leading-none">Strojno čitljiv cjenik</h2>
                 <p className="mt-2 max-w-xl text-sm text-white/60">
-                  Cjenik u XML formatu ažurira se svaki dan do 8 sati. Cjenici prethodnih 30 dana
-                  ostaju dostupni.
+                  Cjenik usluga u CSV obliku, s maloprodajnom i baznom cijenom. Nova verzija se
+                  objavi čim se neka cijena promijeni, a prethodne ostaju dostupne 30 dana.
                 </p>
               </div>
               <a
-                href="/cjenik.xml"
+                href="/cjenik.csv"
                 className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-yellow px-5 text-sm font-bold text-brand-black transition-colors hover:bg-white"
               >
-                Današnji cjenik (XML)
+                Aktualni cjenik (CSV)
                 <ArrowRightIcon className="size-4" />
               </a>
             </div>
-            {days.length > 0 && (
-              <ul className="mt-5 flex flex-wrap gap-2 text-[13px]">
-                {days.map((d) => (
-                  <li key={d}>
+            {publications.length > 0 && (
+              <ul className="mt-5 grid gap-2 text-[13px] sm:grid-cols-2">
+                {publications.map((p, i) => (
+                  <li key={p.number}>
                     <a
-                      href={`/cjenik/${d}.xml`}
-                      className="inline-flex h-8 items-center rounded-full border border-white/15 px-3 text-white/70 tabular-nums transition-colors hover:border-white/40 hover:text-white"
+                      href={`/cjenik/${csvFileName(p)}`}
+                      className="flex min-h-10 items-center justify-between gap-3 rounded-md border border-white/15 px-3 py-2 text-white/70 transition-colors hover:border-white/40 hover:text-white"
                     >
-                      {d.split("-").reverse().join(". ")}.
+                      <span className="tabular-nums">
+                        Objavljeno {publishedLabel(p.publishedAt)}
+                      </span>
+                      <span className="shrink-0 text-white/60">
+                        {i === 0 ? "Aktualni" : "Arhiva"}
+                      </span>
                     </a>
                   </li>
                 ))}

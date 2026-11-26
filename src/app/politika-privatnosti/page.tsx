@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageShell } from "@/components/layout/PageShell";
 import { ADNAN_EMAIL } from "@/content/packages";
+import { business } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Politika privatnosti",
@@ -16,7 +17,8 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
     title: "Tko obrađuje tvoje podatke",
     body: (
       <p>
-        Voditelj obrade podataka je Adnan Gosto. Za sva pitanja o tvojim podacima piši na{" "}
+        Voditelj obrade podataka je {business.name}, {business.street}, {business.city}, vlasnik{" "}
+        {business.owner}. Za sva pitanja o tvojim podacima piši na{" "}
         <a href={`mailto:${ADNAN_EMAIL}`}>{ADNAN_EMAIL}</a>.
       </p>
     ),
